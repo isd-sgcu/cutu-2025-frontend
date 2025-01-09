@@ -29,7 +29,9 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${anuphan.variable} vsc-initialized antialiased`}>
-        <LineProvider>{children}</LineProvider>
+        <main className="mx-auto min-h-screen max-w-lg">
+          <LineProvider>{children}</LineProvider>
+        </main>
       </body>
     </html>
   );
