@@ -1,3 +1,9 @@
+import { Button } from '@/components/ui/button';
+
 export default function page() {
-  return <div>register</div>;
+  return (
+    <div>
+      <Button>ยืนยันการลงทะเบียน</Button>
+    </div>
+  );
 }
