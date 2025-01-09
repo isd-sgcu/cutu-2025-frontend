@@ -29,7 +29,7 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.{js,ts}"],
+      "files": ["src/**"],
       "rules": {
         "unicorn/prefer-module": "off"
       }
