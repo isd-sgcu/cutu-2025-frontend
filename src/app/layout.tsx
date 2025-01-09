@@ -1,16 +1,11 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Anuphan } from 'next/font/google';
 import './globals.css';
-import LineProvider from '../context/liff';
+import LineProvider from '../contexts/liff';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+const anuphan = Anuphan({
+  variable: '--font-anuphan',
+  subsets: ['latin', 'thai'],
 });
 
 export const metadata: Metadata = {
@@ -25,9 +20,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} vsc-initialized antialiased`}
-      >
+      <body className={`${anuphan.variable} vsc-initialized antialiased`}>
         <LineProvider>{children}</LineProvider>
       </body>
     </html>

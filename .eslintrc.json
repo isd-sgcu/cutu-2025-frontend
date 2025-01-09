@@ -1,4 +1,5 @@
 {
+  "files": ["src/**/*.{ts,tsx,js,jsx}"],
   "extends": [
     "next/core-web-vitals",
     "plugin:unicorn/recommended",
@@ -26,13 +27,5 @@
         }
       }
     ]
-  },
-  "overrides": [
-    {
-      "files": ["src/**"],
-      "rules": {
-        "unicorn/prefer-module": "off"
-      }
-    }
-  ]
+  }
 }
