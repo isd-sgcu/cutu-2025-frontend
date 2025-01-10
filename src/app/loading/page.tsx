@@ -1,15 +1,18 @@
 'use client';
 import Image from 'next/image';
-import Ring from '../../../public/loading/Ring.svg';
-import Logo from '../../../public/loading/Logo.svg';
+import { getImageURL } from '@/utils/image';
 
 export default function Loading() {
   return (
     <main className="flex min-h-screen items-center justify-center">
       <div className="relative">
-        <Image src={Ring} alt="logo" className="w-32" />
+        <div className="relative h-32 w-32">
+          <Image src={getImageURL('/loading/Ring.svg')} fill alt="ring" />
+        </div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <Image src={Logo} alt="logo" className="w-14" />
+          <div className="relative h-20 w-14">
+            <Image src={getImageURL('/loading/Logo.svg')} fill alt="logo" />
+          </div>
         </div>
       </div>
     </main>
