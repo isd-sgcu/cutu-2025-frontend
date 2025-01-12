@@ -37,7 +37,7 @@ export default function Navbar() {
       </button>
 
       {isMenuOpen && (
-        <nav className="absolute inset-0 top-64 z-40 bg-white bg-opacity-90">
+        <nav className="absolute inset-0 top-64 z-40 bg-white">
           <ul className="flex h-full flex-col items-center justify-center space-y-6 text-lg text-dark-pink">
             <li className="cursor-pointer">หน้าหลัก</li>
             <li className="cursor-pointer">สิทธิประโยชน์</li>
