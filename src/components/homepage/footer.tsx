@@ -1,12 +1,28 @@
+import { getImageURL } from '@/utils/image';
+import Image from 'next/image';
+
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 p-4">
-      <div className="text-sm">
-        <p>ติดต่อเรา</p>
-        <p>Chula BAKA</p>
-        <p>@chulabaka</p>
-        <p>© 2024 Chulalongkorn University</p>
+    <section className="bg-black p-2">
+      <div className="flex flex-row items-center justify-center gap-2 text-sm">
+        <p className="text-white">Powered by</p>
+        <div className="flex">
+          <Image
+            alt="isdlogo"
+            src={getImageURL('/homepage/isd.svg')}
+            width={24}
+            height={15}
+          />
+        </div>
+        <div className="flex">
+          <Image
+            alt="sgculogo"
+            src={getImageURL('/homepage/sgcu.svg')}
+            width={23}
+            height={15}
+          />
+        </div>
       </div>
-    </footer>
+    </section>
   );
 }
