@@ -10,7 +10,9 @@ export default function Hero() {
         alt="hero"
       />
       <div className="relative flex flex-col items-center justify-center">
-        <h1 className="text-[32px] font-bold text-white">75th TU-CU</h1>
+        <h1 className="text-[32px] font-bold tracking-widest text-white">
+          75th TU-CU
+        </h1>
         <p className="text-base text-white">15 กุมภาพันธ์ 2568 | 13.00</p>
         <p className="text-base text-white">กรีฑาสถานแห่งชาติ</p>
         <button className="mt-4 rounded-[40px] bg-dark-pink px-4 py-2 text-base text-white">

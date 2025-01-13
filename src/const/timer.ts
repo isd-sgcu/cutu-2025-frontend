@@ -1,5 +1,3 @@
-// timer.ts
-
 export type TimerConfig = {
   targetDate: Date;
 };

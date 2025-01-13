@@ -22,7 +22,7 @@ export default {
         'light-pink': '#E9B0CC',
         'dark-blue': '#2D2A4A',
         'mid-blue': '#708FCE',
-        'light-blue': '#SE78BF',
+        'light-blue': '#9BCDEB',
         disabled: '#C1C1C1',
         cream: '#A8CBE7',
         yellow: '#A9D39F',
