@@ -16,7 +16,7 @@ export default function Reviews() {
     const container = document.querySelector('.scroll-container');
     if (container) {
       container.scrollTo({
-        left: container.scrollLeft + 300, // Adjust the scroll distance as needed
+        left: container.scrollLeft + 300,
         behavior: 'smooth',
       });
     }
