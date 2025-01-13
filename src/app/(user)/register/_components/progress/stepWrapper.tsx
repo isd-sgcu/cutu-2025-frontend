@@ -9,9 +9,11 @@ interface StepWrapperProps {
 
 export default function StepWrapper({ step, isActive }: StepWrapperProps) {
   return (
-    <div className='w-14 flex flex-col items-center h-full'>
+    <div className="flex h-full w-14 flex-col items-center">
       <Step step={step} isActive={isActive} />
-      <div className='text-sm text-center mt-2 flex-1 flex items-center'>{steps[step - 1]}</div>
+      <div className="mt-2 flex h-full flex-1 items-center text-center text-sm">
+        {steps[step - 1]}
+      </div>
     </div>
   );
 }

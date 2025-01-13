@@ -9,6 +9,7 @@ interface ProgressProps {
 
 export default function Progress({ step, className }: ProgressProps) {
   step = Math.min(3, Math.max(1, step));
+
   return (
     <div className={cn('flex w-fit -space-x-2', className)}>
       <StepWrapper step={1} isActive={step >= 1} />
