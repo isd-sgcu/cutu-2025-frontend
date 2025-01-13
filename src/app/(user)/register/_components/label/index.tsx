@@ -7,11 +7,11 @@ interface LabelProps {
 
 export default function Label({ isRequired = false, text }: LabelProps) {
   return (
-    <span className="relative">
+    <label className="relative">
       {text}
       {isRequired && (
         <Asterisk className="absolute -right-2 top-0 size-2.5" color="red" />
       )}
-    </span>
+    </label>
   );
 }
