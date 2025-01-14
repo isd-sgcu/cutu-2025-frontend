@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Background />
-      <div className="relative mt-32 flex h-screen flex-col">
+      <div className="relative mt-32 flex h-screen flex-col items-center">
         <TopPart />
         <QRButton />
         <Edit />
