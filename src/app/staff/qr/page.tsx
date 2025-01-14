@@ -5,13 +5,13 @@ import Edit from '@/components/staff/qr/editbutton';
 
 export default function Home() {
   return (
-    <>
+    <main>
       <Background />
-      <div className="relative mt-32 flex h-screen flex-col items-center">
+      <div className="relative mt-32 flex flex-col items-center">
         <TopPart />
         <QRButton />
         <Edit />
       </div>
-    </>
+    </main>
   );
 }
