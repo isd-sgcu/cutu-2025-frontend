@@ -7,9 +7,10 @@ import { config } from '@/app/config';
 
 export default function QRButton() {
   useEffect(() => {
-    liff
-      .init({ liffId: config.liffId })
-      .catch(err => console.error('LIFF Initialization failed:', err));
+    liff.init({ liffId: config.liffId }).catch(err => {
+      alert('LIFF Initialization failed');
+      console.error('LIFF Initialization failed:', err);
+    });
   }, []);
   const openQRScanner = async () => {
     if (!liff.isInClient()) {
