@@ -1,4 +1,4 @@
-import CheckBox from '@/components/checkbox';
+import CheckBox from '@/app/(user)/register/_components/checkbox';
 
 interface ConditionProps {
   condition: string;
