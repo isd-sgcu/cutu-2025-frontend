@@ -22,7 +22,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'disabled',
+      variant: 'filled',
       size: 'default',
     },
   },
