@@ -1,21 +1,32 @@
-import ConfirmPopup from '../confirm/ConfirmPopup';
+import React from 'react';
+import Image from 'next/image';
+import { getImageURL } from '@/utils/image';
 
 interface ConfirmModalProps {
-  isOpen: boolean;
-  userinfo: string;
+  userInfo: string | null;
+  onClose: () => void;
 }
 
-const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, userinfo }) => {
-  const modalClasses = `fixed inset-0 z-50 overflow-y-auto justify-center flex  bg-gray-500 bg-opacity-75 transition-all ease-in-out duration-300 ${
-    isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-  }`;
-
+const ConfirmModal: React.FC<ConfirmModalProps> = ({ userInfo, onClose }) => {
   return (
-    <div className={`${modalClasses}`}>
-      <div
-        className={`flex h-full w-[calc(100vh*(72/156)*(9/10))] items-center shadow-lg`}
-      >
-        <ConfirmPopup userinfo={userinfo} />
+    <div className="flex flex-row items-center justify-center">
+      <div className="flex h-64 w-[300px] flex-col items-center justify-center rounded-md bg-white">
+        <div className="text-28s mb-4 font-normal">Confirm!</div>
+
+        <Image
+          src={getImageURL('/staff/confirm.svg')}
+          width={36}
+          height={36}
+          alt="confirm"
+        />
+        <div className="mt-4 text-lg">สแกนสำเร็จ ยินดีต้อนรับ</div>
+        <div className="text-lg font-semibold text-dark-pink">{userInfo}</div>
+        <button
+          onClick={onClose}
+          className="mt-4 flex h-10 w-32 items-center justify-center rounded-lg bg-dark-pink text-white"
+        >
+          สแกนต่อ
+        </button>
       </div>
     </div>
   );
