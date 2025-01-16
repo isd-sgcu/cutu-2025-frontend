@@ -1,4 +1,4 @@
-import CheckBox from '@/app/(user)/register/_components/checkbox';
+import CheckBox from '@/app/(user)/register/_components/policy/checkbox';
 import Label from '../label';
 
 interface ConsentProps {
