@@ -14,6 +14,7 @@ export default {
       lg: '1rem',
       xl: '1.125rem',
       '2xl': '1.25rem',
+      '28s': '1.75rem',
       '3xl': '2rem',
     },
     extend: {
