@@ -24,6 +24,7 @@ export default {
         'mid-blue': '#708FCE',
         'light-blue': '#SE78BF',
         'light-gray': '#D9D9D9',
+        'mid-gray': '#E3E3E3',
         'dark-gray': '#757575',
         disabled: '#C1C1C1',
         cream: '#A8CBE7',
