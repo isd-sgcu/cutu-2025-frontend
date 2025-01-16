@@ -8,6 +8,7 @@ import ConfirmModal from '../confirm/ConfirmModal';
 export default function QRButton() {
   const { client } = useLiff();
   const [qrCodeValue, setQrCodeValue] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openQRScanner = async () => {
     if (!client?.isInClient()) {
@@ -17,29 +18,34 @@ export default function QRButton() {
     try {
       const result = await client.scanCodeV2();
       setQrCodeValue(result.value);
-      // alert(`Scanned QR Code: ${result.value}`);
+      setIsModalOpen(true);
     } catch (err) {
       console.error('QR Scan failed:', err);
     }
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setQrCodeValue(null);
+  };
+
   return (
-    <div className="mt-6 flex justify-center">
+    <div className="mt-6 h-12 w-72 rounded-full bg-white px-4 py-2 text-lg text-dark-pink">
       <div
         onClick={openQRScanner}
-        className="mt-6 h-12 w-72 rounded-full bg-white px-4 py-2 text-lg text-dark-pink"
+        className="flex flex-row justify-center gap-2"
       >
-        <div className="aspect-ratio flex flex-row justify-center gap-2">
-          <Image
-            src={getImageURL('/staff/qr.png')}
-            alt="edit"
-            width={20}
-            height={21}
-          />
-          <p className="mt-1">คลิกเพื่อสแกน</p>
-        </div>
+        <Image
+          src={getImageURL('/staff/qr.png')}
+          width={24}
+          height={24}
+          alt="scan"
+        />
+        <p className="mt-1">คลิกเพื่อสแกน</p>
       </div>
-      {qrCodeValue && <ConfirmModal userinfo={qrCodeValue} isOpen={true} />}
+      {isModalOpen && (
+        <ConfirmModal userInfo={qrCodeValue} onClose={closeModal} />
+      )}
     </div>
   );
 }
