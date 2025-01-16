@@ -4,6 +4,7 @@ import { useState } from 'react';
 import DropdownInput from './_components/dropdownInput';
 import Label from './_components/label';
 import Progress from './_components/progress';
+import ImageInput from './_components/imageinput';
 
 const choices = [
   'จุฬาลงกรณ์มหาวิทยาลัย',
@@ -15,6 +16,7 @@ const choices = [
 
 export default function Page() {
   const [value, setValue] = useState(choices[0]);
+  const [file, setFile] = useState<File | null>(null);
 
   return (
     <div className="p-6">
@@ -26,6 +28,7 @@ export default function Page() {
         setValue={setValue}
         placeholder="เลือกมหาลัย"
       />
+      <ImageInput value={file} setValue={setFile} />
     </div>
   );
 }
