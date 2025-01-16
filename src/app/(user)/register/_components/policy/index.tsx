@@ -1,19 +1,21 @@
-import Condition from './condition';
+import Condition from './consent';
 import Content from './content';
 import Topic from './topic';
 
 interface PolicyProps {
+  isRequired?: boolean;
   topic: string;
   content: string;
-  condition: string;
+  consent: string;
   isAccepted: boolean;
   SetIsAccepted: (isAccepted: boolean) => void;
 }
 
 export default function Policy({
+  isRequired = false,
   topic,
   content,
-  condition,
+  consent,
   isAccepted,
   SetIsAccepted,
 }: PolicyProps) {
@@ -22,9 +24,10 @@ export default function Policy({
       <Topic topic={topic} />
       <Content content={content} />
       <Condition
-        condition={condition}
-        isAccepted={isAccepted}
-        SetIsAccepted={SetIsAccepted}
+        value={isAccepted}
+        setValue={SetIsAccepted}
+        isRequired={isRequired}
+        label={consent}
       />
     </div>
   );
