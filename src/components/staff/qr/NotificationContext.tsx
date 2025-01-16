@@ -1,6 +1,3 @@
-// import { Icon } from '@iconify/react/dist/iconify.js';
-// import Divider from '@public/congrats/divider.svg';
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface NotificationContextProps {
