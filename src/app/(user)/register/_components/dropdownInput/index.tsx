@@ -26,7 +26,11 @@ export default function DropdownInput({
   return (
     <Select value={value} onValueChange={handleOnValueChange}>
       <SelectTrigger className="w-full rounded border-dark-gray">
-        <SelectValue placeholder={placeholder} />
+        <SelectValue
+          placeholder={
+            <div className="text-placeholder-gray">{placeholder}</div>
+          }
+        />
       </SelectTrigger>
       <SelectContent className="border-dark-gray p-1">
         {choices.map(choice => (
