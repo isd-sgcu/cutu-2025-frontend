@@ -6,16 +6,12 @@ import Progress from './_components/progress';
 import One from './_components/subpages/one';
 import Two from './_components/subpages/two';
 import Three from './_components/subpages/three';
+import Top from './_components/top';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
-  const [step, setStep] = useState(2);
-
-  function nextStep() {
-    if (step == 3) {
-      return;
-    }
-    setStep(step + 1);
-  }
+  const [step, setStep] = useState(3);
+  const router = useRouter();
 
   function getPage(): ReactNode {
     switch (step) {
@@ -24,14 +20,38 @@ export default function Page() {
       case 3:
         return <Three />;
       default:
-        return <One nextStep={nextStep} />;
+        return <One nextStep={backStep} />;
+    }
+  }
+
+  function nextStep() {
+    if (step == 3) {
+      router.push('/prepare-before-event');
+    } else {
+      setStep(step + 1);
+    }
+  }
+
+  function backStep() {
+    if (step == 2) {
+      setStep(1);
+    } else {
+      router.push('/');
     }
   }
 
   return (
-    <div className="flex flex-col items-center p-6">
-      <Progress step={step} />
-      {getPage()}
+    <div className="min-h-screen w-full">
+      <Top
+        backgroundPath="/(user)/register/bg.jpg"
+        back={step <= 2 ? 'กลับ' : 'กลับเข้าสู่หน้าหลัก'}
+        header="ลงทะเบียน"
+        onBack={backStep}
+      />
+      <div className="flex flex-col items-center p-6">
+        <Progress step={step} />
+        {getPage()}
+      </div>
     </div>
   );
 }
