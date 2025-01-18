@@ -37,11 +37,6 @@ export default function QRButton() {
     }
   };
 
-  // const closeModal = () => {
-  //   setModalType(null);
-  //   setQrCodeValue(null);
-  // };
-
   return (
     <div className="mt-6 flex justify-center">
       <div

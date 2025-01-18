@@ -16,6 +16,12 @@ const CongratsModal: React.FC<ConfirmModalProps> = ({
     isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
   }`;
 
+  function closeModal(
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ): void {
+    event.stopPropagation();
+  }
+
   return (
     <div className={`${modalClasses}`}>
       <div className={`flex h-full items-center shadow-lg`}>
@@ -41,7 +47,10 @@ const CongratsModal: React.FC<ConfirmModalProps> = ({
               >
                 สแกนต่อ
               </div>{' '}
-              <div className="mt-3 flex h-10 w-32 items-center justify-center rounded-lg bg-dark-pink text-white">
+              <div
+                onClick={closeModal}
+                className="mt-3 flex h-10 w-32 items-center justify-center rounded-lg bg-dark-pink text-white"
+              >
                 กลับ
               </div>
             </div>
