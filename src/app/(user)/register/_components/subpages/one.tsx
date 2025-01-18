@@ -4,22 +4,17 @@ import Policy from '../policy';
 
 import { PDPA, termAndCondition } from '../../_data/policy';
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 
 interface OneProps {
-  isAcceptTermAndCondition: boolean;
-  isAcceptPDPA: boolean;
-  setisAcceptTermAndCondition: (value: boolean) => void;
-  setisAcceptPDPA: (value: boolean) => void;
   updateStep: (nextStep: number) => void;
 }
 
-export default function One({
-  isAcceptTermAndCondition,
-  isAcceptPDPA,
-  setisAcceptTermAndCondition,
-  setisAcceptPDPA,
-  updateStep,
-}: OneProps) {
+export default function One({ updateStep }: OneProps) {
+  const [isAcceptTermAndCondition, setIsAcceptTermAndCondition] =
+    useState(false);
+  const [isAcceptPDPA, setIsAcceptPDPA] = useState(false);
+
   const isValid = isAcceptTermAndCondition && isAcceptPDPA;
 
   return (
@@ -30,7 +25,7 @@ export default function One({
         consent={termAndCondition.consent}
         isRequired
         isAccepted={isAcceptTermAndCondition}
-        SetIsAccepted={setisAcceptTermAndCondition}
+        SetIsAccepted={setIsAcceptTermAndCondition}
       />
 
       <Policy
@@ -39,7 +34,7 @@ export default function One({
         consent={PDPA.consent}
         isRequired
         isAccepted={isAcceptPDPA}
-        SetIsAccepted={setisAcceptPDPA}
+        SetIsAccepted={setIsAcceptPDPA}
       />
 
       <div className="text-center">

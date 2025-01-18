@@ -14,13 +14,9 @@ export default function Consent({
   label,
   isRequired,
 }: ConsentProps) {
-  function handlerOnToggle() {
-    setValue(!value);
-  }
-
   return (
-    <label className="flex items-center gap-2" onClick={handlerOnToggle}>
-      <CheckBox isChecked={value} />
+    <label className="flex items-center gap-2" onClick={() => setValue(!value)}>
+      <CheckBox isChecked={value} setIsChecked={setValue} />
       <Label isRequired={isRequired} text={label} />
     </label>
   );

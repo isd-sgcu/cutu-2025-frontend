@@ -2,11 +2,11 @@ import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 
 interface CheckBoxProps {
-  isChecked: boolean;
-  onToggle?: () => void;
+  isChecked?: boolean;
+  setIsChecked?: (value: boolean) => void;
 }
 
-export default function CheckBox({ isChecked, onToggle }: CheckBoxProps) {
+export default function CheckBox({ isChecked, setIsChecked }: CheckBoxProps) {
   return (
     <div
       className={cn(
@@ -16,7 +16,7 @@ export default function CheckBox({ isChecked, onToggle }: CheckBoxProps) {
           'border border-dark-gray': !isChecked,
         },
       )}
-      onClick={onToggle}
+      onClick={() => setIsChecked && setIsChecked(!isChecked)}
     >
       {isChecked && <Check className="h-4 w-4 text-white" />}
     </div>
