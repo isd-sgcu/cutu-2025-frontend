@@ -111,7 +111,7 @@ export default function Two({ nextStep }: TwoProps) {
       </div>
 
       <div className="relative space-y-1">
-        <Label isRequired>เพศ</Label>
+        <Label isRequired>การศึกษา</Label>
         <DropdownInput
           value={watch('study')}
           setValue={updateField('study')}
@@ -154,7 +154,7 @@ export default function Two({ nextStep }: TwoProps) {
       {watch('study') == 'จบการศึกษาแล้ว' &&
         watch('university') == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
           <div className="flex justify-between gap-4">
-            <div className="flex-1 space-y-2">
+            <div className="flex-1 space-y-2 relative">
               <Label isRequired>ปีที่สำเร็จการศึกษา</Label>
               <TextInput
                 {...register('graduateYear')}
@@ -168,7 +168,7 @@ export default function Two({ nextStep }: TwoProps) {
               )}
             </div>
 
-            <div className="flex-1 space-y-2">
+            <div className="flex-1 space-y-2 relative">
               <Label isRequired>คณะที่สำเร็จการศึกษา</Label>
               <DropdownInput
                 value={watch('graduateFaculty')}
