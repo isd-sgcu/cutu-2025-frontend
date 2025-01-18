@@ -1,8 +1,5 @@
 'use client';
 
-// TODO: validate field
-// TODO: add error message
-
 import { ReactNode, useState } from 'react';
 
 import Progress from './_components/progress';
@@ -13,23 +10,21 @@ import Three from './_components/subpages/three';
 export default function Page() {
   const [step, setStep] = useState(2);
 
-  function updateStep(nextStep: number) {
-    if (nextStep < 1 || nextStep > 3) {
-      console.error('Invalid step:', nextStep);
+  function nextStep() {
+    if (step == 3) {
       return;
     }
-
-    setStep(nextStep);
+    setStep(step + 1);
   }
 
   function getPage(): ReactNode {
     switch (step) {
-      case 1:
-        return <One updateStep={updateStep} />;
       case 2:
-        return <Two updateStep={updateStep} />;
-      default:
+        return <Two nextStep={nextStep} />;
+      case 3:
         return <Three />;
+      default:
+        return <One nextStep={nextStep} />;
     }
   }
 

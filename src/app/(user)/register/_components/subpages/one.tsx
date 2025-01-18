@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 interface OneProps {
-  updateStep: (nextStep: number) => void;
+  nextStep: () => void;
 }
 
-export default function One({ updateStep }: OneProps) {
+export default function One({ nextStep }: OneProps) {
   const [isAcceptTermAndCondition, setIsAcceptTermAndCondition] =
     useState(false);
   const [isAcceptPDPA, setIsAcceptPDPA] = useState(false);
@@ -39,7 +39,7 @@ export default function One({ updateStep }: OneProps) {
 
       <div className="text-center">
         <Button
-          onClick={() => updateStep(2)}
+          onClick={nextStep}
           variant={isValid ? 'filled' : 'disabled'}
           className="text-lg"
         >

@@ -16,10 +16,10 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface TwoProps {
-  updateStep: (nextStep: number) => void;
+  nextStep: () => void;
 }
 
-export default function Two({} /* updateStep */ : TwoProps) {
+export default function Two({} /* nextStep */ : TwoProps) {
   const {
     handleSubmit,
     register,
@@ -32,6 +32,7 @@ export default function Two({} /* updateStep */ : TwoProps) {
 
   const onSubmit: SubmitHandler<User> = data => {
     console.log(data);
+    // nextStep();
   };
 
   const updateField = (field: keyof User) => {
@@ -46,7 +47,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
         <Label isRequired text="ชื่อ-นามสกุล (ไม่มีคำนำหน้า)" />
         <TextInput {...register('fullname')} />
         {errors.fullname && (
-          <p className="text-sm text-red-500 text-right">{errors.fullname.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.fullname.message}
+          </p>
         )}
       </div>
 
@@ -54,7 +57,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
         <Label isRequired text="อีเมล" />
         <TextInput {...register('email')} />
         {errors.email && (
-          <p className="text-sm text-red-500 text-right">{errors.email.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.email.message}
+          </p>
         )}
       </div>
 
@@ -62,7 +67,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
         <Label isRequired text="หมายเลขโทรศัพท์" />
         <TextInput {...register('tel')} />
         {errors.tel && (
-          <p className="text-sm text-red-500 text-right">{errors.tel.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.tel.message}
+          </p>
         )}
       </div>
 
@@ -75,7 +82,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
           choices={[...studies]}
         />
         {errors.study && (
-          <p className="text-sm text-red-500 text-right">{errors.study.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.study.message}
+          </p>
         )}
       </div>
 
@@ -102,7 +111,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
         <Label isRequired text="สถานะ" />
         <TextInput {...register('status')} />
         {errors.status && (
-          <p className="text-sm text-red-500 text-right">{errors.status.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.status.message}
+          </p>
         )}
       </div>
 
@@ -115,7 +126,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
           choices={[...sizes]}
         />
         {errors.size && (
-          <p className="text-sm text-red-500 text-right">{errors.size.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.size.message}
+          </p>
         )}
       </div>
 
@@ -123,7 +136,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
         <Label text="ข้อจำกัดด้านอาหาร" />
         <TextInput {...register('foodAllegy')} />
         {errors.foodAllegy && (
-          <p className="text-sm text-red-500 text-right">{errors.foodAllegy.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.foodAllegy.message}
+          </p>
         )}
       </div>
 
@@ -131,7 +146,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
         <Label text="โรคประจำตัว" />
         <TextInput {...register('disease')} />
         {errors.disease && (
-          <p className="text-sm text-red-500 text-right">{errors.disease.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.disease.message}
+          </p>
         )}
       </div>
 
@@ -139,7 +156,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
         <Label text="การแพ้ยา" />
         <TextInput {...register('drugAllegy')} />
         {errors.drugAllegy && (
-          <p className="text-sm text-red-500 text-right">{errors.drugAllegy.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.drugAllegy.message}
+          </p>
         )}
       </div>
 
@@ -150,7 +169,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
           setValue={updateField('idCardImg')}
         />
         {errors.idCardImg && (
-          <p className="text-sm text-red-500 text-right">{errors.idCardImg.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.idCardImg.message}
+          </p>
         )}
       </div>
 
@@ -163,7 +184,9 @@ export default function Two({} /* updateStep */ : TwoProps) {
           />
         </div>
         {errors.isConfirm && (
-          <p className="text-sm text-red-500 text-right">{errors.isConfirm.message}</p>
+          <p className="text-right text-sm text-red-500">
+            {errors.isConfirm.message}
+          </p>
         )}
       </div>
 
