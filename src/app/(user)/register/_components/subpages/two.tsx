@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
+  faculties,
   sizes,
   studies,
   universities,
@@ -15,6 +16,7 @@ import {
 } from '../../schema/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import DateInput from '../dateInput';
+
 import { useEffect } from 'react';
 
 interface TwoProps {
@@ -48,6 +50,17 @@ export default function Two({} /* nextStep */ : TwoProps) {
   useEffect(() => {
     let status: User['status'];
 
+    // set default value
+    if (
+      !!study &&
+      !!university &&
+      (study != 'จบการศึกษาแล้ว' || university != 'จุฬาลงกรณ์มหาวิทยาลัย')
+    ) {
+      setValue('graduateYear', '9999');
+      setValue('graduateFaculty', 'ไม่ระบุ');
+    }
+
+    // set status
     if (study == 'กำลังศึกษาอยู่') {
       if (university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
         status = 'นิสิตปัจจุบัน';
@@ -141,6 +154,40 @@ export default function Two({} /* nextStep */ : TwoProps) {
         )}
       </div>
 
+      {watch('study') == 'จบการศึกษาแล้ว' &&
+        watch('university') == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
+          <div className="flex justify-between gap-4">
+            <div className="flex-1 space-y-2">
+              <Label isRequired text="ปีที่สำเร็จการศึกษา" />
+              <TextInput
+                {...register('graduateYear')}
+                placeholder="2544"
+                type="number"
+              />
+              {errors.graduateYear && (
+                <p className="text-right text-sm text-red-500">
+                  {errors.graduateYear.message}
+                </p>
+              )}
+            </div>
+
+            <div className="flex-1 space-y-2">
+              <Label isRequired text="คณะที่สำเร็จการศึกษา" />
+              <DropdownInput
+                value={watch('graduateFaculty')}
+                setValue={updateField('graduateFaculty')}
+                placeholder="กรุณาเลือก"
+                choices={[...faculties]}
+              />
+              {errors.graduateFaculty && (
+                <p className="text-right text-sm text-red-500">
+                  {errors.graduateFaculty.message}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
       <div className="space-y-2">
         <Label isRequired text="วันเกิด" />
         <DateInput
@@ -214,7 +261,7 @@ export default function Two({} /* nextStep */ : TwoProps) {
 
       <div onClick={() => setValue('isConfirm', !watch('isConfirm'))}>
         <div className="flex gap-2">
-          <CheckBox isChecked={watch('isConfirm')} />
+          <CheckBox isChecked={!!watch('isConfirm')} />
           <Label
             isRequired
             text="ข้าพเจ้ายืนยันว่าข้อมูลข้างต้นมีความถูกต้อง"

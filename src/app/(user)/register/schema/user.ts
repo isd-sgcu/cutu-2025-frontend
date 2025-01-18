@@ -88,11 +88,16 @@ export const UserSchema = z.object({
   status: z.enum(statuses, {
     message: 'กรุณาเลือกสถานะ',
   }),
-  graduatedYear: z.number().int().min(0).max(2100),
-  graduatedFaculty: z.enum(faculties),
+  graduateYear: z
+    .string({ message: 'กรุณากรอกปีที่สำเร็จการศึกษา' })
+    .regex(/^\d{4}$/, { message: 'กรุณากรอกปีที่สำเร็จการศึกษา' }),
+  graduateFaculty: z.enum([...faculties, 'ไม่ระบุ'], {
+    message: 'กรุณาเลือกคณะที่สำเร็จการศึกษา',
+  }),
   isConfirm: z
     .boolean({ message: 'กรุณากดยืนยันข้อมูล' })
-    .refine(value => value, { message: 'กรุณากดยืนยันข้อมูล' }),
+    .refine(value => value, { message: 'กรุณากดยืนยันข้อมูล' })
+    .nullable(),
 });
 
 export type User = z.infer<typeof UserSchema>;
