@@ -7,9 +7,8 @@ import { ScanLine } from 'lucide-react';
 export default function QRButton() {
   const { client } = useLiff();
 
-  // Define the file path
-
-  // Read the existing file content
+  // TODO: Define the file path
+  // TODO: Read the existing file content
 
   const [qrCodeValue, setQrCodeValue] = useState<string | null>(null);
   const [modalType, setModalType] = useState<
@@ -44,18 +43,10 @@ export default function QRButton() {
   };
 
   return (
-    <div className="mt-6 flex justify-center">
-      <div
-        onClick={openQRScanner}
-        className="mt-6 h-12 w-72 rounded-full bg-white px-4 py-2 text-lg text-dark-pink"
-      >
-        <div
-          onClick={openQRScanner}
-          className="flex flex-row justify-center gap-2"
-        >
-          <ScanLine size={26} className="mt-1" />
-          <p className="mt-1">คลิกเพื่อสแกน</p>
-        </div>
+    <div className="mt-12 flex justify-center">
+      <div className="flex h-12 w-72 flex-row justify-center rounded-full bg-white px-4 py-2 text-lg text-dark-pink">
+        <ScanLine size={26} className="mr-2 mt-1" />
+        <p className="mt-1">คลิกเพื่อสแกน</p>
       </div>
       {isModalOpen && modalType != null && (
         <Modal
