@@ -1,9 +1,9 @@
-'use server';
+'use client';
 import { useState } from 'react';
 import { useLiff } from '@/contexts/liff';
 import ConfirmModal from './ConfirmModal';
 import { ScanLine } from 'lucide-react';
-import fs from 'fs';
+import clfs from 'fs';
 import path from 'path';
 // import ErrorModal from './ErrorModal';
 // import AlreadyModal from './AlreadyModal';
@@ -16,8 +16,8 @@ export default function QRButton() {
 
   // Read the existing file content
   let existingValues: string[] = [];
-  if (fs.existsSync(filePath)) {
-    const data = fs.readFileSync(filePath, 'utf8');
+  if (clfs.existsSync(filePath)) {
+    const data = clfs.readFileSync(filePath, 'utf8');
     const fileContent = JSON.parse(data);
     existingValues = fileContent.values || [];
   }
@@ -48,7 +48,7 @@ export default function QRButton() {
           existingValues.push(value);
 
           // Write the updated content back to the file
-          fs.writeFileSync(
+          clfs.writeFileSync(
             filePath,
             JSON.stringify({ values: existingValues }, null, 2),
           );
