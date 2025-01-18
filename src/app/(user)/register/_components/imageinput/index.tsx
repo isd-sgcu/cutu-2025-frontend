@@ -38,7 +38,7 @@ export default function ImageInput({ value, setValue }: FileInputProps) {
     <div className="relative flex aspect-[17/10] w-full items-center justify-center rounded-xl border border-dark-gray transition hover:opacity-70">
       <input
         type="file"
-        accept=".jpeg,.jpg,.webp,.png,.svg"
+        accept=".jpeg,.jpg,.webp,.png"
         className="absolute inset-0 cursor-pointer opacity-0"
         onChange={handleOnChangeImage}
       />
