@@ -26,11 +26,14 @@ export default function QRButton() {
 
       if (value) {
         setQrCodeValue(value);
+        setIsModalOpen(true);
         setModalType('confirm');
       } else if (value === 'taken') {
         setModalType('already');
+        setIsModalOpen(true);
       } else {
         setModalType('error');
+        setIsModalOpen(true);
       }
     } catch (err) {
       console.error('QR Scan failed:', err);
