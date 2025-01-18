@@ -1,30 +1,19 @@
 'use client';
 import { useState } from 'react';
 import { useLiff } from '@/contexts/liff';
-import ConfirmModal from './ConfirmModal';
+import Modal from './Modal';
 import { ScanLine } from 'lucide-react';
-import clfs from 'fs';
-import path from 'path';
-// import ErrorModal from './ErrorModal';
-// import AlreadyModal from './AlreadyModal';
 
 export default function QRButton() {
   const { client } = useLiff();
 
   // Define the file path
-  const filePath = path.join(__dirname, 'qrCodeValue.json');
 
   // Read the existing file content
-  let existingValues: string[] = [];
-  if (clfs.existsSync(filePath)) {
-    const data = clfs.readFileSync(filePath, 'utf8');
-    const fileContent = JSON.parse(data);
-    existingValues = fileContent.values || [];
-  }
 
   const [qrCodeValue, setQrCodeValue] = useState<string | null>(null);
   const [modalType, setModalType] = useState<
-    'confirm' | 'error' | 'already' | null
+    'confirm' | 'invalid' | 'already' | null
   >(null);
   const [isModalOpen, setIsModalOpen] = useState(true);
 
@@ -41,28 +30,16 @@ export default function QRButton() {
         setQrCodeValue(value);
         setIsModalOpen(true);
         setModalType('confirm');
-
-        // Check if the value already exists
-        if (!existingValues.includes(value)) {
-          // Add the new value
-          existingValues.push(value);
-
-          // Write the updated content back to the file
-          clfs.writeFileSync(
-            filePath,
-            JSON.stringify({ values: existingValues }, null, 2),
-          );
-        }
       } else if (value === 'taken') {
         setModalType('already');
         setIsModalOpen(true);
       } else {
-        setModalType('error');
+        setModalType('invalid');
         setIsModalOpen(true);
       }
     } catch (err) {
       console.error('QR Scan failed:', err);
-      setModalType('error');
+      setModalType('invalid');
     }
   };
 
@@ -80,16 +57,14 @@ export default function QRButton() {
           <p className="mt-1">คลิกเพื่อสแกน</p>
         </div>
       </div>
-      {isModalOpen && modalType === 'confirm' && (
-        <ConfirmModal
+      {isModalOpen && modalType != null && (
+        <Modal
           userInfo={qrCodeValue}
           scanAgain={openQRScanner}
           closeFn={() => setIsModalOpen(false)}
           modalType={modalType}
         />
       )}
-      {/* {modalType === 'error' && <ErrorModal onClose={closeModal} />}
-      {modalType === 'already' && <AlreadyModal onClose={closeModal} />} */}
     </div>
   );
 }
