@@ -3,13 +3,13 @@ import { getImageURL } from '@/utils/image';
 
 interface ConfirmModalProps {
   userInfo: string | null;
-  onClose: () => void;
+  closeFn: () => void;
   scanAgain: () => void;
 }
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
   userInfo,
-  onClose,
+  closeFn,
   scanAgain,
 }) => {
   const modalClasses =
@@ -41,7 +41,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 สแกนต่อ
               </div>{' '}
               <div
-                onClick={onClose}
+                onClick={closeFn}
                 className="mt-3 flex h-10 w-32 items-center justify-center rounded-lg bg-dark-pink text-white"
               >
                 กลับ

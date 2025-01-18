@@ -62,7 +62,7 @@ export default function QRButton() {
         <ConfirmModal
           userInfo={qrCodeValue}
           scanAgain={openQRScanner}
-          onClose={closeModal}
+          closeFn={closeModal}
         />
       )}
       {/* {modalType === 'error' && <ErrorModal onClose={closeModal} />}
