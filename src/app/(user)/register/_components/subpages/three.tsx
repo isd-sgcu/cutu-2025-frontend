@@ -55,7 +55,7 @@ export default function Three() {
         </Button>
       </section>
 
-      <section className="flex justify-center">
+      <section className="flex justify-center pt-8">
         <Link href={'/prepare-before-event'}>
           <Button className="px-6 text-base">วิธีการเตรียมตัวก่อนวันงาน</Button>
         </Link>

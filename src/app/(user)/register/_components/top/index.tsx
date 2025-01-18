@@ -31,7 +31,7 @@ export default function Top({
           <ChevronLeft />
           {back}
         </div>
-        <div className="text-2xl font-[700] text-white">{header}</div>
+        <div className="text-2xl font-[700] text-white mt-2">{header}</div>
       </div>
     </div>
   );
