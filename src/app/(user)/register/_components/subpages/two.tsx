@@ -80,6 +80,7 @@ export default function Two({ nextStep }: TwoProps) {
 
   return (
     <form className="w-full space-y-4 py-8" onSubmit={handleSubmit(onSubmit)}>
+      {/* fullname */}
       <div className="relative space-y-1">
         <Label isRequired>ชื่อ-นามสกุล (ไม่มีคำนำหน้า)</Label>
         <TextInput {...register('fullname')} />
@@ -90,6 +91,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* email */}
       <div className="relative space-y-1">
         <Label isRequired>อีเมล</Label>
         <TextInput {...register('email')} />
@@ -100,6 +102,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* tel */}
       <div className="relative space-y-1">
         <Label isRequired>หมายเลขโทรศัพท์</Label>
         <TextInput {...register('tel')} />
@@ -110,6 +113,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* study */}
       <div className="relative space-y-1">
         <Label isRequired>การศึกษา</Label>
         <DropdownInput
@@ -125,6 +129,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* university */}
       {watch('study') && (
         <div className="relative space-y-1">
           <Label isRequired>
@@ -141,6 +146,7 @@ export default function Two({ nextStep }: TwoProps) {
         </div>
       )}
 
+      {/* status */}
       <div className="relative space-y-1">
         <Label isRequired>สถานะ</Label>
         <TextInput value={watch('status') || ''} readOnly />
@@ -151,10 +157,11 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* graduate year && graduate faculty*/}
       {watch('study') == 'จบการศึกษาแล้ว' &&
         watch('university') == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
           <div className="flex justify-between gap-4">
-            <div className="flex-1 space-y-2 relative">
+            <div className="relative flex-1 space-y-2">
               <Label isRequired>ปีที่สำเร็จการศึกษา</Label>
               <TextInput
                 {...register('graduateYear')}
@@ -168,7 +175,7 @@ export default function Two({ nextStep }: TwoProps) {
               )}
             </div>
 
-            <div className="flex-1 space-y-2 relative">
+            <div className="relative flex-1 space-y-2">
               <Label isRequired>คณะที่สำเร็จการศึกษา</Label>
               <DropdownInput
                 value={watch('graduateFaculty')}
@@ -185,6 +192,7 @@ export default function Two({ nextStep }: TwoProps) {
           </div>
         )}
 
+      {/* birthDate */}
       <div className="relative space-y-1">
         <Label isRequired>วันเกิด</Label>
         <DateInput
@@ -198,6 +206,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* size */}
       <div className="relative space-y-1">
         <Label isRequired>ขนาดเสื้อ</Label>
         <DropdownInput
@@ -213,6 +222,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* foodAllegy */}
       <div className="relative space-y-1">
         <Label>ข้อจำกัดด้านอาหาร</Label>
         <TextInput {...register('foodAllegy')} />
@@ -223,6 +233,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* disease */}
       <div className="relative space-y-1">
         <Label>โรคประจำตัว</Label>
         <TextInput {...register('disease')} />
@@ -233,6 +244,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* drugAllegy */}
       <div className="relative space-y-1">
         <Label>การแพ้ยา</Label>
         <TextInput {...register('drugAllegy')} />
@@ -243,6 +255,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* idCardImg */}
       <div className="relative space-y-1">
         <Label isRequired>อัปโหลดรูปด้านหน้าบัตรประชาชน</Label>
         <ImageInput
@@ -256,6 +269,7 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
+      {/* confirm */}
       <div
         onClick={() => setValue('isConfirm', !watch('isConfirm'))}
         className="flex gap-2 pt-8"
@@ -264,6 +278,7 @@ export default function Two({ nextStep }: TwoProps) {
         <Label isRequired>ข้าพเจ้ายืนยันว่าข้อมูลข้างต้นมีความถูกต้อง</Label>
       </div>
 
+      {/* submit */}
       <div className="flex justify-center">
         <Button className="text-lg" disabled={!watch('isConfirm')}>
           <input type="submit" value={'ยืนยันการลงทะเบียน'} />
