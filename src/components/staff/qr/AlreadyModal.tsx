@@ -3,17 +3,24 @@ import { getImageURL } from '@/utils/image';
 
 interface ConfirmModalProps {
   userInfo: string | null;
-  onClose: () => void;
+  isOpen: boolean;
   scanAgain: () => void;
 }
 
-const ConfirmModal: React.FC<ConfirmModalProps> = ({
+const CongratsModal: React.FC<ConfirmModalProps> = ({
   userInfo,
-  onClose,
+  isOpen,
   scanAgain,
 }) => {
-  const modalClasses =
-    'fixed inset-0 z-50 overflow-y-auto justify-center flex bg-gray-500 bg-opacity-75 transition-all ease-in-out duration-300';
+  const modalClasses = `fixed inset-0 z-50 overflow-y-auto justify-center flex bg-gray-500 bg-opacity-75 transition-all ease-in-out duration-300 ${
+    isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+  }`;
+
+  function closeModal(
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ): void {
+    event.stopPropagation();
+  }
 
   return (
     <div className={`${modalClasses}`}>
@@ -41,7 +48,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 สแกนต่อ
               </div>{' '}
               <div
-                onClick={onClose}
+                onClick={closeModal}
                 className="mt-3 flex h-10 w-32 items-center justify-center rounded-lg bg-dark-pink text-white"
               >
                 กลับ
@@ -54,4 +61,4 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   );
 };
 
-export default ConfirmModal;
+export default CongratsModal;

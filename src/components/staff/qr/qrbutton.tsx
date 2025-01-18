@@ -13,6 +13,10 @@ export default function QRButton() {
   const [modalType, setModalType] = useState<
     'confirm' | 'error' | 'already' | null
   >(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const openQRScanner = async () => {
     if (!client?.isInClient()) {
@@ -60,7 +64,7 @@ export default function QRButton() {
         <ConfirmModal
           userInfo={qrCodeValue}
           scanAgain={openQRScanner}
-          isOpen={true}
+          onClose={closeModal}
         />
       )}
       {/* {modalType === 'error' && <ErrorModal onClose={closeModal} />}
