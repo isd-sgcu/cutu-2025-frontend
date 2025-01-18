@@ -1,4 +1,3 @@
-'use client';
 'use server';
 import { useState } from 'react';
 import { useLiff } from '@/contexts/liff';
