@@ -1,11 +1,13 @@
 import BG from '@/components/profile/Background';
-import H from '@/components/profile/Header';
+import Header from '@/components/profile/Header';
+import Ticket from '@/components/profile/Ticket/Ticket';
 
 export default function page() {
-    return (
-    <div>
-        <BG />
-        <H />
+  return (
+    <div className="border-2">
+      <BG />
+      <Header />
+      <Ticket />
     </div>
-    );
-  }
+  );
+}
