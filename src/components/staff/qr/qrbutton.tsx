@@ -14,8 +14,6 @@ export default function QRButton() {
     'confirm' | 'error' | 'already' | null
   >(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const openQRScanner = async () => {
@@ -60,7 +58,7 @@ export default function QRButton() {
           <p className="mt-1">คลิกเพื่อสแกน</p>
         </div>
       </div>
-      {modalType === 'confirm' && (
+      {isModalOpen && modalType === 'confirm' && (
         <ConfirmModal
           userInfo={qrCodeValue}
           scanAgain={openQRScanner}
