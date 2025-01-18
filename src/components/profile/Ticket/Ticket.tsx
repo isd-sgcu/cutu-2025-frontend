@@ -1,7 +1,8 @@
 import BG from '@/components/profile/Ticket/TicketBG';
 import QR from '@/components/profile/Ticket/Qrcode';
 import Inf from '@/components/profile/Ticket/Information';
-import EditButton from '@/components/profile/Ticket/InfButton';
+import InfButton from '@/components/profile/Ticket/InfButton';
+import EditButton from '@/components/profile/Ticket/EditButton';
 
 export default function Ticket() {
   return (
@@ -11,6 +12,9 @@ export default function Ticket() {
         <QR />
         <div className="mt-2 flex flex-col items-center">
           <Inf />
+          <InfButton />
+        </div>
+        <div className="mt-20">
           <EditButton />
         </div>
       </div>
