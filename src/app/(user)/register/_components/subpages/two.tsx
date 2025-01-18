@@ -14,6 +14,7 @@ import {
   UserSchema,
 } from '../../schema/user';
 import { zodResolver } from '@hookform/resolvers/zod';
+import DateInput from '../dateInput';
 
 interface TwoProps {
   nextStep: () => void;
@@ -113,6 +114,19 @@ export default function Two({} /* nextStep */ : TwoProps) {
         {errors.status && (
           <p className="text-right text-sm text-red-500">
             {errors.status.message}
+          </p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label isRequired text="วันเกิด" />
+        <DateInput
+          value={watch('birthdate')}
+          setValue={updateField('birthdate')}
+        />
+        {errors.birthdate && (
+          <p className="text-right text-sm text-red-500">
+            {errors.birthdate.message}
           </p>
         )}
       </div>
