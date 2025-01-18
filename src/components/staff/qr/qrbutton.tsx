@@ -13,7 +13,7 @@ export default function QRButton() {
   const [modalType, setModalType] = useState<
     'confirm' | 'error' | 'already' | null
   >(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const openQRScanner = async () => {
     if (!client?.isInClient()) {
