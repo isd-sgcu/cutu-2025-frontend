@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { TimerConfig } from '@/const/timer';
 
-export default function Countdown() {
+export default function Timer() {
   const { targetDate } = TimerConfig;
 
   const [timeLeft, setTimeLeft] = useState({
