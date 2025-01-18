@@ -112,7 +112,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div className={`${modalClasses}`}>
-      <div className={`flex h-full items-center shadow-lg`}>
+      <div className={`flex h-full items-center`}>
         <div className="flex flex-row items-center justify-center">
           <div className="flex h-full w-72 flex-col items-center justify-center rounded-lg bg-white">
             {renderContent()}
