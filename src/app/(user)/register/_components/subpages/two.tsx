@@ -80,8 +80,8 @@ export default function Two({ nextStep }: TwoProps) {
 
   return (
     <form className="w-full space-y-4 py-8" onSubmit={handleSubmit(onSubmit)}>
-      <div className="relative space-y-2">
-        <Label isRequired text="ชื่อ-นามสกุล (ไม่มีคำนำหน้า)" />
+      <div className="relative space-y-1">
+        <Label isRequired>ชื่อ-นามสกุล (ไม่มีคำนำหน้า)</Label>
         <TextInput {...register('fullname')} />
         {errors.fullname && (
           <p className="absolute right-0 text-right text-sm text-red-500">
@@ -90,8 +90,8 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
-      <div className="relative space-y-2">
-        <Label isRequired text="อีเมล" />
+      <div className="relative space-y-1">
+        <Label isRequired>อีเมล</Label>
         <TextInput {...register('email')} />
         {errors.email && (
           <p className="absolute right-0 text-right text-sm text-red-500">
@@ -100,8 +100,8 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
-      <div className="relative space-y-2">
-        <Label isRequired text="หมายเลขโทรศัพท์" />
+      <div className="relative space-y-1">
+        <Label isRequired>หมายเลขโทรศัพท์</Label>
         <TextInput {...register('tel')} />
         {errors.tel && (
           <p className="absolute right-0 text-right text-sm text-red-500">
@@ -110,8 +110,8 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
-      <div className="relative space-y-2">
-        <Label isRequired text="การศีกษา" />
+      <div className="relative space-y-1">
+        <Label isRequired>เพศ</Label>
         <DropdownInput
           value={watch('study')}
           setValue={updateField('study')}
@@ -126,15 +126,12 @@ export default function Two({ nextStep }: TwoProps) {
       </div>
 
       {watch('study') && (
-        <div className="relative space-y-2">
-          <Label
-            isRequired
-            text={
-              watch('study') == 'กำลังศึกษาอยู่'
-                ? 'มหาวิทยาลัย'
-                : 'มหาวิทยาลัยที่จบการศึกษา'
-            }
-          />
+        <div className="relative space-y-1">
+          <Label isRequired>
+            {watch('study') == 'กำลังศึกษาอยู่'
+              ? 'มหาวิทยาลัย'
+              : 'มหาวิทยาลัยที่จบการศึกษา'}
+          </Label>
           <DropdownInput
             value={watch('university')}
             setValue={updateField('university')}
@@ -144,8 +141,8 @@ export default function Two({ nextStep }: TwoProps) {
         </div>
       )}
 
-      <div className="relative space-y-2">
-        <Label isRequired text="สถานะ" />
+      <div className="relative space-y-1">
+        <Label isRequired>สถานะ</Label>
         <TextInput value={watch('status') || ''} readOnly />
         {errors.status && (
           <p className="absolute right-0 text-right text-sm text-red-500">
@@ -158,7 +155,7 @@ export default function Two({ nextStep }: TwoProps) {
         watch('university') == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
           <div className="flex justify-between gap-4">
             <div className="flex-1 space-y-2">
-              <Label isRequired text="ปีที่สำเร็จการศึกษา" />
+              <Label isRequired>ปีที่สำเร็จการศึกษา</Label>
               <TextInput
                 {...register('graduateYear')}
                 placeholder="2544"
@@ -172,7 +169,7 @@ export default function Two({ nextStep }: TwoProps) {
             </div>
 
             <div className="flex-1 space-y-2">
-              <Label isRequired text="คณะที่สำเร็จการศึกษา" />
+              <Label isRequired>คณะที่สำเร็จการศึกษา</Label>
               <DropdownInput
                 value={watch('graduateFaculty')}
                 setValue={updateField('graduateFaculty')}
@@ -188,8 +185,8 @@ export default function Two({ nextStep }: TwoProps) {
           </div>
         )}
 
-      <div className="relative space-y-2">
-        <Label isRequired text="วันเกิด" />
+      <div className="relative space-y-1">
+        <Label isRequired>วันเกิด</Label>
         <DateInput
           value={watch('birthdate')}
           setValue={updateField('birthdate')}
@@ -201,8 +198,8 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
-      <div className="relative space-y-2">
-        <Label isRequired text="ขนาดเสื้อ" />
+      <div className="relative space-y-1">
+        <Label isRequired>ขนาดเสื้อ</Label>
         <DropdownInput
           value={watch('size')}
           setValue={updateField('size')}
@@ -216,8 +213,8 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
-      <div className="relative space-y-2">
-        <Label text="ข้อจำกัดด้านอาหาร" />
+      <div className="relative space-y-1">
+        <Label>ข้อจำกัดด้านอาหาร</Label>
         <TextInput {...register('foodAllegy')} />
         {errors.foodAllegy && (
           <p className="absolute right-0 text-right text-sm text-red-500">
@@ -226,8 +223,8 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
-      <div className="relative space-y-2">
-        <Label text="โรคประจำตัว" />
+      <div className="relative space-y-1">
+        <Label>โรคประจำตัว</Label>
         <TextInput {...register('disease')} />
         {errors.disease && (
           <p className="absolute right-0 text-right text-sm text-red-500">
@@ -236,8 +233,8 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
-      <div className="relative space-y-2">
-        <Label text="การแพ้ยา" />
+      <div className="relative space-y-1">
+        <Label>การแพ้ยา</Label>
         <TextInput {...register('drugAllegy')} />
         {errors.drugAllegy && (
           <p className="absolute right-0 text-right text-sm text-red-500">
@@ -246,8 +243,8 @@ export default function Two({ nextStep }: TwoProps) {
         )}
       </div>
 
-      <div className="relative space-y-2">
-        <Label isRequired text="อัปโหลดรูปด้านหน้าบัตรประชาชน" />
+      <div className="relative space-y-1">
+        <Label isRequired>อัปโหลดรูปด้านหน้าบัตรประชาชน</Label>
         <ImageInput
           value={watch('idCardImg')}
           setValue={updateField('idCardImg')}
@@ -264,7 +261,7 @@ export default function Two({ nextStep }: TwoProps) {
         className="flex gap-2 pt-8"
       >
         <CheckBox isChecked={!!watch('isConfirm')} />
-        <Label isRequired text="ข้าพเจ้ายืนยันว่าข้อมูลข้างต้นมีความถูกต้อง" />
+        <Label isRequired>ข้าพเจ้ายืนยันว่าข้อมูลข้างต้นมีความถูกต้อง</Label>
       </div>
 
       <div className="flex justify-center">

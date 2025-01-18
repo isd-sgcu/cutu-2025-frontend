@@ -20,7 +20,7 @@ export default function Policy({
   SetIsAccepted,
 }: PolicyProps) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <Topic topic={topic} />
       <Content content={content} />
       <Condition

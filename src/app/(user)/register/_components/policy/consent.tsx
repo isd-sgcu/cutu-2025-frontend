@@ -15,9 +15,11 @@ export default function Consent({
   isRequired,
 }: ConsentProps) {
   return (
-    <label className="flex items-center gap-2" onClick={() => setValue(!value)}>
+    <label className="flex items-center gap-2 mt-2" onClick={() => setValue(!value)}>
       <CheckBox isChecked={value} setIsChecked={setValue} />
-      <Label isRequired={isRequired} text={label} />
+      <Label isRequired={isRequired} >
+        {label}
+      </Label>
     </label>
   );
 }

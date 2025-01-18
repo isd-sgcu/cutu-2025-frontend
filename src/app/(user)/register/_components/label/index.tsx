@@ -1,14 +1,18 @@
+import { cn } from '@/lib/utils';
 import { Asterisk } from 'lucide-react';
 
-interface LabelProps {
+interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   isRequired?: boolean;
-  text: string;
 }
-
-export default function Label({ isRequired = false, text }: LabelProps) {
+export default function Label({
+  children,
+  className,
+  isRequired = false,
+  ...props
+}: LabelProps) {
   return (
-    <label className="relative">
-      {text}
+    <label className={cn('relative text-base', className)} {...props}>
+      {children}
       {isRequired && (
         <Asterisk className="absolute -right-2 top-0 size-2.5" color="red" />
       )}
