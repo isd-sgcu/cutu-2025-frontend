@@ -23,7 +23,7 @@ interface TwoProps {
   nextStep: () => void;
 }
 
-export default function Two({} /* nextStep */ : TwoProps) {
+export default function Two({ nextStep }: TwoProps) {
   const {
     handleSubmit,
     register,
@@ -36,7 +36,7 @@ export default function Two({} /* nextStep */ : TwoProps) {
 
   const onSubmit: SubmitHandler<User> = data => {
     console.log(data);
-    // nextStep();
+    nextStep();
   };
 
   const updateField = (field: keyof User) => {
@@ -80,37 +80,37 @@ export default function Two({} /* nextStep */ : TwoProps) {
 
   return (
     <form className="w-full space-y-4 py-8" onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label isRequired text="ชื่อ-นามสกุล (ไม่มีคำนำหน้า)" />
         <TextInput {...register('fullname')} />
         {errors.fullname && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.fullname.message}
           </p>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label isRequired text="อีเมล" />
         <TextInput {...register('email')} />
         {errors.email && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.email.message}
           </p>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label isRequired text="หมายเลขโทรศัพท์" />
         <TextInput {...register('tel')} />
         {errors.tel && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.tel.message}
           </p>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label isRequired text="การศีกษา" />
         <DropdownInput
           value={watch('study')}
@@ -119,14 +119,14 @@ export default function Two({} /* nextStep */ : TwoProps) {
           choices={[...studies]}
         />
         {errors.study && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.study.message}
           </p>
         )}
       </div>
 
       {watch('study') && (
-        <div className="space-y-2">
+        <div className="relative space-y-2">
           <Label
             isRequired
             text={
@@ -144,11 +144,11 @@ export default function Two({} /* nextStep */ : TwoProps) {
         </div>
       )}
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label isRequired text="สถานะ" />
         <TextInput value={watch('status') || ''} readOnly />
         {errors.status && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.status.message}
           </p>
         )}
@@ -165,7 +165,7 @@ export default function Two({} /* nextStep */ : TwoProps) {
                 type="number"
               />
               {errors.graduateYear && (
-                <p className="text-right text-sm text-red-500">
+                <p className="absolute right-0 text-right text-sm text-red-500">
                   {errors.graduateYear.message}
                 </p>
               )}
@@ -180,7 +180,7 @@ export default function Two({} /* nextStep */ : TwoProps) {
                 choices={[...faculties]}
               />
               {errors.graduateFaculty && (
-                <p className="text-right text-sm text-red-500">
+                <p className="absolute right-0 text-right text-sm text-red-500">
                   {errors.graduateFaculty.message}
                 </p>
               )}
@@ -188,20 +188,20 @@ export default function Two({} /* nextStep */ : TwoProps) {
           </div>
         )}
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label isRequired text="วันเกิด" />
         <DateInput
           value={watch('birthdate')}
           setValue={updateField('birthdate')}
         />
         {errors.birthdate && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.birthdate.message}
           </p>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label isRequired text="ขนาดเสื้อ" />
         <DropdownInput
           value={watch('size')}
@@ -210,68 +210,61 @@ export default function Two({} /* nextStep */ : TwoProps) {
           choices={[...sizes]}
         />
         {errors.size && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.size.message}
           </p>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label text="ข้อจำกัดด้านอาหาร" />
         <TextInput {...register('foodAllegy')} />
         {errors.foodAllegy && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.foodAllegy.message}
           </p>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label text="โรคประจำตัว" />
         <TextInput {...register('disease')} />
         {errors.disease && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.disease.message}
           </p>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label text="การแพ้ยา" />
         <TextInput {...register('drugAllegy')} />
         {errors.drugAllegy && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.drugAllegy.message}
           </p>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="relative space-y-2">
         <Label isRequired text="อัปโหลดรูปด้านหน้าบัตรประชาชน" />
         <ImageInput
           value={watch('idCardImg')}
           setValue={updateField('idCardImg')}
         />
         {errors.idCardImg && (
-          <p className="text-right text-sm text-red-500">
+          <p className="absolute right-0 text-right text-sm text-red-500">
             {errors.idCardImg.message}
           </p>
         )}
       </div>
 
-      <div onClick={() => setValue('isConfirm', !watch('isConfirm'))}>
-        <div className="flex gap-2">
-          <CheckBox isChecked={!!watch('isConfirm')} />
-          <Label
-            isRequired
-            text="ข้าพเจ้ายืนยันว่าข้อมูลข้างต้นมีความถูกต้อง"
-          />
-        </div>
-        {errors.isConfirm && (
-          <p className="text-right text-sm text-red-500">
-            {errors.isConfirm.message}
-          </p>
-        )}
+      <div
+        onClick={() => setValue('isConfirm', !watch('isConfirm'))}
+        className="flex gap-2 pt-8"
+      >
+        <CheckBox isChecked={!!watch('isConfirm')} />
+        <Label isRequired text="ข้าพเจ้ายืนยันว่าข้อมูลข้างต้นมีความถูกต้อง" />
       </div>
 
       <div className="flex justify-center">
