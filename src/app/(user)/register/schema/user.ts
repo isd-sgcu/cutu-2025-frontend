@@ -80,7 +80,7 @@ export const UserSchema = z.object({
       message: 'กรุณาอัพโหลดรูปบัตรประชาชน',
     })
     .refine(file => {
-      ['image/jpeg', 'image/png', 'image/webp'].includes(file.type);
+      return ['image/jpeg', 'image/png', 'image/webp'].includes(file.type);
     }, 'กรุณาอัพโหลดเฉพาะ .jpg, .png, .webp'),
   university: z.enum(universities, {
     message: 'กรุณาเลือกมหาวิทยาลัย',
