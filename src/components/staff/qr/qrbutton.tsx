@@ -4,7 +4,7 @@ import { useLiff } from '@/contexts/liff';
 import Modal from './Modal';
 import { ScanLine } from 'lucide-react';
 
-export default function QRButton() {
+export default function QrButton() {
   const { client } = useLiff();
 
   // TODO: Define the file path
