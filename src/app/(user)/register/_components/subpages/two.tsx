@@ -15,6 +15,7 @@ import {
 } from '../../schema/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import DateInput from '../dateInput';
+import { useEffect } from 'react';
 
 interface TwoProps {
   nextStep: () => void;
@@ -41,6 +42,28 @@ export default function Two({} /* nextStep */ : TwoProps) {
       setValue(field, value);
     };
   };
+
+  const study = watch('study');
+  const university = watch('university');
+  useEffect(() => {
+    let status: User['status'];
+
+    if (study == 'กำลังศึกษาอยู่') {
+      if (university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
+        status = 'นิสิตปัจจุบัน';
+      } else {
+        status = 'นักศึกษา';
+      }
+    } else {
+      if (university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
+        status = 'นิสิตเก่า';
+      } else {
+        status = 'บุคคลทั่วไป';
+      }
+    }
+
+    setValue('status', status);
+  }, [study, university, setValue]);
 
   return (
     <form className="w-full space-y-4 py-8" onSubmit={handleSubmit(onSubmit)}>
@@ -110,7 +133,7 @@ export default function Two({} /* nextStep */ : TwoProps) {
 
       <div className="space-y-2">
         <Label isRequired text="สถานะ" />
-        <TextInput {...register('status')} />
+        <TextInput value={watch('status') || ''} readOnly />
         {errors.status && (
           <p className="text-right text-sm text-red-500">
             {errors.status.message}
@@ -205,7 +228,7 @@ export default function Two({} /* nextStep */ : TwoProps) {
       </div>
 
       <div className="flex justify-center">
-        <Button className="text-lg">
+        <Button className="text-lg" disabled={!watch('isConfirm')}>
           <input type="submit" value={'ยืนยันการลงทะเบียน'} />
         </Button>
       </div>
