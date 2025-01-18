@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
 
-interface ConfirmModalProps {
+interface ModalProps {
   modalType: 'confirm' | 'invalid' | 'already';
   userInfo: string | null;
   scanAgain: () => void;
@@ -10,7 +10,7 @@ interface ConfirmModalProps {
   time?: string; // Optional prop for 'already' type
 }
 
-const ConfirmModal: React.FC<ConfirmModalProps> = ({
+const Modal: React.FC<ModalProps> = ({
   modalType,
   userInfo,
   scanAgain,
@@ -42,9 +42,15 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
                   scanAgain();
                   closeFn();
                 }}
-                className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white"
+                className="flex h-10 w-32 cursor-pointer items-center justify-center rounded-lg bg-dark-pink text-white shadow-md"
               >
-                สแกนอีกครั้ง
+                สแกนต่อ
+              </div>{' '}
+              <div
+                onClick={closeFn}
+                className="mt-3 flex h-10 w-32 cursor-pointer items-center justify-center rounded-lg border border-dark-pink text-dark-pink shadow-md"
+              >
+                กลับ
               </div>
             </div>
           </>
@@ -68,7 +74,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
                   scanAgain();
                   closeFn();
                 }}
-                className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white"
+                className="flex h-10 w-32 cursor-pointer items-center justify-center rounded-lg border bg-dark-pink text-white shadow-md"
               >
                 สแกนอีกครั้ง
               </div>
@@ -85,15 +91,14 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
               height={36}
               alt="already"
             />
-            <div className="mt-4 text-lg">
-              ผู้ใช้สแกน QR-code นี้แล้ว เมื่อเวลา {time}
-            </div>
+            <div className="mt-4">ผู้ใช้สแกน QR-code นี้แล้ว</div>
+            <div className="mt-1">เมื่อเวลา {time}</div>
             <div className="my-4 flex flex-col items-center justify-center">
               <div
                 onClick={() => {
                   closeFn();
                 }}
-                className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white"
+                className="flex h-10 w-32 cursor-pointer items-center justify-center rounded-lg border bg-dark-pink text-white shadow-md"
               >
                 กลับ
               </div>
@@ -118,4 +123,4 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   );
 };
 
-export default ConfirmModal;
+export default Modal;
