@@ -35,7 +35,10 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             <div className="my-4 flex flex-col items-center justify-center">
               {' '}
               <div
-                onClick={scanAgain}
+                onClick={() => {
+                  scanAgain();
+                  closeFn();
+                }}
                 className="flex h-10 w-32 items-center justify-center rounded-lg bg-dark-pink text-white"
               >
                 สแกนต่อ
