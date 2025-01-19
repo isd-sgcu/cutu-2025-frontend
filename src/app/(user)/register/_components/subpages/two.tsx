@@ -6,18 +6,16 @@ import CheckBox from '../policy/checkbox';
 import { Button } from '@/components/ui/button';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import {
-  faculties,
-  sizes,
-  studies,
-  universities,
-  User,
-  UserSchema,
-} from '../../schema/user';
+import { User, UserSchema } from '../../schema/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import DateInput from '../dateInput';
 
 import { useEffect } from 'react';
+import ComboBox from '../comboBox';
+import { studies } from '../../_data/studies';
+import { universities } from '../../_data/universities';
+import { faculties } from '../../_data/faculties';
+import { sizes } from '../../_data/size';
 
 interface TwoProps {
   nextStep: () => void;
@@ -33,6 +31,9 @@ export default function Two({ nextStep }: TwoProps) {
   } = useForm<User>({
     resolver: zodResolver(UserSchema),
   });
+
+  console.log(errors);
+  console.log(watch());
 
   const onSubmit: SubmitHandler<User> = data => {
     console.log(data);
@@ -130,6 +131,7 @@ export default function Two({ nextStep }: TwoProps) {
       </div>
 
       {/* university */}
+      {/* TODO: optimize here, there are 390 universties in list */}
       {watch('study') && (
         <div className="relative space-y-1">
           <Label isRequired>
@@ -137,11 +139,13 @@ export default function Two({ nextStep }: TwoProps) {
               ? 'มหาวิทยาลัย'
               : 'มหาวิทยาลัยที่จบการศึกษา'}
           </Label>
-          <DropdownInput
-            value={watch('university')}
+          <ComboBox
+            value={watch('university') || ''}
             setValue={updateField('university')}
-            placeholder="จุฬาลงกรณ์มหาวิทยาลัย"
+            placeholder="กรุณาเลือก"
             choices={[...universities]}
+            searchText="ค้นหามหาวิทยาลัย"
+            emptyText="ไม่มีข้อมูล"
           />
         </div>
       )}
@@ -163,10 +167,15 @@ export default function Two({ nextStep }: TwoProps) {
           <div className="flex justify-between gap-4">
             <div className="relative flex-1 space-y-2">
               <Label isRequired>ปีที่สำเร็จการศึกษา</Label>
-              <TextInput
-                {...register('graduateYear')}
+              <ComboBox
+                value={watch('graduateYear')}
+                setValue={updateField('graduateYear')}
                 placeholder="2544"
-                type="number"
+                emptyText="ไม่มีข้อมูล"
+                searchText="ค้นหาปีที่สำเร็จการศึกษา"
+                choices={Array.from({ length: 101 }, (_, i) =>
+                  (2468 + i).toString(),
+                )}
               />
               {errors.graduateYear && (
                 <p className="absolute right-0 text-right text-sm text-red-500">
@@ -177,10 +186,12 @@ export default function Two({ nextStep }: TwoProps) {
 
             <div className="relative flex-1 space-y-2">
               <Label isRequired>คณะที่สำเร็จการศึกษา</Label>
-              <DropdownInput
+              <ComboBox
                 value={watch('graduateFaculty')}
                 setValue={updateField('graduateFaculty')}
                 placeholder="กรุณาเลือก"
+                emptyText="ไม่มีข้อมูล"
+                searchText="ค้นหาคณะที่สำเร็จการศึกษา"
                 choices={[...faculties]}
               />
               {errors.graduateFaculty && (
