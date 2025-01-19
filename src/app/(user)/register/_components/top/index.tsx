@@ -5,7 +5,7 @@ import { ChevronLeft } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
-interface TopProps {
+export interface TopProps {
   backgroundPath: string;
   back: string;
   header: string;
@@ -31,7 +31,7 @@ export default function Top({
           <ChevronLeft />
           {back}
         </div>
-        <div className="text-2xl font-[700] text-white mt-2">{header}</div>
+        <div className="mt-2 text-2xl font-[700] text-white">{header}</div>
       </div>
     </div>
   );
