@@ -28,9 +28,12 @@ export default async function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className={`${anuphan.variable} vsc-initialized antialiased`}>
-        <main className="mx-auto min-h-screen max-w-lg">
+      <body
+        className={`${anuphan.variable} vsc-initialized bg-dark-pink bg-opacity-20 antialiased`}
+      >
+        <main className="relative mx-auto min-h-screen max-w-md shadow">
           <LineProvider>{children}</LineProvider>
+          <div className="absolute inset-0 -z-50 bg-white"></div>
         </main>
       </body>
     </html>
