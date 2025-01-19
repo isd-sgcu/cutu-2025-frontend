@@ -37,17 +37,12 @@ export default function Reviews() {
         {/* Review Content */}
         <div
           ref={scrollRef}
-          className="scroll-container flex w-full gap-8 overflow-x-auto px-7"
+          className="scroll-container flex w-full gap-8 overflow-x-auto px-5"
         >
           {reviews.map(({ image, name, text }, idx) => (
             <div key={idx} className="w-64 flex-shrink-0 rounded-lg">
-              <div className="flex justify-center">
-                <Image
-                  src={getImageURL(image)}
-                  alt={name}
-                  width={242}
-                  height={107}
-                />
+              <div className="relative flex aspect-[242/107] w-full flex-col items-center justify-center">
+                <Image src={getImageURL(image)} alt={name} fill />
               </div>
               <h3 className="mt-2 text-center font-semibold">{name}</h3>
               <p className="mx-2 mt-1 text-sm text-gray-700">{text}</p>

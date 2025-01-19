@@ -3,7 +3,7 @@ import { getImageURL } from '@/utils/image';
 import Link from 'next/link';
 export default function Hero() {
   return (
-    <section className="relative z-0 flex aspect-auto h-64 w-full flex-col items-center justify-center">
+    <section className="relative z-0 flex aspect-[393/267] w-full flex-col items-center justify-center">
       <Image
         src={getImageURL('/homepage/hero.png')}
         className="brightness-75"
