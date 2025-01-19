@@ -5,9 +5,8 @@ import ImageInput from '../imageinput';
 import CheckBox from '../policy/checkbox';
 import { Button } from '@/components/ui/button';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { User, UserSchema } from '../../schema/user';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { User } from '../../schema/user';
 import DateInput from '../dateInput';
 
 import { useEffect } from 'react';
@@ -16,28 +15,28 @@ import { studies } from '../../_data/studies';
 import { universities } from '../../_data/universities';
 import { faculties } from '../../_data/faculties';
 import { sizes } from '../../_data/size';
+import ErrorMsg from '../errorMsg';
+import RegisterLayout from '../RegisterLayout';
 
 interface TwoProps {
-  nextStep: () => void;
+  setStep: (value: number) => void;
+  form: UseFormReturn<User>;
 }
 
-export default function Two({ nextStep }: TwoProps) {
+export default function Two({ setStep, form }: TwoProps) {
   const {
     handleSubmit,
     register,
     setValue,
     watch,
     formState: { errors },
-  } = useForm<User>({
-    resolver: zodResolver(UserSchema),
-  });
+  } = form;
 
-  console.log(errors);
-  console.log(watch());
+  const user = watch();
 
   const onSubmit: SubmitHandler<User> = data => {
     console.log(data);
-    nextStep();
+    onNext();
   };
 
   const updateField = (field: keyof User) => {
@@ -46,30 +45,29 @@ export default function Two({ nextStep }: TwoProps) {
     };
   };
 
-  const study = watch('study');
-  const university = watch('university');
   useEffect(() => {
     let status: User['status'];
 
     // set default value
     if (
-      !!study &&
-      !!university &&
-      (study != 'จบการศึกษาแล้ว' || university != 'จุฬาลงกรณ์มหาวิทยาลัย')
+      !!user.study &&
+      !!user.university &&
+      (user.study != 'จบการศึกษาแล้ว' ||
+        user.university != 'จุฬาลงกรณ์มหาวิทยาลัย')
     ) {
       setValue('graduateYear', '9999');
       setValue('graduateFaculty', 'ไม่ระบุ');
     }
 
     // set status
-    if (study == 'กำลังศึกษาอยู่') {
-      if (university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
+    if (user.study == 'กำลังศึกษาอยู่') {
+      if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
         status = 'นิสิตปัจจุบัน';
       } else {
         status = 'นักศึกษา';
       }
     } else {
-      if (university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
+      if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
         status = 'นิสิตเก่า';
       } else {
         status = 'บุคคลทั่วไป';
@@ -77,224 +75,191 @@ export default function Two({ nextStep }: TwoProps) {
     }
 
     setValue('status', status);
-  }, [study, university, setValue]);
+  }, [user.study, user.university, setValue]);
+
+  function onBack() {
+    setStep(1);
+  }
+
+  function onNext() {
+    setStep(3);
+  }
 
   return (
-    <form className="w-full space-y-4 py-8" onSubmit={handleSubmit(onSubmit)}>
-      {/* fullname */}
-      <div className="relative space-y-1">
-        <Label isRequired>ชื่อ-นามสกุล (ไม่มีคำนำหน้า)</Label>
-        <TextInput {...register('fullname')} />
-        {errors.fullname && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.fullname.message}
-          </p>
-        )}
-      </div>
-
-      {/* email */}
-      <div className="relative space-y-1">
-        <Label isRequired>อีเมล</Label>
-        <TextInput {...register('email')} />
-        {errors.email && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.email.message}
-          </p>
-        )}
-      </div>
-
-      {/* tel */}
-      <div className="relative space-y-1">
-        <Label isRequired>หมายเลขโทรศัพท์</Label>
-        <TextInput {...register('tel')} />
-        {errors.tel && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.tel.message}
-          </p>
-        )}
-      </div>
-
-      {/* study */}
-      <div className="relative space-y-1">
-        <Label isRequired>การศึกษา</Label>
-        <DropdownInput
-          value={watch('study')}
-          setValue={updateField('study')}
-          placeholder="กำลังศึกษาอยู่"
-          choices={[...studies]}
-        />
-        {errors.study && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.study.message}
-          </p>
-        )}
-      </div>
-
-      {/* university */}
-      {/* TODO: optimize here, there are 390 universties in list */}
-      {watch('study') && (
+    <RegisterLayout
+      step={2}
+      onBack={onBack}
+      bgPath="/(user)/register/bg.jpg"
+      backMsg="กลับ"
+    >
+      <form className="w-full space-y-4 py-8" onSubmit={handleSubmit(onSubmit)}>
+        {/* fullname */}
         <div className="relative space-y-1">
-          <Label isRequired>
-            {watch('study') == 'กำลังศึกษาอยู่'
-              ? 'มหาวิทยาลัย'
-              : 'มหาวิทยาลัยที่จบการศึกษา'}
-          </Label>
-          <ComboBox
-            value={watch('university') || ''}
-            setValue={updateField('university')}
-            placeholder="กรุณาเลือก"
-            choices={[...universities]}
-            searchText="ค้นหามหาวิทยาลัย"
-            emptyText="ไม่มีข้อมูล"
-          />
+          <Label isRequired>ชื่อ-นามสกุล (ไม่มีคำนำหน้า)</Label>
+          <TextInput {...register('fullname')} />
+          <ErrorMsg message={errors.fullname?.message} />
         </div>
-      )}
 
-      {/* status */}
-      <div className="relative space-y-1">
-        <Label isRequired>สถานะ</Label>
-        <TextInput value={watch('status') || ''} readOnly />
-        {errors.status && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.status.message}
-          </p>
-        )}
-      </div>
+        {/* email */}
+        <div className="relative space-y-1">
+          <Label isRequired>อีเมล</Label>
+          <TextInput {...register('email')} />
+          <ErrorMsg message={errors.email?.message} />
+        </div>
 
-      {/* graduate year && graduate faculty*/}
-      {watch('study') == 'จบการศึกษาแล้ว' &&
-        watch('university') == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
-          <div className="flex justify-between gap-4">
-            <div className="relative flex-1 space-y-2">
-              <Label isRequired>ปีที่สำเร็จการศึกษา</Label>
-              <ComboBox
-                value={watch('graduateYear')}
-                setValue={updateField('graduateYear')}
-                placeholder="2544"
-                emptyText="ไม่มีข้อมูล"
-                searchText="ค้นหาปีที่สำเร็จการศึกษา"
-                choices={Array.from({ length: 101 }, (_, i) =>
-                  (2468 + i).toString(),
-                )}
-              />
-              {errors.graduateYear && (
-                <p className="absolute right-0 text-right text-sm text-red-500">
-                  {errors.graduateYear.message}
-                </p>
-              )}
-            </div>
+        {/* tel */}
+        <div className="relative space-y-1">
+          <Label isRequired>หมายเลขโทรศัพท์</Label>
+          <TextInput {...register('tel')} />
+          <ErrorMsg message={errors.tel?.message} />
+        </div>
 
-            <div className="relative flex-1 space-y-2">
-              <Label isRequired>คณะที่สำเร็จการศึกษา</Label>
-              <ComboBox
-                value={watch('graduateFaculty')}
-                setValue={updateField('graduateFaculty')}
-                placeholder="กรุณาเลือก"
-                emptyText="ไม่มีข้อมูล"
-                searchText="ค้นหาคณะที่สำเร็จการศึกษา"
-                choices={[...faculties]}
-              />
-              {errors.graduateFaculty && (
-                <p className="absolute right-0 text-right text-sm text-red-500">
-                  {errors.graduateFaculty.message}
-                </p>
-              )}
-            </div>
+        {/* study */}
+        <div className="relative space-y-1">
+          <Label isRequired>การศึกษา</Label>
+          <DropdownInput
+            value={user.study}
+            setValue={updateField('study')}
+            placeholder="กำลังศึกษาอยู่"
+            choices={[...studies]}
+          />
+          <ErrorMsg message={errors.study?.message} />
+        </div>
+
+        {/* university */}
+        {/* TODO: optimize here, there are 390 universties in list */}
+        {user.study && (
+          <div className="relative space-y-1">
+            <Label isRequired>
+              {user.study == 'กำลังศึกษาอยู่'
+                ? 'มหาวิทยาลัย'
+                : 'มหาวิทยาลัยที่จบการศึกษา'}
+            </Label>
+            <ComboBox
+              value={user.university || ''}
+              setValue={updateField('university')}
+              placeholder="กรุณาเลือก"
+              choices={[...universities]}
+              searchText="ค้นหามหาวิทยาลัย"
+              emptyText="ไม่มีข้อมูล"
+            />
+            <ErrorMsg message={errors.university?.message} />
           </div>
         )}
 
-      {/* birthDate */}
-      <div className="relative space-y-1">
-        <Label isRequired>วันเกิด</Label>
-        <DateInput
-          value={watch('birthdate')}
-          setValue={updateField('birthdate')}
-        />
-        {errors.birthdate && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.birthdate.message}
-          </p>
-        )}
-      </div>
+        {/* status */}
+        <div className="relative space-y-1">
+          <Label isRequired>สถานะ</Label>
+          <TextInput value={user.status || ''} readOnly />
+          <ErrorMsg message={errors.status?.message} />
+        </div>
 
-      {/* size */}
-      <div className="relative space-y-1">
-        <Label isRequired>ขนาดเสื้อ</Label>
-        <DropdownInput
-          value={watch('size')}
-          setValue={updateField('size')}
-          placeholder="กรุณาเลือก"
-          choices={[...sizes]}
-        />
-        {errors.size && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.size.message}
-          </p>
-        )}
-      </div>
+        {/* graduate year && graduate faculty*/}
+        {user.study == 'จบการศึกษาแล้ว' &&
+          user.university == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
+            <div className="flex justify-between gap-4">
+              <div className="relative w-1/2 space-y-2">
+                <Label isRequired>ปีที่สำเร็จการศึกษา</Label>
+                <ComboBox
+                  value={user.graduateYear}
+                  setValue={updateField('graduateYear')}
+                  placeholder="2544"
+                  emptyText="ไม่มีข้อมูล"
+                  searchText="ค้นหาปีที่สำเร็จการศึกษา"
+                  choices={Array.from(
+                    {
+                      length: 101,
+                    },
+                    (_, i) => (2468 + i).toString(),
+                  )}
+                />
+                <ErrorMsg message={errors.graduateYear?.message} />
+              </div>
 
-      {/* foodAllegy */}
-      <div className="relative space-y-1">
-        <Label>ข้อจำกัดด้านอาหาร</Label>
-        <TextInput {...register('foodAllegy')} />
-        {errors.foodAllegy && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.foodAllegy.message}
-          </p>
-        )}
-      </div>
+              <div className="relative w-1/2 space-y-2">
+                <Label isRequired>คณะที่สำเร็จการศึกษา</Label>
+                <ComboBox
+                  value={user.graduateFaculty}
+                  setValue={updateField('graduateFaculty')}
+                  placeholder="กรุณาเลือก"
+                  emptyText="ไม่มีข้อมูล"
+                  searchText="ค้นหาคณะที่สำเร็จการศึกษา"
+                  choices={[...faculties]}
+                />
+                <ErrorMsg message={errors.graduateFaculty?.message} />
+              </div>
+            </div>
+          )}
 
-      {/* disease */}
-      <div className="relative space-y-1">
-        <Label>โรคประจำตัว</Label>
-        <TextInput {...register('disease')} />
-        {errors.disease && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.disease.message}
-          </p>
-        )}
-      </div>
+        {/* birthDate */}
+        <div className="relative space-y-1">
+          <Label isRequired>วันเกิด</Label>
+          <DateInput
+            value={user.birthdate}
+            setValue={updateField('birthdate')}
+          />
+          <ErrorMsg message={errors.birthdate?.message} />
+        </div>
 
-      {/* drugAllegy */}
-      <div className="relative space-y-1">
-        <Label>การแพ้ยา</Label>
-        <TextInput {...register('drugAllegy')} />
-        {errors.drugAllegy && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.drugAllegy.message}
-          </p>
-        )}
-      </div>
+        {/* size */}
+        <div className="relative space-y-1">
+          <Label isRequired>ขนาดเสื้อ</Label>
+          <DropdownInput
+            value={user.size}
+            setValue={updateField('size')}
+            placeholder="กรุณาเลือก"
+            choices={[...sizes]}
+          />
+          <ErrorMsg message={errors.size?.message} />
+        </div>
 
-      {/* idCardImg */}
-      <div className="relative space-y-1">
-        <Label isRequired>อัปโหลดรูปด้านหน้าบัตรประชาชน</Label>
-        <ImageInput
-          value={watch('idCardImg')}
-          setValue={updateField('idCardImg')}
-        />
-        {errors.idCardImg && (
-          <p className="absolute right-0 text-right text-sm text-red-500">
-            {errors.idCardImg.message}
-          </p>
-        )}
-      </div>
+        {/* foodAllegy */}
+        <div className="relative space-y-1">
+          <Label>ข้อจำกัดด้านอาหาร</Label>
+          <TextInput {...register('foodAllegy')} />
+          <ErrorMsg message={errors.foodAllegy?.message} />
+        </div>
 
-      {/* confirm */}
-      <div
-        onClick={() => setValue('isConfirm', !watch('isConfirm'))}
-        className="flex gap-2 pt-8"
-      >
-        <CheckBox isChecked={!!watch('isConfirm')} />
-        <Label isRequired>ข้าพเจ้ายืนยันว่าข้อมูลข้างต้นมีความถูกต้อง</Label>
-      </div>
+        {/* disease */}
+        <div className="relative space-y-1">
+          <Label>โรคประจำตัว</Label>
+          <TextInput {...register('disease')} />
+          <ErrorMsg message={errors.disease?.message} />
+        </div>
 
-      {/* submit */}
-      <div className="flex justify-center">
-        <Button className="text-lg" disabled={!watch('isConfirm')}>
-          <input type="submit" value={'ยืนยันการลงทะเบียน'} />
-        </Button>
-      </div>
-    </form>
+        {/* drugAllegy */}
+        <div className="relative space-y-1">
+          <Label>การแพ้ยา</Label>
+          <TextInput {...register('drugAllegy')} />
+          <ErrorMsg message={errors.drugAllegy?.message} />
+        </div>
+
+        {/* idCardImg */}
+        <div className="relative space-y-1">
+          <Label isRequired>อัปโหลดรูปด้านหน้าบัตรประชาชน</Label>
+          <ImageInput
+            value={user.idCardImg}
+            setValue={updateField('idCardImg')}
+          />
+          <ErrorMsg message={errors.idCardImg?.message} />
+        </div>
+
+        {/* confirm */}
+        <div
+          onClick={() => setValue('isConfirm', !user.isConfirm)}
+          className="flex gap-2 pt-8"
+        >
+          <CheckBox isChecked={!!user.isConfirm} />
+          <Label isRequired>ข้าพเจ้ายืนยันว่าข้อมูลข้างต้นมีความถูกต้อง</Label>
+        </div>
+
+        {/* submit */}
+        <div className="flex justify-center">
+          <Button className="text-lg" disabled={!user.isConfirm}>
+            <input type="submit" value={'ยืนยันการลงทะเบียน'} />
+          </Button>
+        </div>
+      </form>
+    </RegisterLayout>
   );
 }
