@@ -4,7 +4,7 @@ interface ContentProps {
 
 export default function Content({ content }: ContentProps) {
   return (
-    <div className="border-dark-gray h-64 overflow-y-auto rounded-md border-2 p-2 text-base">
+    <div className="h-64 overflow-y-auto rounded-md border-2 border-dark-gray p-2 text-base">
       {content}
     </div>
   );

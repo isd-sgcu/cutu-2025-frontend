@@ -9,7 +9,7 @@ export default function Step({ step, isActive }: StepProps) {
   return (
     <div
       className={cn(
-        'bg-light-gray flex size-10 items-center justify-center rounded-full text-xl font-[700]',
+        'flex size-10 items-center justify-center rounded-full bg-light-gray text-xl font-[700]',
         {
           'bg-dark-pink text-white': isActive,
         },

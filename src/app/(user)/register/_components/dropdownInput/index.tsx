@@ -28,7 +28,9 @@ export default function DropdownInput({
       <SelectTrigger className="w-full rounded border-dark-gray focus:border-2 focus:border-dark-pink focus:ring-0">
         <SelectValue
           placeholder={
-            <div className="text-placeholder-gray">{placeholder}</div>
+            <div className="overflow-hidden text-ellipsis text-placeholder-gray">
+              {placeholder}
+            </div>
           }
         />
       </SelectTrigger>
