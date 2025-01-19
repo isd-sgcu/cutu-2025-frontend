@@ -23,7 +23,7 @@ export default {
         'light-pink': '#E9B0CC',
         'dark-blue': '#2D2A4A',
         'mid-blue': '#708FCE',
-        'light-blue': '#SE78BF',
+        'light-blue': '#9BCDEB',
         'light-gray': '#D9D9D9',
         'placeholder-gray': '#C1C1C1',
         'mid-gray': '#E3E3E3',
