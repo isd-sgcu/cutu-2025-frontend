@@ -20,7 +20,7 @@ function Calendar({
   return (
     <DayPicker
       captionLayout="dropdown"
-      fromDate={new Date(1920, 0)}
+      fromDate={new Date(1890, 0)}
       toDate={new Date()}
       showOutsideDays={showOutsideDays}
       className={cn('p-3', className)}
@@ -30,7 +30,7 @@ function Calendar({
         caption: 'flex justify-center pt-1 relative items-center px-2',
         caption_label: 'text-base font-medium px-2 hidden',
         dropdown_icon: 'text-dark-pink text-lg',
-        dropdown: "flex item-center",
+        dropdown: 'flex item-center',
         dropdown_month: 'flex',
         dropdown_year: 'flex',
         vhidden: 'hidden',

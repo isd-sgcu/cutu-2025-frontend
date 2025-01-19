@@ -11,7 +11,7 @@ import Top from './_components/top';
 import { useRouter } from 'next/navigation';
 
 export default function Page() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [isTerm, setIsTerm] = useState(false);
   const [isPDPA, setIsPDPA] = useState(false);
   const router = useRouter();
