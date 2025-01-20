@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
+import React from 'react';
 export default function Background() {
   return (
-    <div className="-z-5 fixed left-0 top-0 mx-auto min-h-screen w-full max-w-screen-sm">
+    <div className="fixed inset-0 top-0 -z-10 mx-auto min-h-screen w-full max-w-screen-sm">
       <div>
         <Image
           src={getImageURL('/profile/Background.png')}
