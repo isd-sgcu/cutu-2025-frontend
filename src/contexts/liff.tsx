@@ -64,8 +64,6 @@ export default function LineProvider({
   return (
     <liffContext.Provider value={state}>
       {state.isInitializing ? <Load /> : children}
-      {/* <Load /> */}
-      {/* {children} */}
     </liffContext.Provider>
   );
 }
