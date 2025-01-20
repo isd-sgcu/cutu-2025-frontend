@@ -10,8 +10,8 @@ export default function Inf() {
       <p>
         <span>{fname}</span>
       </p>
-      <div className="mt-[6px] h-[1px] w-[245px] bg-white" />
-      <div className="mt-4 flex flex-col items-center">
+      <div className="mt-[5px] h-[1px] w-[245px] bg-white" />
+      <div className="mt-3 flex flex-col items-center">
         <div className="flex">
           <p>15 กุมภาพันธ์ 2568 | 13.00 น. เป็นต้นไป</p>
         </div>

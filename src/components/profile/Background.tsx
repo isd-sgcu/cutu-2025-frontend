@@ -6,7 +6,7 @@ export default function Background() {
       <div>
         <Image
           src={getImageURL('/profile/Background.png')}
-          className="opacity-70"
+          className="opacity-70 bg-blend-lighten"
           fill
           alt="Background"
         />
