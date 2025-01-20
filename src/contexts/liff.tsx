@@ -3,6 +3,7 @@
 import liff, { Liff } from '@line/liff';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { config } from '../app/config';
+import Load from '@/components/loading/loading';
 
 interface LiffContextState {
   client: Liff | null;
@@ -62,7 +63,9 @@ export default function LineProvider({
 
   return (
     <liffContext.Provider value={state}>
-      {state.isInitializing ? <div>loading...</div> : children}
+      {state.isInitializing ? <Load /> : children}
+      {/* <Load /> */}
+      {/* {children} */}
     </liffContext.Provider>
   );
 }
