@@ -11,7 +11,8 @@ const buttonVariants = cva(
       variant: {
         filled:
           'bg-dark-pink text-white hover:bg-dark-pink/90 focus-visible:ring-dark-pink',
-        outline: 'border border-dark-pink border-2',
+        outline:
+          'border border-dark-pink border-2 hover:bg-dark-pink text-dark-pink hover:text-white',
         disabled: 'bg-disabled text-white',
         ghost: 'hover:bg-dark-pink/10',
       },

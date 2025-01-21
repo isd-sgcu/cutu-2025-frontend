@@ -29,6 +29,7 @@ export default {
         'mid-gray': '#E3E3E3',
         'dark-gray': '#757575',
         'dark-green': '#51AE76',
+        error: '#FF0000',
         disabled: '#C1C1C1',
         cream: '#A8CBE7',
         yellow: '#A9D39F',
