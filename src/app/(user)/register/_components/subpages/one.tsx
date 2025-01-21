@@ -1,12 +1,13 @@
 'use client';
 
-import Policy from '../policy';
+import { useState } from 'react';
 
 import { PDPA, termAndCondition } from '../../_data/policy';
+
+import Policy from '../policy';
 import { Button } from '@/components/ui/button';
 import RegisterLayout from '../RegisterLayout';
-
-import { useRouter } from 'next/navigation';
+import BackWarning from '../BackWarning';
 
 interface OneProps {
   isTerm: boolean;
@@ -23,15 +24,15 @@ export default function One({
   setIsPDPA,
   setIsTerm,
 }: OneProps) {
-  const router = useRouter();
   const isValid = isPDPA && isTerm;
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   function onNext() {
     if (isValid) setStep(2);
   }
 
   function onBack() {
-    router.push('/');
+    setIsOpenModal(true);
   }
 
   return (
@@ -41,6 +42,11 @@ export default function One({
       bgPath="/(user)/register/bg.jpg"
       backMsg="กลับ"
     >
+      <BackWarning
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        callBackPath="/"
+      />
       <div className="space-y-8 py-8">
         <Policy
           topic={termAndCondition.topic}
