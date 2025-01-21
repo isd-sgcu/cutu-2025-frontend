@@ -37,6 +37,7 @@ export default function LineProvider({
       });
 
       if (!liff.isLoggedIn()) {
+        setState(prev => ({ ...prev, isInitializing: true }));
         liff.login();
       }
     } catch (error) {
