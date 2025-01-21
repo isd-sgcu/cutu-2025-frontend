@@ -30,30 +30,32 @@ export default function BackWarning({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent className="w-[90%] max-w-md rounded-lg p-0 py-4">
         <DialogTitle></DialogTitle>
-        <div className="flex flex-col items-center rounded-md p-4 text-2xl">
+        <div className="flex flex-col items-center rounded-md text-xl">
           <Image
             src={getImageURL('/(user)/register/question-mark.svg')}
-            width={150}
-            height={150}
+            width={100}
+            height={100}
             alt="warning"
           />
-          <h1 className="mt-8 font-bold">
+          <h1 className="mt-8 text-center font-bold">
             ท่านต้องการกลับไปยังหน้าหลักหรือไม่?
           </h1>
-          <p className="text-2xl">ระบบจะยังไม่บันทึกข้อมูลที่ท่านได้กรอกไว้</p>
-          <div className="mt-10 flex items-center justify-center gap-10">
+          <p className="text-center text-xl">
+            ระบบจะยังไม่บันทึกข้อมูลที่ท่านได้กรอกไว้
+          </p>
+          <div className="mt-6 flex items-center justify-center gap-4">
             <Button
               variant="filled"
-              className="text-2xl"
+              className="text-xl"
               onClick={handlerCancel}
             >
               ยกเลิก
             </Button>
             <Button
               variant="outline"
-              className="text-2xl"
+              className="text-xl"
               onClick={handleConfirm}
             >
               ตกลง
