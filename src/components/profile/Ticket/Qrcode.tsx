@@ -1,3 +1,5 @@
+import React from 'react';
+import QRCode from 'react-qr-code';
 import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
 
@@ -14,12 +16,7 @@ export default function QR() {
         <h2 className="text-center text-white">Your QR-Code</h2>
       </div>
       <div className="mt-4">
-        <Image
-          src={getImageURL('/profile/QRcode.svg')}
-          height={250}
-          width={250}
-          alt="QR"
-        />
+        <QRCode value={'UID'} className="bg-white p-4" />
       </div>
     </div>
   );

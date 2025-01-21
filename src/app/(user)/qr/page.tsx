@@ -5,7 +5,7 @@ import Ticket from '@/components/profile/Ticket/Ticket';
 
 export default function page() {
   return (
-    <div className="border-2">
+    <div>
       <BG />
       <Header />
       <Ticket />

@@ -6,7 +6,7 @@ export default function InfButton() {
   return (
     <Link
       href={'user/information'}
-      className="mt-2 flex h-9 w-52 items-center justify-center rounded-full border-[1px] border-white bg-gradient-to-r from-[#313051] from-20% via-[#607494] to-[#99C5E4]"
+      className="mt-2 flex h-8 w-52 items-center justify-center rounded-full border-[1px] border-white bg-gradient-to-r from-[#313051] from-20% via-[#607494] to-[#99C5E4]"
     >
       <div className="flex flex-row items-center gap-2">
         <Image

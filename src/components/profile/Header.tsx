@@ -11,8 +11,8 @@ export default function header() {
           <Image
             src={getImageURL('/profile/Logo.svg')}
             className="mx-auto"
-            width={44}
-            height={62}
+            width={60}
+            height={70}
             alt="Logo"
           />
         </div>
