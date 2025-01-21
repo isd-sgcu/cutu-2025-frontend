@@ -7,7 +7,7 @@ export default function page() {
     <div className="relative flex min-h-screen flex-col items-center pt-16">
       <Background />
       <Top />
-      <div className='mt-6'></div>
+      <div className="mt-6"></div>
       <Form />
     </div>
   );
