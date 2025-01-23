@@ -49,7 +49,7 @@ export default function ComboBox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="min-h-10 w-full justify-between rounded-sm border border-dark-gray px-3 focus:border-2 focus:border-dark-pink focus:outline-none focus:ring-0"
+          className="min-h-10 w-full justify-between rounded-sm border border-dark-gray px-3 text-black hover:bg-white hover:text-black focus:border-2 focus:border-dark-pink focus:text-black focus:outline-none focus:ring-0 font-normal"
         >
           <div className="overflow-hidden text-ellipsis">
             {value ? (
