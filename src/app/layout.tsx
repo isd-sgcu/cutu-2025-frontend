@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { Anuphan } from 'next/font/google';
 import './globals.css';
-import LineProvider from '../contexts/liff';
+
 import { Toaster } from 'react-hot-toast';
+
+import LineProvider from '../contexts/liff';
+import AuthProvider from '@/contexts/auth';
 
 const anuphan = Anuphan({
   variable: '--font-anuphan',
@@ -34,7 +37,9 @@ export default async function RootLayout({
       >
         <Toaster />
         <main className="relative mx-auto min-h-screen max-w-md shadow">
-          <LineProvider>{children}</LineProvider>
+          <LineProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </LineProvider>
           <div className="absolute inset-0 -z-50 bg-white"></div>
         </main>
       </body>

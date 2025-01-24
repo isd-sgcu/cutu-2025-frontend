@@ -1,17 +1,29 @@
-import React from 'react';
+import { cn } from '@/lib/utils';
+import React, { ComponentPropsWithoutRef } from 'react';
 
-interface ErrorMsgProps {
-  message: string | undefined;
+export function ErrorMsgFloat({
+  children,
+  className,
+  ...props
+}: ComponentPropsWithoutRef<'p'>) {
+  return (
+    <ErrorMsg
+      className={cn('absolute right-0 text-right', className)}
+      {...props}
+    >
+      {children}
+    </ErrorMsg>
+  );
 }
 
-export default function ErrorMsg({ message }: ErrorMsgProps) {
+export function ErrorMsg({
+  children,
+  className,
+  ...props
+}: ComponentPropsWithoutRef<'p'>) {
   return (
-    <>
-      {message && (
-        <p className="absolute right-0 text-right text-sm text-red-500">
-          {message}
-        </p>
-      )}
-    </>
+    <p className={cn('text-sm text-red-500', className)} {...props}>
+      {children}
+    </p>
   );
 }

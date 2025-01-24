@@ -3,20 +3,21 @@
 import { useEffect } from 'react';
 
 import TextInput from '../../register/_components/textInput';
-import ErrorMsg from '../../register/_components/errorMsg';
 import DropdownInput from '../../register/_components/dropdownInput';
 import ComboBox from '../../register/_components/comboBox';
 import Label from '../../register/_components/label';
 import DateInput from '../../register/_components/dateInput';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { ErrorMsgFloat } from '../../register/_components/errorMsg';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { User, UserSchema } from '../schema/user';
 import { universities } from '../../register/_data/universities';
 import { faculties } from '../../register/_data/faculties';
 import { studies } from '../../register/_data/studies';
 import { sizes } from '../../register/_data/size';
-import Image from 'next/image';
+
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Form() {
@@ -84,21 +85,21 @@ export default function Form() {
         <div className="relative space-y-1">
           <Label isRequired>ชื่อ-นามสกุล (ไม่มีคำนำหน้า)</Label>
           <TextInput {...register('fullname')} />
-          <ErrorMsg message={errors.fullname?.message} />
+          <ErrorMsgFloat>{errors.fullname?.message}</ErrorMsgFloat>
         </div>
 
         {/* email */}
         <div className="relative space-y-1">
           <Label isRequired>อีเมล</Label>
           <TextInput {...register('email')} />
-          <ErrorMsg message={errors.email?.message} />
+          <ErrorMsgFloat>{errors.email?.message}</ErrorMsgFloat>
         </div>
 
         {/* tel */}
         <div className="relative space-y-1">
           <Label isRequired>หมายเลขโทรศัพท์</Label>
           <TextInput {...register('tel')} />
-          <ErrorMsg message={errors.tel?.message} />
+          <ErrorMsgFloat>{errors.tel?.message}</ErrorMsgFloat>
         </div>
 
         {/* study */}
@@ -110,7 +111,7 @@ export default function Form() {
             placeholder="กำลังศึกษาอยู่"
             choices={[...studies]}
           />
-          <ErrorMsg message={errors.study?.message} />
+          <ErrorMsgFloat>{errors.study?.message}</ErrorMsgFloat>
         </div>
 
         {/* university */}
@@ -130,7 +131,7 @@ export default function Form() {
               searchText="ค้นหามหาวิทยาลัย"
               emptyText="ไม่มีข้อมูล"
             />
-            <ErrorMsg message={errors.university?.message} />
+            <ErrorMsgFloat>{errors.university?.message}</ErrorMsgFloat>
           </div>
         )}
 
@@ -138,7 +139,7 @@ export default function Form() {
         <div className="relative space-y-1">
           <Label isRequired>สถานะ</Label>
           <TextInput value={user.status || ''} readOnly />
-          <ErrorMsg message={errors.status?.message} />
+          <ErrorMsgFloat>{errors.status?.message}</ErrorMsgFloat>
         </div>
 
         {/* graduate year && graduate faculty*/}
@@ -160,7 +161,7 @@ export default function Form() {
                     (_, i) => (2468 + i).toString(),
                   )}
                 />
-                <ErrorMsg message={errors.graduateYear?.message} />
+                <ErrorMsgFloat>{errors.graduateYear?.message}</ErrorMsgFloat>
               </div>
 
               <div className="relative w-1/2 space-y-2">
@@ -173,7 +174,7 @@ export default function Form() {
                   searchText="ค้นหาคณะที่สำเร็จการศึกษา"
                   choices={[...faculties]}
                 />
-                <ErrorMsg message={errors.graduateFaculty?.message} />
+                <ErrorMsgFloat>{errors.graduateFaculty?.message}</ErrorMsgFloat>
               </div>
             </div>
           )}
@@ -185,7 +186,7 @@ export default function Form() {
             value={user.birthdate}
             setValue={updateField('birthdate')}
           />
-          <ErrorMsg message={errors.birthdate?.message} />
+          <ErrorMsgFloat>{errors.birthdate?.message}</ErrorMsgFloat>
         </div>
 
         {/* size */}
@@ -197,28 +198,28 @@ export default function Form() {
             placeholder="กรุณาเลือก"
             choices={[...sizes]}
           />
-          <ErrorMsg message={errors.size?.message} />
+          <ErrorMsgFloat>{errors.size?.message}</ErrorMsgFloat>
         </div>
 
         {/* foodAllegy */}
         <div className="relative space-y-1">
           <Label>ข้อจำกัดด้านอาหาร</Label>
           <TextInput {...register('foodAllegy')} />
-          <ErrorMsg message={errors.foodAllegy?.message} />
+          <ErrorMsgFloat>{errors.foodAllegy?.message}</ErrorMsgFloat>
         </div>
 
         {/* disease */}
         <div className="relative space-y-1">
           <Label>โรคประจำตัว</Label>
           <TextInput {...register('disease')} />
-          <ErrorMsg message={errors.disease?.message} />
+          <ErrorMsgFloat>{errors.disease?.message}</ErrorMsgFloat>
         </div>
 
         {/* drugAllegy */}
         <div className="relative space-y-1">
           <Label>การแพ้ยา</Label>
           <TextInput {...register('drugAllegy')} />
-          <ErrorMsg message={errors.drugAllegy?.message} />
+          <ErrorMsgFloat>{errors.drugAllegy?.message}</ErrorMsgFloat>
         </div>
 
         {/* submit */}

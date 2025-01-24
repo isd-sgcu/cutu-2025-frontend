@@ -1,26 +1,26 @@
+import { useEffect } from 'react';
+
 import Label from '../label';
 import TextInput from '../textInput';
 import DropdownInput from '../dropdownInput';
 import ImageInput from '../imageinput';
 import CheckBox from '../policy/checkbox';
+import DateInput from '../dateInput';
+import ComboBox from '../comboBox';
+import { ErrorMsg, ErrorMsgFloat } from '../errorMsg';
+import RegisterLayout from '../RegisterLayout';
 import { Button } from '@/components/ui/button';
 
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
-import DateInput from '../dateInput';
 
-import { useEffect } from 'react';
-import ComboBox from '../comboBox';
 import { studies } from '../../_data/studies';
 import { universities } from '../../_data/universities';
 import { faculties } from '../../_data/faculties';
 import { sizes } from '../../_data/size';
-import ErrorMsg from '../errorMsg';
-import RegisterLayout from '../RegisterLayout';
-import { authKey, registerUser } from '../../_api/register';
 import { useLiff } from '@/contexts/liff';
+import { useAuth } from '@/contexts/auth';
 import { User } from '../../_schema/user';
 import toast from 'react-hot-toast';
-import { ensureError } from '@/utils/error';
 
 interface TwoProps {
   setStep: (value: number) => void;
@@ -29,6 +29,7 @@ interface TwoProps {
 
 export default function Two({ setStep, form }: TwoProps) {
   const { client } = useLiff();
+  const { register: sendRegister, registerError } = useAuth();
   const {
     handleSubmit,
     register,
@@ -40,20 +41,20 @@ export default function Two({ setStep, form }: TwoProps) {
   const user = watch();
 
   const onSubmit: SubmitHandler<User> = async data => {
-    const toastId = toast.loading('กรุณารอสักครู่');
-    setTimeout(async () => {
-      if (!client?.id) return;
-      const req = { ...data, id: client.id };
-      const res = await registerUser(req);
-      if (res.success) {
-        localStorage.setItem(authKey, JSON.stringify(res));
-        toast.success('ลงทะเบียนสำเร็จ');
-        onNext();
-      } else {
-        toast.error(ensureError(res.error).message);
-        toast.dismiss(toastId);
-      }
-    }, 2000);
+    if (!client?.id) {
+      console.error('error submit register form: liff client is null');
+      return;
+    }
+
+    const toastId = toast.loading('กำลังส่ง');
+    const resp = await sendRegister({ ...data, id: client.id });
+    if (resp.success) {
+      onNext();
+      toast.success('ลงทะเบียนสำเร็จ');
+    } else {
+      toast.error(resp.error.message);
+    }
+    toast.dismiss(toastId);
   };
 
   const updateField = (field: keyof User) => {
@@ -114,21 +115,21 @@ export default function Two({ setStep, form }: TwoProps) {
         <div className="relative space-y-1">
           <Label isRequired>ชื่อ-นามสกุล (ไม่มีคำนำหน้า)</Label>
           <TextInput {...register('fullname')} />
-          <ErrorMsg message={errors.fullname?.message} />
+          <ErrorMsgFloat>{errors.fullname?.message}</ErrorMsgFloat>
         </div>
 
         {/* email */}
         <div className="relative space-y-1">
           <Label isRequired>อีเมล</Label>
           <TextInput {...register('email')} />
-          <ErrorMsg message={errors.email?.message} />
+          <ErrorMsgFloat>{errors.email?.message}</ErrorMsgFloat>
         </div>
 
         {/* tel */}
         <div className="relative space-y-1">
           <Label isRequired>หมายเลขโทรศัพท์</Label>
           <TextInput {...register('tel')} />
-          <ErrorMsg message={errors.tel?.message} />
+          <ErrorMsgFloat>{errors.tel?.message}</ErrorMsgFloat>
         </div>
 
         {/* study */}
@@ -140,7 +141,7 @@ export default function Two({ setStep, form }: TwoProps) {
             placeholder="กำลังศึกษาอยู่"
             choices={[...studies]}
           />
-          <ErrorMsg message={errors.study?.message} />
+          <ErrorMsgFloat>{errors.study?.message}</ErrorMsgFloat>
         </div>
 
         {/* university */}
@@ -160,7 +161,7 @@ export default function Two({ setStep, form }: TwoProps) {
               searchText="ค้นหามหาวิทยาลัย"
               emptyText="ไม่มีข้อมูล"
             />
-            <ErrorMsg message={errors.university?.message} />
+            <ErrorMsgFloat>{errors.university?.message}</ErrorMsgFloat>
           </div>
         )}
 
@@ -168,7 +169,7 @@ export default function Two({ setStep, form }: TwoProps) {
         <div className="relative space-y-1">
           <Label isRequired>สถานะ</Label>
           <TextInput value={user.status || ''} readOnly />
-          <ErrorMsg message={errors.status?.message} />
+          <ErrorMsgFloat>{errors.status?.message}</ErrorMsgFloat>
         </div>
 
         {/* graduate year && graduate faculty*/}
@@ -190,7 +191,7 @@ export default function Two({ setStep, form }: TwoProps) {
                     (_, i) => (2468 + i).toString(),
                   )}
                 />
-                <ErrorMsg message={errors.graduateYear?.message} />
+                <ErrorMsgFloat>{errors.graduateYear?.message}</ErrorMsgFloat>
               </div>
 
               <div className="relative w-1/2 space-y-2">
@@ -203,7 +204,7 @@ export default function Two({ setStep, form }: TwoProps) {
                   searchText="ค้นหาคณะที่สำเร็จการศึกษา"
                   choices={[...faculties]}
                 />
-                <ErrorMsg message={errors.graduateFaculty?.message} />
+                <ErrorMsgFloat>{errors.graduateFaculty?.message}</ErrorMsgFloat>
               </div>
             </div>
           )}
@@ -215,7 +216,7 @@ export default function Two({ setStep, form }: TwoProps) {
             value={user.birthdate}
             setValue={updateField('birthdate')}
           />
-          <ErrorMsg message={errors.birthdate?.message} />
+          <ErrorMsgFloat>{errors.birthdate?.message}</ErrorMsgFloat>
         </div>
 
         {/* size */}
@@ -227,28 +228,28 @@ export default function Two({ setStep, form }: TwoProps) {
             placeholder="กรุณาเลือก"
             choices={[...sizes]}
           />
-          <ErrorMsg message={errors.size?.message} />
+          <ErrorMsgFloat>{errors.size?.message}</ErrorMsgFloat>
         </div>
 
         {/* foodAllegy */}
         <div className="relative space-y-1">
           <Label>ข้อจำกัดด้านอาหาร</Label>
           <TextInput {...register('foodAllegy')} />
-          <ErrorMsg message={errors.foodAllegy?.message} />
+          <ErrorMsgFloat>{errors.foodAllegy?.message}</ErrorMsgFloat>
         </div>
 
         {/* disease */}
         <div className="relative space-y-1">
           <Label>โรคประจำตัว</Label>
           <TextInput {...register('disease')} />
-          <ErrorMsg message={errors.disease?.message} />
+          <ErrorMsgFloat>{errors.disease?.message}</ErrorMsgFloat>
         </div>
 
         {/* drugAllegy */}
         <div className="relative space-y-1">
           <Label>การแพ้ยา</Label>
           <TextInput {...register('drugAllegy')} />
-          <ErrorMsg message={errors.drugAllegy?.message} />
+          <ErrorMsgFloat>{errors.drugAllegy?.message}</ErrorMsgFloat>
         </div>
 
         {/* idCardImg */}
@@ -258,7 +259,7 @@ export default function Two({ setStep, form }: TwoProps) {
             value={user.idCardImg}
             setValue={updateField('idCardImg')}
           />
-          <ErrorMsg message={errors.idCardImg?.message} />
+          <ErrorMsgFloat>{errors.idCardImg?.message}</ErrorMsgFloat>
         </div>
 
         {/* confirm */}
@@ -271,10 +272,11 @@ export default function Two({ setStep, form }: TwoProps) {
         </div>
 
         {/* submit */}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center justify-center gap-2">
           <Button className="text-lg" disabled={!user.isConfirm}>
             <input type="submit" value={'ยืนยันการลงทะเบียน'} />
           </Button>
+          <ErrorMsg className="text-base">{registerError?.message}</ErrorMsg>
         </div>
       </form>
     </RegisterLayout>
