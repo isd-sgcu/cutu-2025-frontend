@@ -8,7 +8,7 @@ import Three from './_components/subpages/three';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { User, UserSchema } from './_schema/user';
+import { RegisterForm, RegisterSchema } from '@/schema/register';
 
 export default function Page() {
   const [step, setStep] = useState(2);
@@ -16,8 +16,8 @@ export default function Page() {
   const [isTerm, setIsTerm] = useState(false);
   const [isPDPA, setIsPDPA] = useState(false);
 
-  const form = useForm<User>({
-    resolver: zodResolver(UserSchema),
+  const form = useForm<RegisterForm>({
+    resolver: zodResolver(RegisterSchema),
   });
 
   function getPage(): ReactNode {

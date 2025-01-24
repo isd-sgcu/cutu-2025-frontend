@@ -9,23 +9,32 @@ import React, {
 } from 'react';
 
 import {
-  AuthData,
-  LoginResp,
-  RegisterReq,
-  RegisterResp,
+  getUser,
   login as sendLogin,
   register as sendRegister,
+  edit as sendEdit,
 } from '@/utils/auth';
 
 import { useLiff } from './liff';
 import { Result } from '@/utils/error';
+import { AuthToken } from '@/schema/auth';
+import { User } from '@/schema/user';
+import { LoginResp } from '@/schema/login';
+import { RegisterReq, RegisterResp } from '@/schema/register';
+import { EditReq } from '@/schema/edit';
 
 interface AuthState {
-  data: AuthData | null;
+  user: User | undefined;
+  token: AuthToken | undefined;
   isLoggedIn: boolean;
-  loginError: Error | null;
-  registerError: Error | null;
+  loginError: Error | undefined;
+  registerError: Error | undefined;
+  editError: Error | undefined;
+  isLoggingIn: boolean;
+  isRegistering: boolean;
+  isEditing: boolean;
   login(): Promise<Result<LoginResp>>;
+  edit(req: EditReq): Promise<Result<null>>;
   register(req: RegisterReq): Promise<Result<RegisterResp>>;
 }
 
@@ -34,42 +43,87 @@ const AuthContext = createContext<AuthState>({} as AuthState);
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [data, setData] = useState<AuthData | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [loginError, setLoginError] = useState<Error | null>(null);
-  const [registerError, setRegisterError] = useState<Error | null>(null);
+  const [state, setState] = useState({
+    user: undefined as User | undefined,
+    token: undefined as AuthToken | undefined,
+    isLoggedIn: false,
+    loginError: undefined as Error | undefined,
+    registerError: undefined as Error | undefined,
+    editError: undefined as Error | undefined,
+    isLoggingIn: false,
+    isRegistering: false,
+    isEditing: false,
+  });
   const { client } = useLiff();
 
-  async function login(): Promise<Result<LoginResp>> {
-    if (!client?.id) {
-      const error = new Error('login error: liff id is null');
+  type State = typeof state;
+  function set(key: keyof State, val: State[keyof State]) {
+    setState(prev => ({ ...prev, [key]: val }));
+  }
+
+  async function login(): Promise<Result<User & AuthToken>> {
+    const context = client?.getContext();
+    const userId = context?.userId;
+    if (!userId) {
+      const error = new Error('login error: user id is undefined');
       console.error(error.message);
       return { success: false, error: error };
     }
 
-    const resp = await sendLogin(client.id);
-    if (resp.success) {
-      setData(resp.result);
-      setIsLoggedIn(true);
+    set('isLoggingIn', true);
+    const loginResp = await sendLogin(userId);
+
+    if (loginResp.success) {
+      set('token', loginResp.result);
+      set('isLoggedIn', true);
     } else {
-      console.error('login faild:', resp.error);
-      setLoginError(resp.error);
+      console.error('login failed:', loginResp.error);
+      set('loginError', loginResp.error);
+      return loginResp;
     }
 
-    return resp;
+    const UserResp = await getUser(userId);
+    if (UserResp.success) {
+      set('user', UserResp.result);
+    } else {
+      console.error('get user failed:', UserResp.error);
+      set('loginError', UserResp.error);
+      return UserResp;
+    }
+
+    set('isLoggedIn', false);
+
+    return {
+      success: true,
+      result: { ...UserResp.result, ...loginResp.result },
+    };
   }
 
   async function register(data: RegisterReq) {
+    set('isRegistering', true);
     const resp = await sendRegister(data);
 
     if (resp.success) {
-      setData(resp.result);
-      setIsLoggedIn(true);
+      console.log('register success:', resp.result);
     } else {
       console.error('register faild:', resp.error);
-      setRegisterError(resp.error);
+      set('registerError', resp.error);
     }
 
+    set('isRegistering', false);
+    return await login();
+  }
+
+  async function edit(data: RegisterReq) {
+    set('isEditing', true);
+    const resp = await sendEdit(data);
+
+    if (!resp.success) {
+      console.error('edit faild:', resp.error);
+      set('editError', resp.error);
+    }
+
+    set('isEditing', false);
     return resp;
   }
 
@@ -80,12 +134,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        data,
-        isLoggedIn,
-        loginError,
-        registerError,
+        ...state,
         login,
         register,
+        edit,
       }}
     >
       {children}
