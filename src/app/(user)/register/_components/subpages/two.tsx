@@ -13,18 +13,19 @@ import { Button } from '@/components/ui/button';
 
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
 
-import { studies } from '../../_data/studies';
-import { universities } from '../../_data/universities';
-import { faculties } from '../../_data/faculties';
-import { sizes } from '../../_data/size';
 import { useLiff } from '@/contexts/liff';
 import { useAuth } from '@/contexts/auth';
-import { User } from '../../_schema/user';
 import toast from 'react-hot-toast';
+import { RegisterForm } from '@/schema/register';
+import { educationsMap } from '@/data/educations';
+import { universities } from '@/data/universities';
+import { faculties } from '@/data/faculties';
+import { sizeJersey } from '@/data/size';
+import { statusMap } from '@/data/status';
 
 interface TwoProps {
   setStep: (value: number) => void;
-  form: UseFormReturn<User>;
+  form: UseFormReturn<RegisterForm>;
 }
 
 export default function Two({ setStep, form }: TwoProps) {
@@ -40,14 +41,19 @@ export default function Two({ setStep, form }: TwoProps) {
 
   const user = watch();
 
-  const onSubmit: SubmitHandler<User> = async data => {
-    if (!client?.id) {
-      console.error('error submit register form: liff client is null');
+  const onSubmit: SubmitHandler<RegisterForm> = async data => {
+    const context = client?.getContext();
+    const userId = context?.userId;
+    if (!userId) {
+      console.error('Failed submit register form: userId is undefined');
       return;
     }
 
     const toastId = toast.loading('กำลังส่ง');
-    const resp = await sendRegister({ ...data, id: client.id });
+    const resp = await sendRegister({
+      ...data,
+      id: userId,
+    });
     if (resp.success) {
       onNext();
       toast.success('ลงทะเบียนสำเร็จ');
@@ -57,43 +63,43 @@ export default function Two({ setStep, form }: TwoProps) {
     toast.dismiss(toastId);
   };
 
-  const updateField = (field: keyof User) => {
-    return (value: User[keyof User]) => {
+  const updateField = (field: keyof RegisterForm) => {
+    return (value: RegisterForm[keyof RegisterForm]) => {
       setValue(field, value);
     };
   };
 
   useEffect(() => {
-    let status: User['status'];
+    let status: RegisterForm['status'];
 
     // set default value
     if (
-      !!user.study &&
+      !!user.education &&
       !!user.university &&
-      (user.study != 'จบการศึกษาแล้ว' ||
+      (user.education != 'graduated' ||
         user.university != 'จุฬาลงกรณ์มหาวิทยาลัย')
     ) {
-      setValue('graduateYear', '9999');
-      setValue('graduateFaculty', 'ไม่ระบุ');
+      setValue('graduatedYear', '9999');
+      setValue('faculty', 'ไม่ระบุ');
     }
 
     // set status
-    if (user.study == 'กำลังศึกษาอยู่') {
+    if (user.education == 'studying') {
       if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'นิสิตปัจจุบัน';
+        status = 'cu_student';
       } else {
-        status = 'นักศึกษา';
+        status = 'student';
       }
     } else {
       if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'นิสิตเก่า';
+        status = 'alumni';
       } else {
-        status = 'บุคคลทั่วไป';
+        status = 'general_public';
       }
     }
 
     setValue('status', status);
-  }, [user.study, user.university, setValue]);
+  }, [user.education, user.university, setValue]);
 
   function onBack() {
     setStep(1);
@@ -111,11 +117,11 @@ export default function Two({ setStep, form }: TwoProps) {
       backMsg="กลับ"
     >
       <form className="w-full space-y-4 py-8" onSubmit={handleSubmit(onSubmit)}>
-        {/* fullname */}
+        {/* name */}
         <div className="relative space-y-1">
           <Label isRequired>ชื่อ-นามสกุล (ไม่มีคำนำหน้า)</Label>
-          <TextInput {...register('fullname')} />
-          <ErrorMsgFloat>{errors.fullname?.message}</ErrorMsgFloat>
+          <TextInput {...register('name')} />
+          <ErrorMsgFloat>{errors.name?.message}</ErrorMsgFloat>
         </div>
 
         {/* email */}
@@ -125,31 +131,30 @@ export default function Two({ setStep, form }: TwoProps) {
           <ErrorMsgFloat>{errors.email?.message}</ErrorMsgFloat>
         </div>
 
-        {/* tel */}
+        {/* phone */}
         <div className="relative space-y-1">
           <Label isRequired>หมายเลขโทรศัพท์</Label>
-          <TextInput {...register('tel')} />
-          <ErrorMsgFloat>{errors.tel?.message}</ErrorMsgFloat>
+          <TextInput {...register('phone')} />
+          <ErrorMsgFloat>{errors.phone?.message}</ErrorMsgFloat>
         </div>
 
-        {/* study */}
+        {/* education */}
         <div className="relative space-y-1">
           <Label isRequired>การศึกษา</Label>
           <DropdownInput
-            value={user.study}
-            setValue={updateField('study')}
+            value={educationsMap[user.education]}
+            setValue={val => setValue('education', educationsMap[val])}
             placeholder="กำลังศึกษาอยู่"
-            choices={[...studies]}
+            choices={Object.keys(educationsMap).map(key => key)}
           />
-          <ErrorMsgFloat>{errors.study?.message}</ErrorMsgFloat>
+          <ErrorMsgFloat>{errors.education?.message}</ErrorMsgFloat>
         </div>
 
         {/* university */}
-        {/* TODO: optimize here, there are 390 universties in list */}
-        {user.study && (
+        {user.education && (
           <div className="relative space-y-1">
             <Label isRequired>
-              {user.study == 'กำลังศึกษาอยู่'
+              {user.education == 'studying'
                 ? 'มหาวิทยาลัย'
                 : 'มหาวิทยาลัยที่จบการศึกษา'}
             </Label>
@@ -168,19 +173,19 @@ export default function Two({ setStep, form }: TwoProps) {
         {/* status */}
         <div className="relative space-y-1">
           <Label isRequired>สถานะ</Label>
-          <TextInput value={user.status || ''} readOnly />
+          <TextInput value={statusMap[user.status] || ''} readOnly />
           <ErrorMsgFloat>{errors.status?.message}</ErrorMsgFloat>
         </div>
 
         {/* graduate year && graduate faculty*/}
-        {user.study == 'จบการศึกษาแล้ว' &&
+        {user.education == 'graduated' &&
           user.university == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
             <div className="flex justify-between gap-4">
               <div className="relative w-1/2 space-y-2">
                 <Label isRequired>ปีที่สำเร็จการศึกษา</Label>
                 <ComboBox
-                  value={user.graduateYear}
-                  setValue={updateField('graduateYear')}
+                  value={user.graduatedYear}
+                  setValue={updateField('graduatedYear')}
                   placeholder="2544"
                   emptyText="ไม่มีข้อมูล"
                   searchText="ค้นหาปีที่สำเร็จการศึกษา"
@@ -191,20 +196,20 @@ export default function Two({ setStep, form }: TwoProps) {
                     (_, i) => (2468 + i).toString(),
                   )}
                 />
-                <ErrorMsgFloat>{errors.graduateYear?.message}</ErrorMsgFloat>
+                <ErrorMsgFloat>{errors.graduatedYear?.message}</ErrorMsgFloat>
               </div>
 
               <div className="relative w-1/2 space-y-2">
                 <Label isRequired>คณะที่สำเร็จการศึกษา</Label>
                 <ComboBox
-                  value={user.graduateFaculty}
-                  setValue={updateField('graduateFaculty')}
+                  value={user.faculty}
+                  setValue={updateField('faculty')}
                   placeholder="กรุณาเลือก"
                   emptyText="ไม่มีข้อมูล"
                   searchText="ค้นหาคณะที่สำเร็จการศึกษา"
                   choices={[...faculties]}
                 />
-                <ErrorMsgFloat>{errors.graduateFaculty?.message}</ErrorMsgFloat>
+                <ErrorMsgFloat>{errors.faculty?.message}</ErrorMsgFloat>
               </div>
             </div>
           )}
@@ -223,19 +228,19 @@ export default function Two({ setStep, form }: TwoProps) {
         <div className="relative space-y-1">
           <Label isRequired>ขนาดเสื้อ</Label>
           <DropdownInput
-            value={user.size}
-            setValue={updateField('size')}
+            value={user.sizeJersey}
+            setValue={updateField('sizeJersey')}
             placeholder="กรุณาเลือก"
-            choices={[...sizes]}
+            choices={[...sizeJersey]}
           />
-          <ErrorMsgFloat>{errors.size?.message}</ErrorMsgFloat>
+          <ErrorMsgFloat>{errors.sizeJersey?.message}</ErrorMsgFloat>
         </div>
 
         {/* foodAllegy */}
         <div className="relative space-y-1">
           <Label>ข้อจำกัดด้านอาหาร</Label>
-          <TextInput {...register('foodAllegy')} />
-          <ErrorMsgFloat>{errors.foodAllegy?.message}</ErrorMsgFloat>
+          <TextInput {...register('foodLimitation')} />
+          <ErrorMsgFloat>{errors.foodLimitation?.message}</ErrorMsgFloat>
         </div>
 
         {/* disease */}
@@ -255,11 +260,8 @@ export default function Two({ setStep, form }: TwoProps) {
         {/* idCardImg */}
         <div className="relative space-y-1">
           <Label isRequired>อัปโหลดรูปด้านหน้าบัตรประชาชน</Label>
-          <ImageInput
-            value={user.idCardImg}
-            setValue={updateField('idCardImg')}
-          />
-          <ErrorMsgFloat>{errors.idCardImg?.message}</ErrorMsgFloat>
+          <ImageInput value={user.image} setValue={updateField('image')} />
+          <ErrorMsgFloat>{errors.image?.message}</ErrorMsgFloat>
         </div>
 
         {/* confirm */}

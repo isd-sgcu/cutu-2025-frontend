@@ -1,25 +1,25 @@
 import { z } from 'zod';
-import { universities } from '../_data/universities';
-import { faculties } from '../_data/faculties';
-import { statuses } from '../_data/statuses';
-import { sizes } from '../_data/size';
-import { studies } from '../_data/studies';
+import { universities } from '../data/universities';
+import { faculties } from '../data/faculties';
+import { status } from '@/data/status';
+import { educations } from '@/data/educations';
+import { sizeJersey } from '@/data/size';
 
-export const UserSchema = z.object({
-  fullname: z.string().min(1, 'กรุณากรอกชื่อ-นามสกุล'),
+export const RegisterSchema = z.object({
+  name: z.string().min(1, 'กรุณากรอกชื่อ-นามสกุล'),
   email: z.string().email('กรุณากรอกอีเมล'),
-  tel: z.string().regex(/^\d+$/, 'กรุณากรอกเลข 0-9 เท่านั้น'),
+  phone: z.string().regex(/^\d+$/, 'กรุณากรอกเลข 0-9 เท่านั้น'),
   birthdate: z.date({
     message: 'กรุณากรอกวันเกิด',
   }),
-  size: z.enum(sizes, {
+  sizeJersey: z.enum(sizeJersey, {
     message: 'กรุณาเลือกขนาดเสื้อ',
   }),
-  study: z.enum(studies, { message: 'กรุณาเลือกการศึกษา' }),
-  foodAllegy: z.string(),
+  education: z.enum(educations, { message: 'กรุณาเลือกการศึกษา' }),
+  foodLimitation: z.string(),
   disease: z.string(),
   drugAllegy: z.string(),
-  idCardImg: z
+  image: z
     .instanceof(File, {
       message: 'กรุณาอัพโหลดรูปบัตรประชาชน',
     })
@@ -29,13 +29,13 @@ export const UserSchema = z.object({
   university: z.enum(universities, {
     message: 'กรุณาเลือกมหาวิทยาลัย',
   }),
-  status: z.enum(statuses, {
+  status: z.enum(status, {
     message: 'กรุณาเลือกสถานะ',
   }),
-  graduateYear: z
+  graduatedYear: z
     .string({ message: 'กรุณากรอกปีที่สำเร็จการศึกษา' })
     .regex(/^\d{4}$/, { message: 'กรุณากรอกปีที่สำเร็จการศึกษา' }),
-  graduateFaculty: z.enum([...faculties, 'ไม่ระบุ'], {
+  faculty: z.enum([...faculties, 'ไม่ระบุ'], {
     message: 'กรุณาเลือกคณะที่สำเร็จการศึกษา',
   }),
   isConfirm: z
@@ -44,4 +44,15 @@ export const UserSchema = z.object({
     .nullable(),
 });
 
-export type User = z.infer<typeof UserSchema>;
+export type RegisterForm = z.infer<typeof RegisterSchema>;
+
+export interface RegisterReq extends RegisterForm {
+  id: string;
+}
+
+export const RegisterRespSchema = z.object({
+  accessToken: z.string(),
+  userId: z.string(),
+});
+
+export type RegisterResp = z.infer<typeof RegisterRespSchema>;

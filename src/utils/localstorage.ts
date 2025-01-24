@@ -4,7 +4,7 @@ export function setLocalStorageObj<T>(key: LocalStorageKey, data: T) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-export function getLocalStorageObj<T>(key: string): T | null {
+export function getLocalStorageObj(key: string): unknown | null {
   const raw = localStorage.getItem(key);
   return raw ? JSON.parse(raw) : null;
 }

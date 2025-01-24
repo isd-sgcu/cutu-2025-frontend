@@ -6,19 +6,23 @@ import TextInput from '../../register/_components/textInput';
 import DropdownInput from '../../register/_components/dropdownInput';
 import ComboBox from '../../register/_components/comboBox';
 import Label from '../../register/_components/label';
-import DateInput from '../../register/_components/dateInput';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ErrorMsgFloat } from '../../register/_components/errorMsg';
+import { ErrorMsg, ErrorMsgFloat } from '../../register/_components/errorMsg';
+import Image from 'next/image';
+import DateInput from '../../register/_components/dateInput';
 
-import { User, UserSchema } from '../schema/user';
-import { universities } from '../../register/_data/universities';
-import { faculties } from '../../register/_data/faculties';
-import { studies } from '../../register/_data/studies';
-import { sizes } from '../../register/_data/size';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { sizeJersey } from '@/data/size';
+import { faculties } from '@/data/faculties';
+import { EditForm, EditSchema } from '@/schema/edit';
+import { educationsMap } from '@/data/educations';
+import { universities } from '@/data/universities';
+import { statusMap } from '@/data/status';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useAuth } from '@/contexts/auth';
+import { useLiff } from '@/contexts/liff';
+import toast from 'react-hot-toast';
 
 export default function Form() {
   const {
@@ -27,53 +31,72 @@ export default function Form() {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<User>({
-    resolver: zodResolver(UserSchema),
+  } = useForm<EditForm>({
+    resolver: zodResolver(EditSchema),
   });
+
+  const { editError, edit, isEditing } = useAuth();
+  const { client } = useLiff();
 
   const user = watch();
 
-  const onSubmit: SubmitHandler<User> = data => {
-    console.log(data);
+  const onSubmit: SubmitHandler<EditForm> = async data => {
+    const context = client?.getContext();
+    const userId = context?.userId;
+    if (!userId) {
+      const error = new Error('Failed edit: userId is undefined');
+      console.error(error);
+      return;
+    }
+
+    const toastId = toast.loading('รอสักครู่');
+    const resp = await edit({ ...data, id: userId });
+    if (resp.success) {
+      toast.success('บันทึกการแก้ไขสำเร็จ');
+    } else {
+      toast.error('บันทึกการแก้ไขไม่สำเร็จ');
+    }
+
+    toast.dismiss(toastId);
   };
 
-  const updateField = (field: keyof User) => {
-    return (value: User[keyof User]) => {
+  const updateField = (field: keyof EditForm) => {
+    return (value: EditForm[keyof EditForm]) => {
       setValue(field, value);
     };
   };
 
   useEffect(() => {
-    let status: User['status'];
+    let status: EditForm['status'];
 
     // set default value
     if (
-      !!user.study &&
+      !!user.education &&
       !!user.university &&
-      (user.study != 'จบการศึกษาแล้ว' ||
+      (user.education != 'graduated' ||
         user.university != 'จุฬาลงกรณ์มหาวิทยาลัย')
     ) {
-      setValue('graduateYear', '9999');
-      setValue('graduateFaculty', 'ไม่ระบุ');
+      setValue('graduatedYear', '9999');
+      setValue('faculty', 'ไม่ระบุ');
     }
 
     // set status
-    if (user.study == 'กำลังศึกษาอยู่') {
+    if (user.education == 'studying') {
       if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'นิสิตปัจจุบัน';
+        status = 'cu_student';
       } else {
-        status = 'นักศึกษา';
+        status = 'student';
       }
     } else {
       if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'นิสิตเก่า';
+        status = 'alumni';
       } else {
-        status = 'บุคคลทั่วไป';
+        status = 'general_public';
       }
     }
 
     setValue('status', status);
-  }, [user.study, user.university, setValue]);
+  }, [user.education, user.university, setValue]);
 
   return (
     <div className="w-full flex-1 bg-white">
@@ -81,11 +104,11 @@ export default function Form() {
         className="w-full space-y-4 px-6 py-8"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {/* fullname */}
+        {/* name */}
         <div className="relative space-y-1">
           <Label isRequired>ชื่อ-นามสกุล (ไม่มีคำนำหน้า)</Label>
-          <TextInput {...register('fullname')} />
-          <ErrorMsgFloat>{errors.fullname?.message}</ErrorMsgFloat>
+          <TextInput {...register('name')} />
+          <ErrorMsgFloat>{errors.name?.message}</ErrorMsgFloat>
         </div>
 
         {/* email */}
@@ -95,31 +118,30 @@ export default function Form() {
           <ErrorMsgFloat>{errors.email?.message}</ErrorMsgFloat>
         </div>
 
-        {/* tel */}
+        {/* phone */}
         <div className="relative space-y-1">
           <Label isRequired>หมายเลขโทรศัพท์</Label>
-          <TextInput {...register('tel')} />
-          <ErrorMsgFloat>{errors.tel?.message}</ErrorMsgFloat>
+          <TextInput {...register('phone')} />
+          <ErrorMsgFloat>{errors.phone?.message}</ErrorMsgFloat>
         </div>
 
-        {/* study */}
+        {/* education */}
         <div className="relative space-y-1">
           <Label isRequired>การศึกษา</Label>
           <DropdownInput
-            value={user.study}
-            setValue={updateField('study')}
+            value={educationsMap[user.education]}
+            setValue={val => setValue('education', educationsMap[val])}
             placeholder="กำลังศึกษาอยู่"
-            choices={[...studies]}
+            choices={Object.keys(educationsMap).map(key => key)}
           />
-          <ErrorMsgFloat>{errors.study?.message}</ErrorMsgFloat>
+          <ErrorMsgFloat>{errors.education?.message}</ErrorMsgFloat>
         </div>
 
         {/* university */}
-        {/* TODO: optimize here, there are 390 universties in list */}
-        {user.study && (
+        {user.education && (
           <div className="relative space-y-1">
             <Label isRequired>
-              {user.study == 'กำลังศึกษาอยู่'
+              {user.education == 'studying'
                 ? 'มหาวิทยาลัย'
                 : 'มหาวิทยาลัยที่จบการศึกษา'}
             </Label>
@@ -138,19 +160,19 @@ export default function Form() {
         {/* status */}
         <div className="relative space-y-1">
           <Label isRequired>สถานะ</Label>
-          <TextInput value={user.status || ''} readOnly />
+          <TextInput value={statusMap[user.status] || ''} readOnly />
           <ErrorMsgFloat>{errors.status?.message}</ErrorMsgFloat>
         </div>
 
         {/* graduate year && graduate faculty*/}
-        {user.study == 'จบการศึกษาแล้ว' &&
+        {user.education == 'graduated' &&
           user.university == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
             <div className="flex justify-between gap-4">
               <div className="relative w-1/2 space-y-2">
                 <Label isRequired>ปีที่สำเร็จการศึกษา</Label>
                 <ComboBox
-                  value={user.graduateYear}
-                  setValue={updateField('graduateYear')}
+                  value={user.graduatedYear}
+                  setValue={updateField('graduatedYear')}
                   placeholder="2544"
                   emptyText="ไม่มีข้อมูล"
                   searchText="ค้นหาปีที่สำเร็จการศึกษา"
@@ -161,20 +183,20 @@ export default function Form() {
                     (_, i) => (2468 + i).toString(),
                   )}
                 />
-                <ErrorMsgFloat>{errors.graduateYear?.message}</ErrorMsgFloat>
+                <ErrorMsgFloat>{errors.graduatedYear?.message}</ErrorMsgFloat>
               </div>
 
               <div className="relative w-1/2 space-y-2">
                 <Label isRequired>คณะที่สำเร็จการศึกษา</Label>
                 <ComboBox
-                  value={user.graduateFaculty}
-                  setValue={updateField('graduateFaculty')}
+                  value={user.faculty}
+                  setValue={updateField('faculty')}
                   placeholder="กรุณาเลือก"
                   emptyText="ไม่มีข้อมูล"
                   searchText="ค้นหาคณะที่สำเร็จการศึกษา"
                   choices={[...faculties]}
                 />
-                <ErrorMsgFloat>{errors.graduateFaculty?.message}</ErrorMsgFloat>
+                <ErrorMsgFloat>{errors.faculty?.message}</ErrorMsgFloat>
               </div>
             </div>
           )}
@@ -188,24 +210,23 @@ export default function Form() {
           />
           <ErrorMsgFloat>{errors.birthdate?.message}</ErrorMsgFloat>
         </div>
-
         {/* size */}
         <div className="relative space-y-1">
           <Label isRequired>ขนาดเสื้อ</Label>
           <DropdownInput
-            value={user.size}
-            setValue={updateField('size')}
+            value={user.sizeJersey}
+            setValue={updateField('sizeJersey')}
             placeholder="กรุณาเลือก"
-            choices={[...sizes]}
+            choices={[...sizeJersey]}
           />
-          <ErrorMsgFloat>{errors.size?.message}</ErrorMsgFloat>
+          <ErrorMsgFloat>{errors.sizeJersey?.message}</ErrorMsgFloat>
         </div>
 
         {/* foodAllegy */}
         <div className="relative space-y-1">
           <Label>ข้อจำกัดด้านอาหาร</Label>
-          <TextInput {...register('foodAllegy')} />
-          <ErrorMsgFloat>{errors.foodAllegy?.message}</ErrorMsgFloat>
+          <TextInput {...register('foodLimitation')} />
+          <ErrorMsgFloat>{errors.foodLimitation?.message}</ErrorMsgFloat>
         </div>
 
         {/* disease */}
@@ -223,8 +244,11 @@ export default function Form() {
         </div>
 
         {/* submit */}
-        <div className="flex justify-center pt-4">
-          <Button className="flex items-center justify-center gap-2 px-16 text-lg">
+        <div className="flex flex-col items-center justify-center gap-2 pt-4">
+          <Button
+            className="flex items-center justify-center gap-2 px-16 text-lg"
+            disabled={isEditing}
+          >
             <Image
               src={'/user/profile/save-icon.svg'}
               alt="save-icon"
@@ -233,6 +257,7 @@ export default function Form() {
             />
             <input type="submit" value={'บันทึกการแก้ไข'} />
           </Button>
+          <ErrorMsg className="text-base">{editError?.message}</ErrorMsg>
         </div>
       </form>
     </div>
