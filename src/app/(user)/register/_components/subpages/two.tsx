@@ -6,7 +6,6 @@ import CheckBox from '../policy/checkbox';
 import { Button } from '@/components/ui/button';
 
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
-import { User } from '../../schema/user';
 import DateInput from '../dateInput';
 
 import { useEffect } from 'react';
@@ -17,6 +16,11 @@ import { faculties } from '../../_data/faculties';
 import { sizes } from '../../_data/size';
 import ErrorMsg from '../errorMsg';
 import RegisterLayout from '../RegisterLayout';
+import { authKey, registerUser } from '../../_api/register';
+import { useLiff } from '@/contexts/liff';
+import { User } from '../../_schema/user';
+import toast from 'react-hot-toast';
+import { ensureError } from '@/utils/error';
 
 interface TwoProps {
   setStep: (value: number) => void;
@@ -24,6 +28,7 @@ interface TwoProps {
 }
 
 export default function Two({ setStep, form }: TwoProps) {
+  const { client } = useLiff();
   const {
     handleSubmit,
     register,
@@ -34,9 +39,21 @@ export default function Two({ setStep, form }: TwoProps) {
 
   const user = watch();
 
-  const onSubmit: SubmitHandler<User> = data => {
-    console.log(data);
-    onNext();
+  const onSubmit: SubmitHandler<User> = async data => {
+    const toastId = toast.loading('กรุณารอสักครู่');
+    setTimeout(async () => {
+      if (!client?.id) return;
+      const req = { ...data, id: client.id };
+      const res = await registerUser(req);
+      if (res.success) {
+        localStorage.setItem(authKey, JSON.stringify(res));
+        toast.success('ลงทะเบียนสำเร็จ');
+        onNext();
+      } else {
+        toast.error(ensureError(res.error).message);
+        toast.dismiss(toastId);
+      }
+    }, 2000);
   };
 
   const updateField = (field: keyof User) => {

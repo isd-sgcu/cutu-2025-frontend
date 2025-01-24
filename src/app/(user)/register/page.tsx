@@ -8,10 +8,10 @@ import Three from './_components/subpages/three';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { User, UserSchema } from './schema/user';
+import { User, UserSchema } from './_schema/user';
 
 export default function Page() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
 
   const [isTerm, setIsTerm] = useState(false);
   const [isPDPA, setIsPDPA] = useState(false);
