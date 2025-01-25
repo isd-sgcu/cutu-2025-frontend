@@ -129,6 +129,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     login();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
