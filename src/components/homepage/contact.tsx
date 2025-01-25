@@ -11,7 +11,10 @@ export default function Contact() {
           <p className="mb-9 underline">นโยบายคุ้มครองข้อมูลส่วนบุคคล</p>
         </Link>
         <p className="mb-2 font-semibold">ติดต่อเรา</p>{' '}
-        <Link href={''} className="mb-2 flex flex-row">
+        <Link
+          href={'https://www.facebook.com/CUTUFootball/?locale=th_TH'}
+          className="mb-2 flex flex-row"
+        >
           <Image
             src={getImageURL('/homepage/Facebook.svg')}
             width={16}
@@ -21,7 +24,10 @@ export default function Contact() {
           />
           <p>Chula BAKA</p>
         </Link>{' '}
-        <Link href={''} className="mb-2 flex flex-row">
+        <Link
+          href={'https://www.instagram.com/chulabaka/'}
+          className="mb-2 flex flex-row"
+        >
           <Image
             src={getImageURL('/homepage/Instagram.svg')}
             width={16}
@@ -31,7 +37,7 @@ export default function Contact() {
           />
           <p>chulabaka</p>
         </Link>{' '}
-        <Link href={''} className="mb-2 flex flex-row">
+        <Link href={'https://x.com/chulabaka'} className="mb-2 flex flex-row">
           <Image
             src={getImageURL('/homepage/X.svg')}
             width={16}
@@ -41,7 +47,7 @@ export default function Contact() {
           />
           <p>@chulabaka</p>
         </Link>{' '}
-        <Link href={''} className="mt-6 flex flex-row items-center">
+        <div className="mt-6 flex flex-row items-center">
           <Image
             src={getImageURL('/homepage/Logo.svg')}
             width={21}
@@ -50,7 +56,7 @@ export default function Contact() {
             className="mr-2"
           />
           <p>ฟุตบอลประเพณีธรรมศาสตร์-จุฬาฯ ครั้งที่ 75</p>
-        </Link>
+        </div>
       </div>
     </section>
   );
