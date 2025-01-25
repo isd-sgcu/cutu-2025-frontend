@@ -89,7 +89,7 @@ export default function Two({ setStep, form }: TwoProps) {
     <RegisterLayout
       step={2}
       onBack={onBack}
-      bgPath="/(user)/register/bg.jpg"
+      bgPath="/user/register/bg.jpg"
       backMsg="กลับ"
     >
       <form className="w-full space-y-4 py-8" onSubmit={handleSubmit(onSubmit)}>

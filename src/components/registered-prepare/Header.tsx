@@ -8,7 +8,7 @@ export default function header() {
       <div className="relative flex flex-col pt-14">
         <div>
           <Image
-            src={getImageURL('/(user)/registered-prepare/Logo.svg')}
+            src={getImageURL('/user/registered-prepare/Logo.svg')}
             className="mx-auto"
             width={60}
             height={70}

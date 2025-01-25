@@ -34,7 +34,7 @@ export default function BackWarning({
         <DialogTitle></DialogTitle>
         <div className="flex flex-col items-center rounded-md text-xl">
           <Image
-            src={getImageURL('/(user)/register/question-mark.svg')}
+            src={getImageURL('/user/register/question-mark.svg')}
             width={100}
             height={100}
             alt="warning"

@@ -39,7 +39,7 @@ export default function One({
     <RegisterLayout
       step={1}
       onBack={onBack}
-      bgPath="/(user)/register/bg.jpg"
+      bgPath="/user/register/bg.jpg"
       backMsg="กลับ"
     >
       <BackWarning

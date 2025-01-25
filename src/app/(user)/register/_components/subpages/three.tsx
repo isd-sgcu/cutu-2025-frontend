@@ -36,7 +36,7 @@ export default function Three() {
     <RegisterLayout
       step={3}
       onBack={onBack}
-      bgPath="/(user)/register/bg.jpg"
+      bgPath="/user/register/bg.jpg"
       backMsg="กลับ"
     >
       <main className="space-y-6 py-8">

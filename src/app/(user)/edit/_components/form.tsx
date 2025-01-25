@@ -225,7 +225,7 @@ export default function Form() {
         <div className="flex justify-center pt-4">
           <Button className="flex items-center justify-center gap-2 px-16 text-lg">
             <Image
-              src={'/(user)/profile/save-icon.svg'}
+              src={'/user/profile/save-icon.svg'}
               alt="save-icon"
               width={16}
               height={16}

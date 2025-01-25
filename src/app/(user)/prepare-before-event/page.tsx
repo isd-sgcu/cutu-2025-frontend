@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <div className="min-h-screen w-full">
       <Top
-        backgroundPath="/(user)/register/bg.jpg"
+        backgroundPath="/user/register/bg.jpg"
         back={'กลับเข้าสู่หน้าหลัก'}
         header="วิธีการเตรียมตัวก่อนวันงาน"
         onBack={() => router.push('/')}

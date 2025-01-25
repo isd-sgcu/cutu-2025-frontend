@@ -39,11 +39,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, children, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
     return variant == 'outline' ? (
-      <div className="rounded-full bg-gradient-to-r from-gradient-pirple to-gradient-pink p-1">
+      <button
+        className="rounded-full bg-gradient-to-r from-gradient-pirple to-gradient-pink p-1"
+        {...props}
+      >
         <div className="h-full w-full cursor-pointer rounded-full bg-white px-4">
           {children}
         </div>
-      </div>
+      </button>
     ) : (
       <Comp
         className={cn(
