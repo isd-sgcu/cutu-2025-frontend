@@ -17,11 +17,11 @@ import { useLiff } from '@/contexts/liff';
 import { useAuth } from '@/contexts/auth';
 import toast from 'react-hot-toast';
 import { RegisterForm } from '@/schema/register';
-import { educationsMap } from '@/data/educations';
-import { universities } from '@/data/universities';
-import { faculties } from '@/data/faculties';
-import { sizeJersey } from '@/data/size';
-import { statusMap } from '@/data/status';
+import { educationsMap } from '@/const/educations';
+import { universities } from '@/const/universities';
+import { faculties } from '@/const/faculties';
+import { sizeJersey } from '@/const/size';
+import { statusMap } from '@/const/status';
 
 interface TwoProps {
   setStep: (value: number) => void;

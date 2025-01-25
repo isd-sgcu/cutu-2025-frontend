@@ -12,12 +12,12 @@ import Image from 'next/image';
 import DateInput from '../../register/_components/dateInput';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { sizeJersey } from '@/data/size';
-import { faculties } from '@/data/faculties';
+import { sizeJersey } from '@/const/size';
+import { faculties } from '@/const/faculties';
 import { EditForm, EditSchema } from '@/schema/edit';
-import { educationsMap } from '@/data/educations';
-import { universities } from '@/data/universities';
-import { statusMap } from '@/data/status';
+import { educationsMap } from '@/const/educations';
+import { universities } from '@/const/universities';
+import { statusMap } from '@/const/status';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuth } from '@/contexts/auth';
