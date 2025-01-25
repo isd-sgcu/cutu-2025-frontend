@@ -11,7 +11,7 @@ const buttonVariants = cva(
       variant: {
         filled:
           'bg-gradient-to-r from-gradient-pirple to-gradient-pink text-white hover:opacity-80 focus-visible:ring-dark-pink',
-        outline: 'bg-white text-black border-none hover:bg-white',
+        outline: '',
         disabled: 'bg-disabled text-white',
         ghost: 'hover:bg-dark-pink/10',
       },
@@ -38,22 +38,26 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, children, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
-    return (
+    return variant == 'outline' ? (
       <div className="rounded-full bg-gradient-to-r from-gradient-pirple to-gradient-pink p-1">
-        <Comp
-          className={cn(
-            buttonVariants({
-              variant,
-              size,
-              className,
-            }),
-          )}
-          ref={ref}
-          {...props}
-        >
+        <div className="h-full w-full cursor-pointer rounded-full bg-white px-4">
           {children}
-        </Comp>
+        </div>
       </div>
+    ) : (
+      <Comp
+        className={cn(
+          buttonVariants({
+            variant,
+            size,
+            className,
+          }),
+        )}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </Comp>
     );
   },
 );
