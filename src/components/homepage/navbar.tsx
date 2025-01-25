@@ -51,8 +51,8 @@ export default function Navbar() {
             : 'pointer-events-none -translate-y-5 opacity-0'
         }`}
       >
-        <div className="mx-7 mb-2 w-full border-b border-gray-300" />
         <ul className="flex h-full flex-col items-center justify-center px-7 py-1 text-lg text-dark-pink">
+          <div className="mb-2 w-full border-b border-gray-300" />
           {menuItems.map((item, index) => (
             <Link
               key={index}

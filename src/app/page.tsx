@@ -8,7 +8,7 @@ import Sponsors from '@/components/homepage/sponsor';
 import Countdown from '@/components/homepage/timer';
 export default function Homepage() {
   return (
-    <div>
+    <div className='w-full'>
       <Navbar />
       <div className="mt-4" />
       <Hero />
