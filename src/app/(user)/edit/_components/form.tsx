@@ -83,9 +83,9 @@ export default function Form() {
     // set status
     if (user.education == 'studying') {
       if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'cu_student';
+        status = 'chula_student';
       } else {
-        status = 'student';
+        status = 'general_student';
       }
     } else {
       if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
