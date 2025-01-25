@@ -19,6 +19,8 @@ export default {
     },
     extend: {
       colors: {
+        'gradient-pirple': '#2D284B',
+        'gradient-pink': '#EB69A0',
         'dark-pink': '#DF729F',
         'light-pink': '#E9B0CC',
         'dark-blue': '#2D2A4A',
