@@ -5,11 +5,24 @@ import RegisterLayout from '../RegisterLayout';
 import { Check } from 'lucide-react';
 
 import { useRouter } from 'next/navigation';
+import { useToJpeg } from '@hugocxl/react-to-image';
 
 import QRCode from 'react-qr-code';
 
 export default function Three() {
   const router = useRouter();
+  const [, convert] = useToJpeg({
+    selector: '#qr',
+    onSuccess: data => {
+      const link = document.createElement('a');
+      link.download = 'cutu2025-qrcode.jpeg';
+      link.href = data;
+      link.click();
+    },
+    onError: error => {
+      console.error(error);
+    },
+  });
 
   function onBack() {
     router.push('/');
@@ -57,11 +70,14 @@ export default function Three() {
 
         {/* QR code */}
         <section className="flex flex-col items-center">
-          <QRCode value="qr-code" className="size-[200px]" />
+          <QRCode value="qr-code" className="size-[200px]" id="qr" />
         </section>
 
         {/* save buttons */}
-        <section className="flex flex-col items-center gap-4 pt-4">
+        <section
+          className="flex flex-col items-center gap-4 pt-4"
+          onClick={convert}
+        >
           <Button
             variant="outline"
             className="min-w-40 border-[3px] text-base font-light transition-colors"
