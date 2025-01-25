@@ -61,18 +61,12 @@ export default function Three() {
         </section>
 
         {/* save buttons */}
-        <section className="flex flex-col items-center gap-4">
+        <section className="flex flex-col items-center gap-4 pt-4">
           <Button
             variant="outline"
             className="min-w-40 border-[3px] text-base font-light transition-colors"
           >
             บันทึกไปยังโทรศัพท์
-          </Button>
-          <Button
-            variant="outline"
-            className="min-w-40 border-[3px] text-base font-light transition-colors"
-          >
-            บันทึกไปยังอีเมล
           </Button>
         </section>
 

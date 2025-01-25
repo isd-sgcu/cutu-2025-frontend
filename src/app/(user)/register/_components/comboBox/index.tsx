@@ -8,7 +8,6 @@ import * as React from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -45,11 +44,11 @@ export default function ComboBox({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
+        <div
           variant="outline"
-          role="combobox"
+          // role="combobox"
           aria-expanded={open}
-          className="min-h-10 w-full justify-between rounded-sm border border-dark-gray px-3 text-black hover:bg-white hover:text-black focus:border-2 focus:border-dark-pink focus:text-black focus:outline-none focus:ring-0 font-normal"
+          className="flex min-h-10 w-full items-center justify-between rounded-sm border border-dark-gray px-3 text-sm font-normal text-black hover:bg-white hover:text-black focus:border-2 focus:border-dark-pink focus:text-black focus:outline-none focus:ring-0"
         >
           <div className="overflow-hidden text-ellipsis">
             {value ? (
@@ -59,7 +58,7 @@ export default function ComboBox({
             )}
           </div>
           <ChevronDown className="size-5 text-black opacity-50" size={5} />
-        </Button>
+        </div>
       </PopoverTrigger>
       {/* TODO: adjust popover content to be width fulll */}
       <PopoverContent className="p-0">
