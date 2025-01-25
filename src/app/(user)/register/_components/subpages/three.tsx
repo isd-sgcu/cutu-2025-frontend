@@ -64,13 +64,13 @@ export default function Three() {
         <section className="flex flex-col items-center gap-4">
           <Button
             variant="outline"
-            className="min-w-40 border-[3px] text-base font-light transition-colors hover:bg-dark-pink hover:text-white"
+            className="min-w-40 border-[3px] text-base font-light transition-colors"
           >
             บันทึกไปยังโทรศัพท์
           </Button>
           <Button
             variant="outline"
-            className="min-w-40 border-[3px] text-base font-light transition-colors hover:bg-dark-pink hover:text-white"
+            className="min-w-40 border-[3px] text-base font-light transition-colors"
           >
             บันทึกไปยังอีเมล
           </Button>
