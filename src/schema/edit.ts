@@ -1,9 +1,10 @@
 import { z } from 'zod';
-import { universities } from '../data/universities';
-import { faculties } from '../data/faculties';
-import { status } from '@/data/status';
-import { educations } from '@/data/educations';
-import { sizeJersey } from '@/data/size';
+
+import { status } from '@/const/status';
+import { educations } from '@/const/educations';
+import { sizeJersey } from '@/const/size';
+import { universities } from '@/const/universities';
+import { faculties } from '@/const/faculties';
 
 export const EditSchema = z.object({
   name: z.string().min(1, 'กรุณากรอกชื่อ-นามสกุล'),

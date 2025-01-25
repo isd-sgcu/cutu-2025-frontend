@@ -6,4 +6,3 @@ export const AuthTokenSchema = z.object({
 });
 
 export type AuthToken = z.infer<typeof AuthTokenSchema>;
-
