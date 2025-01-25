@@ -1,0 +1,24 @@
+export default function Inf() {
+  const ID = '0123456789';
+  const fname = 'พงษ์บุริศร์ ว่องไชยกุล';
+
+  return (
+    <div className="flex flex-col items-center justify-center text-[12px] text-white">
+      <p>
+        #UID<span>{ID}</span>
+      </p>
+      <p>
+        <span>{fname}</span>
+      </p>
+      <div className="mt-[5px] h-[1px] w-[245px] bg-white" />
+      <div className="mt-3 flex flex-col items-center">
+        <div className="flex">
+          <p>15 กุมภาพันธ์ 2568 | 13.00 น. เป็นต้นไป</p>
+        </div>
+        <div className="flex">
+          <p>สนามศุภชลาศัย สนามกีฬาแห่งชาติ</p>
+        </div>
+      </div>
+    </div>
+  );
+}
