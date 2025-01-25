@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { User, UserSchema } from './schema/user';
 
 export default function Page() {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
 
   const [isTerm, setIsTerm] = useState(false);
   const [isPDPA, setIsPDPA] = useState(false);
