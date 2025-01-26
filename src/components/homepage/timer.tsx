@@ -38,7 +38,7 @@ export default function Timer() {
   }, [targetDate]);
 
   return (
-    <section className="bg-light-pink p-4 text-center">
+    <section className="bg-gradient-to-t from-[#EB69A0] to-[#F0AACD] p-4 text-center">
       {/* Top Text */}
       <p className="text-base font-light">สิ้นสุดการลงทะเบียนในอีก...</p>
 

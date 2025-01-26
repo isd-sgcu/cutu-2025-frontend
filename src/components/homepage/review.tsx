@@ -23,7 +23,10 @@ export default function Reviews() {
   };
 
   return (
-    <section className="bg-light-blue px-3 py-4">
+    <section
+      id="reviews"
+      className="bg-gradient-to-b from-[#EB69A0] to-[#648CD2] px-3 py-4"
+    >
       <h2 className="text-center text-2xl font-bold text-white">รีวิว</h2>
       <div className="relative mt-4 flex items-center">
         {/* Left Navigation Button */}
@@ -37,7 +40,7 @@ export default function Reviews() {
         {/* Review Content */}
         <div
           ref={scrollRef}
-          className="scroll-container flex w-full gap-8 overflow-x-auto px-5"
+          className="scroll-container mx-14 flex w-full gap-8 overflow-x-auto"
         >
           {reviews.map(({ image, name, text }, idx) => (
             <div key={idx} className="w-64 flex-shrink-0 rounded-lg">

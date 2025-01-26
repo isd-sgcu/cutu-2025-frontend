@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Contact() {
   return (
-    <section className="p-4">
+    <section id="contacts" className="p-4">
       <div className="text-sm">
         <Link href={''} className="cursor-pointer">
           <p className="underline">ข้อตกลงและเงื่อนไข</p>

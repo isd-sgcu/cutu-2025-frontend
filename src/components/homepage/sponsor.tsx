@@ -32,31 +32,29 @@ export default function Sponsors() {
         </button>
 
         {/* Sponsors Content */}
-        <div
-          ref={scrollRef}
-          className="scroll-container flex gap-8 overflow-x-auto px-5"
-        >
-          {Array.from({ length: Math.ceil(sponsors.length / 8) }, (_, i) => (
+        <div ref={scrollRef} className="mx-10 flex w-full overflow-auto">
+          {Array.from({ length: Math.ceil(sponsors.length / 16) }, (_, i) => (
             <div
               key={i}
-              className="grid min-w-[300px] grid-cols-4 grid-rows-2 gap-4"
+              className="grid grid-cols-4 grid-rows-2 gap-x-10 gap-y-4"
             >
-              {sponsors.slice(i * 8, i * 8 + 8).map(({ image, name }, idx) => (
-                <div
-                  key={idx}
-                  className="flex h-9 w-9 flex-shrink-0 items-center justify-center border border-gray-300"
-                >
-                  <div className="flex h-full items-center justify-center">
-                    <Image
-                      src={getImageURL(image)}
-                      alt={name}
-                      width={35}
-                      height={35}
-                      className="rounded-full"
-                    />
+              {sponsors
+                .slice(i * 16, i * 16 + 16)
+                .map(({ image, name }, idx) => (
+                  <div
+                    key={idx}
+                    className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-gray-300"
+                  >
+                    <div className="relative aspect-[1/1] w-full">
+                      <Image
+                        src={getImageURL(image)}
+                        alt={name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           ))}
         </div>

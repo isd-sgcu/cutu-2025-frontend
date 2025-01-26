@@ -6,7 +6,7 @@ export default function Hero() {
     <section className="relative z-0 flex aspect-[393/267] w-full flex-col items-center justify-center">
       <Image
         src={getImageURL('/homepage/hero.png')}
-        className="brightness-75"
+        className="brightness-50"
         fill
         alt="hero"
       />
@@ -14,11 +14,13 @@ export default function Hero() {
         <h1 className="text-3xl font-bold tracking-widest text-white">
           75th TU-CU
         </h1>
-        <p className="text-base text-white">15 กุมภาพันธ์ 2568 | 13.00</p>
-        <p className="text-base text-white">กรีฑาสถานแห่งชาติ</p>
+        <p className="text-base font-semibold text-white">
+          15 กุมภาพันธ์ 2568 | 13.00
+        </p>
+        <p className="text-base font-semibold text-white">กรีฑาสถานแห่งชาติ</p>
         <Link
           href={'/register'}
-          className="mt-4 rounded-[40px] bg-dark-pink px-4 py-2 text-base text-white"
+          className="mt-4 rounded-[40px] bg-gradient-to-r from-[#2D284B] to-[#EB69A0] px-4 py-2 text-base font-semibold text-white"
         >
           ลงทะเบียน
         </Link>
