@@ -10,9 +10,7 @@ import { User } from '@/schema/user';
 import { LoginResp } from '@/schema/login';
 import { EditReq } from '@/schema/edit';
 import { Result } from '@/utils/error';
-import { AxiosError } from 'axios';
-import { apiClient } from './axios';
-import { ErrorDTO } from '@/schema/error';
+
 
 export const authKey: LocalStorageKey = 'auth-data';
 
