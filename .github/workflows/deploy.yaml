@@ -1,7 +1,7 @@
 name: Deploy to Cloud Run
 
 env:
-  SERVICE_NAME: CUTU2025-frontend
+  SERVICE_NAME: cutu2025-frontend
 
 on:
   push:
