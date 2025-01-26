@@ -13,6 +13,7 @@ import {
   login as sendLogin,
   register as sendRegister,
   edit as sendEdit,
+  setAuthData,
 } from '@/utils/auth';
 
 import { useLiff } from './liff';
@@ -105,6 +106,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
     if (resp.success) {
       console.log('register success:', resp.result);
+      setAuthData(resp.result);
     } else {
       console.error('register faild:', resp.error);
       set('registerError', resp.error);
@@ -112,6 +114,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
     set('isRegistering', false);
     return await login();
+    return resp;
   }
 
   async function edit(data: RegisterReq) {

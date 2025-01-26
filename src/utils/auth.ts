@@ -11,6 +11,9 @@ import { LoginResp } from '@/schema/login';
 import { EditReq } from '@/schema/edit';
 import { Result } from '@/utils/error';
 
+import { AxiosError } from 'axios';
+import { apiClient } from './axios';
+import { ErrorDTO } from '@/schema/error';
 
 export const authKey: LocalStorageKey = 'auth-data';
 
@@ -28,19 +31,18 @@ export function setAuthData(data: AuthToken) {
 export async function register(
   req: RegisterReq,
 ): Promise<Result<RegisterResp>> {
-  return new Promise<Result<RegisterResp>>(resolve => {
-    setTimeout(() => {
-      const data = {
-        accessToken: 'mock accessToken',
-        userId: 'mock userId' + req,
-      };
-      setAuthData(data);
-      resolve({
-        success: true,
-        result: data,
-      });
-    }, 2000);
-  });
+  try {
+    const res = await apiClient.postForm<RegisterResp>('/users/register', req);
+    return { success: true, result: res.data };
+  } catch (raw: unknown) {
+    const error = raw as AxiosError<ErrorDTO>;
+    return {
+      success: false,
+      error: new Error(
+        error.response ? error.response.data.message : error.message,
+      ),
+    };
+  }
 }
 
 export const login = async (id: string): Promise<Result<LoginResp>> => {
