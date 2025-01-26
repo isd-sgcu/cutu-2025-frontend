@@ -28,7 +28,10 @@ export default function Benefits() {
   };
 
   return (
-    <section className="h-80 bg-dark-pink p-4">
+    <section
+      id="benefits"
+      className="h-80 bg-gradient-to-t from-[#EB69A0] to-[#853B5B] p-4"
+    >
       <h2 className="mb-4 text-center text-2xl font-bold text-white">
         สิทธิประโยชน์
       </h2>
@@ -36,7 +39,7 @@ export default function Benefits() {
         {/* Left Navigation Button */}
         <button
           onClick={() => scrollCarousel('left')}
-          className="absolute left-0 top-1/2 z-10 h-8 w-8 -translate-y-1/2 scale-75 transform rounded-full bg-light-blue font-bold text-white"
+          className="absolute left-0 top-1/2 z-10 h-8 w-8 -translate-y-1/2 scale-75 transform rounded-full bg-dark-pink font-bold text-white"
         >
           <div className="relative grid scale-50 justify-items-center gap-1.5">
             <span className="h-0.5 w-6 translate-y-3 rotate-45 rounded-full bg-white" />
@@ -74,7 +77,7 @@ export default function Benefits() {
         {/* Right Navigation Button */}
         <button
           onClick={() => scrollCarousel('right')}
-          className="absolute right-0 top-1/2 z-10 h-8 w-8 -translate-y-1/2 scale-75 transform rounded-full bg-light-blue font-bold text-white"
+          className="absolute right-0 top-1/2 z-10 h-8 w-8 -translate-y-1/2 scale-75 transform rounded-full bg-dark-pink font-bold text-white"
         >
           <div className="relative grid scale-50 justify-items-center gap-1.5">
             <span className="h-0.5 w-6 translate-y-3 -rotate-45 rounded-full bg-white" />
