@@ -9,8 +9,8 @@ const anuphan = Anuphan({
 });
 
 export const metadata: Metadata = {
-  title: 'CUTU 2025',
-  description: 'CUTU 2025',
+  title: 'TUCU 2025',
+  description: 'TUCU 2025',
 };
 
 export default async function RootLayout({
@@ -19,7 +19,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <head>
         <link
           rel="icon"

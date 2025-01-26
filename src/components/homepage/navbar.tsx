@@ -10,7 +10,6 @@ export default function Navbar() {
   const menuItems = [
     { title: 'หน้าหลัก', link: '/' },
     { title: 'สิทธิประโยชน์', link: '#benefits' },
-    { title: 'รีวิว', link: '#reviews' },
     { title: 'ติดต่อเรา', link: '#contacts' },
     { title: 'ลงทะเบียน', link: '/register' },
   ];
