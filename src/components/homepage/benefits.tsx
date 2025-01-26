@@ -51,18 +51,17 @@ export default function Benefits() {
         {/* Carousel */}
         <div
           ref={carouselRef}
-          className="scrollbar-hide flex gap-4 overflow-x-auto"
+          className="no-scrollbar flex gap-4 overflow-x-auto"
         >
           {benefits.map(({ title, description, image }, index) => (
             <div
               key={index}
               className="h-[227px] w-[201px] flex-shrink-0 border bg-white p-4"
             >
-              <div className="flex flex-col items-center">
+              <div className="relative flex aspect-[174/107] w-full flex-col items-center">
                 <Image
                   src={getImageURL(image)}
-                  width={174}
-                  height={107}
+                  fill
                   alt={title}
                   className="rounded"
                 />

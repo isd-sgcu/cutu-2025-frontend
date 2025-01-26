@@ -32,31 +32,32 @@ export default function Sponsors() {
         </button>
 
         {/* Sponsors Content */}
-        <div ref={scrollRef} className="mx-10 flex w-full overflow-auto">
-          {Array.from({ length: Math.ceil(sponsors.length / 16) }, (_, i) => (
-            <div
-              key={i}
-              className="grid grid-cols-4 grid-rows-2 gap-x-10 gap-y-4"
-            >
-              {sponsors
-                .slice(i * 16, i * 16 + 16)
-                .map(({ image, name }, idx) => (
-                  <div
-                    key={idx}
-                    className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-gray-300"
-                  >
-                    <div className="relative aspect-[1/1] w-full">
-                      <Image
-                        src={getImageURL(image)}
-                        alt={name}
-                        fill
-                        className="object-cover"
-                      />
+        <div
+          ref={scrollRef}
+          className="no-scrollbar flex gap-4 overflow-x-scroll"
+        >
+          {Array.from(
+            { length: Math.ceil(sponsors.length / 10) },
+            (_, pageIndex) => (
+              <div
+                key={pageIndex}
+                className="grid w-full shrink-0 grid-cols-5 grid-rows-2 place-items-center gap-5"
+              >
+                {sponsors
+                  .slice(pageIndex * 10, pageIndex * 10 + 10)
+                  .map(({ image, name }, sponsorIndex) => (
+                    <div
+                      key={sponsorIndex}
+                      className="flex h-9 w-9 overflow-hidden rounded-lg border border-gray-300"
+                    >
+                      <div className="relative aspect-[1/1] w-full">
+                        <Image src={getImageURL(image)} alt={name} fill />
+                      </div>
                     </div>
-                  </div>
-                ))}
-            </div>
-          ))}
+                  ))}
+              </div>
+            ),
+          )}
         </div>
 
         {/* Right Navigation Button */}
@@ -67,7 +68,7 @@ export default function Sponsors() {
           </div>
         </button>
       </div>
-      <div className="border-1 mx-4 mt-4 border border-b border-black"></div>
+      <div className="mx-4 mt-4 border border-b border-black"></div>
     </section>
   );
 }
