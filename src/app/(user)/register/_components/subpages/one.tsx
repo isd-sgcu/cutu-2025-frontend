@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { PDPA, termAndCondition } from '../../_data/policy';
+import { PDPA, termAndCondition } from '@/const/policy';
 
 import Policy from '../policy';
 import { Button } from '@/components/ui/button';

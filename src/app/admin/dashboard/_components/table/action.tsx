@@ -8,26 +8,33 @@ import {
 } from '@radix-ui/react-popover';
 
 import ActionList from './actionList';
+import { useDeleteUser } from '../../api/user';
+import { useAuth } from '@/contexts/auth';
 
-const actions = [
-  {
-    imageURL: '/admin/dashboard/circle-x.svg',
-    className: 'bg-error',
-    text: 'Remove',
-  },
-  {
-    imageURL: '/admin/dashboard/profile.svg',
-    className: 'bg-dark-pink',
-    text: 'Change to Staff',
-  },
-  {
-    imageURL: '/admin/dashboard/crown.svg',
-    className: 'bg-dark-blue',
-    text: 'Change to Admin',
-  },
-];
+export default function Action({ id }: { id: string }) {
+  const { token } = useAuth();
+  const { mutate: deleteUser } = useDeleteUser(id, token?.accessToken || '');
 
-export default function Action() {
+  const actions = [
+    {
+      imageURL: '/admin/dashboard/circle-x.svg',
+      className: 'bg-error',
+      text: 'Remove',
+      fn: deleteUser,
+    },
+    {
+      imageURL: '/admin/dashboard/profile.svg',
+      className: 'bg-dark-pink',
+      text: 'Change to Staff',
+      fn: () => {},
+    },
+    {
+      imageURL: '/admin/dashboard/crown.svg',
+      className: 'bg-dark-blue',
+      text: 'Change to Admin',
+      fn: () => {},
+    },
+  ];
   return (
     <Popover>
       <PopoverTrigger>

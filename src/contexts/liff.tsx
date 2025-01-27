@@ -30,25 +30,27 @@ export default function LineProvider({
   async function init() {
     try {
       await liff.init({ liffId: config.liffId });
+
       setState({
         client: liff,
         error: null,
         isInitializing: false,
       });
-
       if (!liff.isLoggedIn()) {
         setState(prev => ({ ...prev, isInitializing: true }));
         liff.login();
       }
-    } catch (error) {
+    } catch (raw: unknown) {
+      const error =
+        raw instanceof Error ? raw : new Error('Failed to initialize LIFF');
+
       setState({
         client: null,
-        error:
-          error instanceof Error
-            ? error
-            : new Error('Failed to initialize LIFF'),
+        error: error,
         isInitializing: false,
       });
+
+      console.error('error init liff: ', error);
     }
   }
 

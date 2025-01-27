@@ -3,10 +3,15 @@ import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
 import React from 'react';
 
+interface SearchStaffProps extends React.ComponentPropsWithoutRef<'input'> {
+  handleSearch: () => void;
+}
+
 export default function SearchStaff({
   className,
+  handleSearch,
   ...props
-}: React.ComponentPropsWithoutRef<'input'>) {
+}: SearchStaffProps) {
   return (
     <div className="relative flex items-center px-6 py-4">
       <TextInput
@@ -17,7 +22,10 @@ export default function SearchStaff({
         placeholder="searching staff"
         {...props}
       />
-      <Search className="absolute right-10 text-dark-gray" />
+      <Search
+        className="absolute right-10 text-dark-gray"
+        onClick={handleSearch}
+      />
     </div>
   );
 }

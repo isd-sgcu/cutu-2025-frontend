@@ -4,23 +4,20 @@ import { Row } from './row';
 import { Col } from './col';
 import Role from './role';
 import Action from './action';
+import { User } from '@/schema/user';
 
-export interface UserRowProps {
-  UID: string;
-  name: string;
-  role: 'admin' | 'staff';
-}
-
-export default function UserRow({ UID, name, role }: UserRowProps) {
+export default function UserRow({ user }: { user: User }) {
   return (
     <Row className="border-y border-mid-gray">
-      <Col>{UID}</Col>
-      <Col className="text-center">{name}</Col>
+      <Col className="overflow-hidden truncate text-ellipsis px-4">
+        {user.id}
+      </Col>
+      <Col className="text-center">{user.name}</Col>
       <Col className="px-2">
-        <Role role={role} />
+        <Role role={user.role} />
       </Col>
       <Col>
-        <Action />
+        <Action id={user.id} />
       </Col>
     </Row>
   );

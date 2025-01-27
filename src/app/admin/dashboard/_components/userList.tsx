@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from './table/header';
-import UserRow, { UserRowProps } from './table/userRow';
+import UserRow from './table/userRow';
+import { User } from '@/schema/user';
 
 interface UserListProps {
-  users: UserRowProps[];
+  users: User[];
 }
 
 export default function UserList({ users }: UserListProps) {
@@ -11,7 +12,7 @@ export default function UserList({ users }: UserListProps) {
     <div>
       <Header />
       {users.map(user => (
-        <UserRow key={user.UID} {...user} />
+        <UserRow key={user.id} user={user} />
       ))}
     </div>
   );
