@@ -1,5 +1,4 @@
 import TextInput from '@/app/(user)/register/_components/textInput';
-import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/auth';
 import { UserPlus } from 'lucide-react';
 import { useState } from 'react';
@@ -35,14 +34,13 @@ export default function AddRole() {
         value={phone}
         onChange={e => setPhone(e.target.value)}
       />
-      <Button
-        inClassName="flex items-center justify-center gap-2 text-sm text-nowrap py-1"
-        variant={'outline'}
+      <button
+        className="flex items-center gap-2 text-nowrap rounded-full border border-dark-pink px-4 py-1.5 text-sm text-dark-pink"
         onClick={onAddStaff}
       >
         <UserPlus />
         Add Role
-      </Button>
+      </button>
     </div>
   );
 }

@@ -16,7 +16,7 @@ import { useLiff } from '@/contexts/liff';
 import { useAuth } from '@/contexts/auth';
 import toast from 'react-hot-toast';
 import { RegisterForm } from '@/schema/register';
-import { educationsMap } from '@/const/educations';
+import { educationsMap, educationsMapReverse } from '@/const/educations';
 import { universities } from '@/const/universities';
 import { faculties } from '@/const/faculties';
 import { sizeJersey } from '@/const/size';
@@ -142,9 +142,9 @@ export default function Two({ setStep, form }: TwoProps) {
           <Label isRequired>การศึกษา</Label>
           <DropdownInput
             value={educationsMap[user.education]}
-            setValue={val => setValue('education', educationsMap[val])}
+            setValue={val => setValue('education', educationsMapReverse[val])}
             placeholder="กำลังศึกษาอยู่"
-            choices={Object.keys(educationsMap).map(key => key)}
+            choices={Object.keys(educationsMapReverse).map(key => key)}
           />
           <ErrorMsgFloat>{errors.education?.message}</ErrorMsgFloat>
         </div>

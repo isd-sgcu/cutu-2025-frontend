@@ -10,7 +10,7 @@ export default function UserRow({ user }: { user: User }) {
   return (
     <Row className="border-y border-mid-gray">
       <Col className="overflow-hidden truncate text-ellipsis px-4">
-        {user.id}
+        #{user.uid}
       </Col>
       <Col className="text-center">{user.name}</Col>
       <Col className="px-2">
