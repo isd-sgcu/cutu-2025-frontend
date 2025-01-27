@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import React from 'react';
 
 interface RoleProps extends React.ComponentPropsWithoutRef<'div'> {
-  role: 'admin' | 'staff';
+  role: 'admin' | 'staff' | 'member';
 }
 
 export default function Role({ className, role, ...props }: RoleProps) {
