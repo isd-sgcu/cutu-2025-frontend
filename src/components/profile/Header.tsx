@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
 import { useAuth } from '@/contexts/auth';
 
-export default function header() {
+export default function Header() {
   const { user } = useAuth();
   let username = user?.name;
   if (username) {
