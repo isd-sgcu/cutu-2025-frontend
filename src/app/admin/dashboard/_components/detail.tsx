@@ -1,24 +1,26 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import AddRole from './addRole';
 import SearchStaff from './searchStaff';
 import UserList from './userList';
-import { User } from '@/schema/user';
+import { useAuth } from '@/contexts/auth';
+import { useGetUsers } from '../api/user';
 
-interface DetailProps {
-  users: User[];
-  name: string;
-  setName: (name: string) => void;
-  handleSearch: () => void;
-}
+export default function Detail() {
+  const [name, setName] = useState('');
+  const { token } = useAuth();
+  const { isLoading, refetch, data } = useGetUsers(
+    token?.accessToken || '',
+    name,
+  );
 
-export default function Detail({
-  users,
-  setName,
-  name,
-  handleSearch,
-}: DetailProps) {
+  function handleSearch() {
+    refetch();
+  }
+
+  const users = data || [];
+
   return (
     <div className="w-full flex-1 bg-white text-base">
       <AddRole />
@@ -27,7 +29,7 @@ export default function Detail({
         onChange={e => setName(e.target.value)}
         handleSearch={handleSearch}
       />
-      <UserList users={users} />
+      <UserList users={users} isLoading={isLoading} />
     </div>
   );
 }
