@@ -87,7 +87,7 @@ export async function edit(
   accessToken: string,
 ): Promise<Result<null>> {
   try {
-    await apiClient.patch(`/users/${req.id}`, req, {
+    await apiClient.patch(`/users`, req, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
