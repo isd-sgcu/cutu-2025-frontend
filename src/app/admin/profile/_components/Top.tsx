@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@/contexts/auth';
 import { getImageURL } from '@/utils/image';
 import Image from 'next/image';

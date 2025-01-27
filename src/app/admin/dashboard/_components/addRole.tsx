@@ -1,3 +1,5 @@
+'use client';
+
 import TextInput from '@/app/(user)/register/_components/textInput';
 import { useAuth } from '@/contexts/auth';
 import { UserPlus } from 'lucide-react';
