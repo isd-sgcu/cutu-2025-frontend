@@ -26,10 +26,10 @@ export default function Header() {
       </div>
       <div className="relative flex flex-col gap-1 text-center tracking-normal text-white">
         <h1 className="text-[18px] font-semibold leading-5">
-          CU-TU Unity Football 75<sup>th</sup>
+          The 75th TU-CU Traditional Football Match
         </h1>
         <h2 className="text-[12px] font-normal leading-4">
-          ฟุตบอลประเพณีธรรมศาสตร์-จุฬาฯ ครั้งที่ 75
+          งานฟุตบอลประเพณีธรรมศาสตร์-จุฬาฯ ครั้งที่ 75
         </h2>
         <div className="relative mt-3 flex flex-col">
           <h1 className="text-[20px] font-semibold leading-6">

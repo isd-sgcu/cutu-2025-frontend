@@ -19,7 +19,7 @@ const pages = {
   admin: {
     home: '/',
     qr: '/staff/qr',
-    profile: '/admin/dashboard',
+    profile: '/admin/profile',
   },
 };
 
