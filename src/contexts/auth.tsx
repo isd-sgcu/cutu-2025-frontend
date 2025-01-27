@@ -34,6 +34,7 @@ interface AuthState {
   isLoggingIn: boolean;
   isRegistering: boolean;
   isEditing: boolean;
+  isInitialized: boolean;
   login(): Promise<Result<LoginResp>>;
   edit(req: EditReq): Promise<Result<null>>;
   register(req: RegisterReq): Promise<Result<RegisterResp>>;
@@ -54,6 +55,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     isLoggingIn: false,
     isRegistering: false,
     isEditing: false,
+    isInitialized: false,
   });
   const { client } = useLiff();
 
@@ -71,15 +73,16 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       return { success: false, error: error };
     }
 
+    console.log('start login');
     set('isLoggingIn', true);
     const loginResp = await sendLogin(userId);
 
     if (loginResp.success) {
       set('token', loginResp.result);
-      set('isLoggedIn', true);
     } else {
       console.error('login failed:', loginResp.error);
       set('loginError', loginResp.error);
+      set('isLoggingIn', false);
       return loginResp;
     }
 
@@ -89,10 +92,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     } else {
       console.error('get user failed:', UserResp.error);
       set('loginError', UserResp.error);
+      set('isLoggingIn', false);
       return UserResp;
     }
 
-    set('isLoggedIn', false);
+    set('isLoggingIn', false);
 
     return {
       success: true,
@@ -136,6 +140,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     login();
+    set('isInitialized', true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
