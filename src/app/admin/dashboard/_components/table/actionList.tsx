@@ -5,12 +5,14 @@ import Image from 'next/image';
 interface ActionListProps extends React.ComponentPropsWithoutRef<'div'> {
   imageURL: string;
   text: string;
+  fn: () => void;
 }
 
 export default function ActionList({
   imageURL,
   className,
   text,
+  fn,
   ...props
 }: ActionListProps) {
   return (
@@ -20,6 +22,7 @@ export default function ActionList({
         className,
       )}
       {...props}
+      onClick={fn}
     >
       <Image src={getImageURL(imageURL)} alt="icon" width={20} height={20} />
       {text}
