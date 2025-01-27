@@ -39,3 +39,5 @@ export const faculties = [
   'สถาบันวิจัยสังคม',
   'สถาบันเอเชียศึกษา',
 ] as const;
+
+export type Faculty = (typeof faculties)[number];

@@ -18,6 +18,11 @@ export default function Page() {
 
   const form = useForm<RegisterForm>({
     resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      drugAllergy: '-',
+      foodLimitation: '-',
+      chronicDisease: '-',
+    },
   });
 
   function getPage(): ReactNode {

@@ -38,54 +38,70 @@ export async function register(
     const error = raw as AxiosError<ErrorDTO>;
     return {
       success: false,
-      error: new Error(
-        error.response ? error.response.data.message : error.message,
-      ),
+      error: new Error(error.response?.data.error || error.message),
     };
   }
 }
 
 export const login = async (id: string): Promise<Result<LoginResp>> => {
-  const data = { accessToken: 'mock accessToken', userId: id };
-  setAuthData(data);
-  return {
-    success: true,
-    result: data,
-  };
+  try {
+    const resp = await apiClient.post(`/users/signin`, `"${id}"`, {
+      headers: {
+        'Content-Type': 'apllcation/json',
+      },
+    });
+    setAuthData(resp.data);
+    return { success: true, result: resp.data };
+  } catch (raw: unknown) {
+    const error = raw as AxiosError<ErrorDTO>;
+    return {
+      success: false,
+      error: new Error(
+        error.response ? error.response.data.error : error.message,
+      ),
+    };
+  }
 };
 
 export async function getUser(id: string): Promise<Result<User>> {
-  return new Promise<Result<User>>(resolve => {
-    setTimeout(() => {
-      resolve({
-        success: true,
-        result: {
-          id: id,
-          name: 'mock-name',
-          education: 'mock-education',
-          email: 'mock-email',
-          faculty: 'mock-faculty',
-          foodLimitation: 'mock-foodLimitation',
-          graduatedYear: 'mock-graduatedYear',
-          imageURL: 'mock-imageURL',
-          invitationCode: 'mock-invitationCode',
-          lastEntered: 'mock-lastEntered',
-          phone: 'mock-phone',
-          role: 'mock-role',
-          sizeJersey: 'mock-sizeJersey',
-          status: 'mock-status',
-          university: 'mock-university',
-        },
-      });
-    }, 2000);
-  });
+  try {
+    const resp = await apiClient.get<User>(`/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${getAuthData()?.accessToken}`,
+      },
+    });
+    return { success: true, result: resp.data };
+  } catch (raw: unknown) {
+    const error = raw as AxiosError<ErrorDTO>;
+    return {
+      success: false,
+      error: new Error(
+        error.response ? error.response.data.error : error.message,
+      ),
+    };
+  }
 }
 
-export async function edit(req: EditReq): Promise<Result<null>> {
-  console.log('edit req: ', req);
-  return new Promise<Result<null>>(resolve => {
-    setTimeout(() => {
-      resolve({ success: true, result: null });
-    }, 2000);
-  });
+export async function edit(
+  req: EditReq,
+  accessToken: string,
+): Promise<Result<null>> {
+  try {
+    await apiClient.patch(`/users/${req.id}`, req, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return { success: true, result: null };
+  } catch (raw: unknown) {
+    const error = raw as AxiosError<ErrorDTO>;
+    if (error.response) {
+      return {
+        success: false,
+        error: new Error(error.response.data.error),
+      };
+    } else {
+      return { success: false, error: new Error(error.message) };
+    }
+  }
 }

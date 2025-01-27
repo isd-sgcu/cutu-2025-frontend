@@ -390,3 +390,5 @@ export const universities = [
   'โรงเรียนเสนาธิการทหารบก',
   'วิทยาลัยนานาชาติราฟเฟิลส์',
 ] as const;
+
+export type University = (typeof universities)[number];

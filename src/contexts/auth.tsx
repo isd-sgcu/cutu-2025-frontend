@@ -105,21 +105,25 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const resp = await sendRegister(data);
 
     if (resp.success) {
-      console.log('register success:', resp.result);
       setAuthData(resp.result);
     } else {
       console.error('register faild:', resp.error);
       set('registerError', resp.error);
+      return resp;
     }
 
     set('isRegistering', false);
     return await login();
-    return resp;
   }
 
   async function edit(data: RegisterReq) {
+    if (!state.token?.accessToken) {
+      const error = new Error(state.token?.accessToken);
+      console.error('Failed edit:', error);
+      return { success: false, error } as Result<null>;
+    }
     set('isEditing', true);
-    const resp = await sendEdit(data);
+    const resp = await sendEdit(data, state.token.accessToken);
 
     if (!resp.success) {
       console.error('edit faild:', resp.error);

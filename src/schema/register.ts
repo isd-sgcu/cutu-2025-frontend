@@ -9,16 +9,18 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, 'กรุณากรอกชื่อ-นามสกุล'),
   email: z.string().email('กรุณากรอกอีเมล'),
   phone: z.string().regex(/^\d+$/, 'กรุณากรอกเลข 0-9 เท่านั้น'),
-  birthdate: z.date({
-    message: 'กรุณากรอกวันเกิด',
-  }),
+  age: z
+    .string({
+      message: 'กรุณากรอกอายุ',
+    })
+    .regex(/^\d+$/, 'กรุณากรอกเลข 0-9 เท่านั้น'),
   sizeJersey: z.enum(sizeJersey, {
     message: 'กรุณาเลือกขนาดเสื้อ',
   }),
   education: z.enum(educations, { message: 'กรุณาเลือกการศึกษา' }),
   foodLimitation: z.string(),
-  disease: z.string(),
-  drugAllegy: z.string(),
+  chronicDisease: z.string(),
+  drugAllergy: z.string(),
   image: z
     .instanceof(File, {
       message: 'กรุณาอัพโหลดรูปบัตรประชาชน',

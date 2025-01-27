@@ -11,3 +11,5 @@ export const statusMap = {
   general_student: 'นักศึกษา',
   general_public: 'บุคคลทั่วไป',
 };
+
+export type Status = (typeof status)[number];

@@ -5,7 +5,6 @@ import TextInput from '../textInput';
 import DropdownInput from '../dropdownInput';
 import ImageInput from '../imageinput';
 import CheckBox from '../policy/checkbox';
-import DateInput from '../dateInput';
 import ComboBox from '../comboBox';
 import { ErrorMsg, ErrorMsgFloat } from '../errorMsg';
 import RegisterLayout from '../RegisterLayout';
@@ -214,14 +213,11 @@ export default function Two({ setStep, form }: TwoProps) {
             </div>
           )}
 
-        {/* birthDate */}
+        {/* age */}
         <div className="relative space-y-1">
-          <Label isRequired>วันเกิด</Label>
-          <DateInput
-            value={user.birthdate}
-            setValue={updateField('birthdate')}
-          />
-          <ErrorMsgFloat>{errors.birthdate?.message}</ErrorMsgFloat>
+          <Label isRequired>อายุ</Label>
+          <TextInput {...register('age')} />
+          <ErrorMsgFloat>{errors.age?.message}</ErrorMsgFloat>
         </div>
 
         {/* size */}
@@ -246,15 +242,15 @@ export default function Two({ setStep, form }: TwoProps) {
         {/* disease */}
         <div className="relative space-y-1">
           <Label>โรคประจำตัว</Label>
-          <TextInput {...register('disease')} />
-          <ErrorMsgFloat>{errors.disease?.message}</ErrorMsgFloat>
+          <TextInput {...register('chronicDisease')} />
+          <ErrorMsgFloat>{errors.chronicDisease?.message}</ErrorMsgFloat>
         </div>
 
         {/* drugAllegy */}
         <div className="relative space-y-1">
           <Label>การแพ้ยา</Label>
-          <TextInput {...register('drugAllegy')} />
-          <ErrorMsgFloat>{errors.drugAllegy?.message}</ErrorMsgFloat>
+          <TextInput {...register('drugAllergy')} />
+          <ErrorMsgFloat>{errors.drugAllergy?.message}</ErrorMsgFloat>
         </div>
 
         {/* idCardImg */}

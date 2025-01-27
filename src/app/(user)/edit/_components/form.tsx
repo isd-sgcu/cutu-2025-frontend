@@ -9,7 +9,6 @@ import Label from '../../register/_components/label';
 import { Button } from '@/components/ui/button';
 import { ErrorMsg, ErrorMsgFloat } from '../../register/_components/errorMsg';
 import Image from 'next/image';
-import DateInput from '../../register/_components/dateInput';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { sizeJersey } from '@/const/size';
@@ -25,18 +24,37 @@ import { useLiff } from '@/contexts/liff';
 import toast from 'react-hot-toast';
 
 export default function Form() {
+  const { editError, edit, isEditing, user: defaultUser } = useAuth();
+  const { client } = useLiff();
   const {
     handleSubmit,
     register,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<EditForm>({
     resolver: zodResolver(EditSchema),
   });
-
-  const { editError, edit, isEditing } = useAuth();
-  const { client } = useLiff();
+  useEffect(() => {
+    if (defaultUser) {
+      reset({
+        name: defaultUser.name,
+        email: defaultUser.email,
+        phone: defaultUser.phone,
+        education: defaultUser.education,
+        university: defaultUser.university,
+        status: defaultUser.status,
+        graduatedYear: defaultUser.graduatedYear,
+        faculty: defaultUser.faculty,
+        age: defaultUser.age,
+        sizeJersey: defaultUser.sizeJersey,
+        foodLimitation: defaultUser.foodLimitation,
+        chronicDisease: defaultUser.chronicDisease,
+        drugAllergy: defaultUser.drugAllergy,
+      });
+    }
+  }, [defaultUser, reset]);
 
   const user = watch();
 
@@ -203,12 +221,9 @@ export default function Form() {
 
         {/* birthDate */}
         <div className="relative space-y-1">
-          <Label isRequired>วันเกิด</Label>
-          <DateInput
-            value={user.birthdate}
-            setValue={updateField('birthdate')}
-          />
-          <ErrorMsgFloat>{errors.birthdate?.message}</ErrorMsgFloat>
+          <Label isRequired>อายุ</Label>
+          <TextInput {...register('age')} />
+          <ErrorMsgFloat>{errors.age?.message}</ErrorMsgFloat>
         </div>
         {/* size */}
         <div className="relative space-y-1">
@@ -232,15 +247,15 @@ export default function Form() {
         {/* disease */}
         <div className="relative space-y-1">
           <Label>โรคประจำตัว</Label>
-          <TextInput {...register('disease')} />
-          <ErrorMsgFloat>{errors.disease?.message}</ErrorMsgFloat>
+          <TextInput {...register('chronicDisease')} />
+          <ErrorMsgFloat>{errors.chronicDisease?.message}</ErrorMsgFloat>
         </div>
 
         {/* drugAllegy */}
         <div className="relative space-y-1">
           <Label>การแพ้ยา</Label>
-          <TextInput {...register('drugAllegy')} />
-          <ErrorMsgFloat>{errors.drugAllegy?.message}</ErrorMsgFloat>
+          <TextInput {...register('drugAllergy')} />
+          <ErrorMsgFloat>{errors.drugAllergy?.message}</ErrorMsgFloat>
         </div>
 
         {/* submit */}
