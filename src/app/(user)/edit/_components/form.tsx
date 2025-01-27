@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { sizeJersey } from '@/const/size';
 import { faculties } from '@/const/faculties';
 import { EditForm, EditSchema } from '@/schema/edit';
-import { educationsMap } from '@/const/educations';
+import { educationsMap, educationsMapReverse } from '@/const/educations';
 import { universities } from '@/const/universities';
 import { statusMap } from '@/const/status';
 
@@ -148,9 +148,14 @@ export default function Form() {
           <Label isRequired>การศึกษา</Label>
           <DropdownInput
             value={educationsMap[user.education]}
-            setValue={val => setValue('education', educationsMap[val])}
+            setValue={val =>
+              setValue(
+                'education',
+                educationsMapReverse[val as 'กำลังศึกษา' | 'จบการศึกษา'],
+              )
+            }
             placeholder="กำลังศึกษาอยู่"
-            choices={Object.keys(educationsMap).map(key => key)}
+            choices={Object.keys(educationsMapReverse).map(key => key)}
           />
           <ErrorMsgFloat>{errors.education?.message}</ErrorMsgFloat>
         </div>
