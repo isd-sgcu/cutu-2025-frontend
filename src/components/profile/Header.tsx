@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
-//import { useLiff } from '@/contexts/liff';
+// import { useLiff } from '@/contexts/liff';
 //import { useAuth } from '@/contexts/auth';
 
 export default function header() {
-  //const { user } = useAuth();
-  //const username = user?.name;
+  // const { user } = useAuth();
+  // const username = user?.name;
 
   return (
     <div className="relative mx-auto items-center justify-center">
