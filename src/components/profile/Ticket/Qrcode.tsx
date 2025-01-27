@@ -1,9 +1,15 @@
+'use client';
+
 import React from 'react';
 import QRCode from 'react-qr-code';
 import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
+import { useLiff } from '@/contexts/liff';
 
 export default function QR() {
+  const { client } = useLiff();
+  const context = client?.getContext();
+  const userId = context?.userId || '';
   return (
     <div>
       <div className="flex justify-center gap-2">
@@ -16,7 +22,7 @@ export default function QR() {
         <h2 className="text-center text-white">Your QR-Code</h2>
       </div>
       <div className="mt-4">
-        <QRCode value={'UID'} className="bg-white p-4" />
+        <QRCode value={userId} className="bg-white p-4" />
       </div>
     </div>
   );

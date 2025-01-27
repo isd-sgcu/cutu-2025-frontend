@@ -1,8 +1,15 @@
+'use client';
+
 import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
+import { useAuth } from '@/contexts/auth';
 
-export default function header() {
-  const username = 'Yang';
+export default function Header() {
+  const { user } = useAuth();
+  let username = user?.name;
+  if (username) {
+    username = username.split(' ')[0];
+  }
 
   return (
     <div className="relative mx-auto items-center justify-center">

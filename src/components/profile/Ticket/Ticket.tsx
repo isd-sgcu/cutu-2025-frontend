@@ -14,7 +14,7 @@ export default function Ticket() {
           <Inf />
           <InfButton />
         </div>
-        <div className="mt-20">
+        <div className="mt-24">
           <EditButton />
         </div>
       </div>
