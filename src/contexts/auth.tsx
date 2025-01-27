@@ -73,7 +73,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       return { success: false, error: error };
     }
 
-    console.log('start login');
     set('isLoggingIn', true);
     const loginResp = await sendLogin(userId);
 
@@ -139,8 +138,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    login();
-    set('isInitialized', true);
+    (async () => {
+      await login();
+      set('isInitialized', true);
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -18,10 +18,10 @@ export default function Protect({
   children,
   callBack = '/',
 }: ProtectProps) {
-  const { user, isLoggingIn, isInitialized } = useAuth();
+  const { user, isInitialized } = useAuth();
   const router = useRouter();
 
-  if (isLoggingIn || !isInitialized) {
+  if (!isInitialized) {
     return <Loading />;
   }
 
