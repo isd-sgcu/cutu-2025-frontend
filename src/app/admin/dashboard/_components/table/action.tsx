@@ -8,33 +8,56 @@ import {
 } from '@radix-ui/react-popover';
 
 import ActionList from './actionList';
-import { useDeleteUser } from '../../api/user';
+import { useDeleteUser, useUpdateUserRole } from '../../api/user';
 import { useAuth } from '@/contexts/auth';
+import toast from 'react-hot-toast';
 
 export default function Action({ id }: { id: string }) {
   const { token } = useAuth();
-  const { mutate: deleteUser } = useDeleteUser(id, token?.accessToken || '');
+  const { mutateAsync: deleteUser } = useDeleteUser(token?.accessToken || '');
+  const { mutateAsync: updateRole } = useUpdateUserRole(
+    token?.accessToken || '',
+  );
+
+  function onDelete() {
+    const resp = deleteUser({ id });
+    toast.promise(resp, {
+      success: 'Delete user success',
+      error: 'Failed Delete user',
+      loading: 'Deleting user',
+    });
+  }
+
+  function onUpdateRole(role: 'admin' | 'staff') {
+    const resp = updateRole({ id, role });
+    toast.promise(resp, {
+      success: 'Update role success',
+      error: 'Failed update role',
+      loading: 'Updating role',
+    });
+  }
 
   const actions = [
     {
       imageURL: '/admin/dashboard/circle-x.svg',
       className: 'bg-error',
       text: 'Remove',
-      fn: deleteUser,
+      fn: onDelete,
     },
     {
       imageURL: '/admin/dashboard/profile.svg',
       className: 'bg-dark-pink',
       text: 'Change to Staff',
-      fn: () => {},
+      fn: () => onUpdateRole('staff'),
     },
     {
       imageURL: '/admin/dashboard/crown.svg',
       className: 'bg-dark-blue',
       text: 'Change to Admin',
-      fn: () => {},
+      fn: () => onUpdateRole('admin'),
     },
   ];
+  
   return (
     <Popover>
       <PopoverTrigger>

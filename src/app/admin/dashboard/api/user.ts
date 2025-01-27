@@ -1,3 +1,4 @@
+import { Role } from '@/const/role';
 import { apiClient } from '@/utils/axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
@@ -27,22 +28,43 @@ export async function deleteUser(id: string, accessToken: string) {
   });
 }
 
-export function useDeleteUser(id: string, accessToken: string) {
+export function useDeleteUser(accessToken: string) {
   const queryClient = useQueryClient();
-  let toastId: string;
   return useMutation({
-    mutationFn: () => deleteUser(id, accessToken),
-    onMutate: () => {
-      toastId = toast.loading('Deleting user...');
+    mutationFn: ({ id }: { id: string }) => deleteUser(id, accessToken),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      toast.success('User deleted');
     },
+    onError: error => {
+      console.error('Failed to update user role:', error);
+    },
+  });
+}
+
+export function updateUserRole(id: string, role: Role, accessToken: string) {
+  return apiClient.patch(
+    `/users/${id}`,
+    { role },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+}
+
+export function useUpdateUserRole(accessToken: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, role }: { id: string; role: Role }) =>
+      updateUserRole(id, role, accessToken),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
-    onError: () => {
-      toast.error('Failed to delete user');
-    },
-    onSettled: () => {
-      toast.dismiss(toastId);
+    onError: error => {
+      console.error('Failed to update user role:', error);
     },
   });
 }
