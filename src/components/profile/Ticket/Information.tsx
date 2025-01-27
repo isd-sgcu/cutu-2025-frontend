@@ -1,20 +1,20 @@
 'use client';
 import { useLiff } from '@/contexts/liff';
-//import { useAuth } from '@/contexts/auth';
+import { useAuth } from '@/contexts/auth';
 
 export default function Inf() {
   const { client } = useLiff();
   const context = client?.getContext();
   const userId = context?.userId || '';
-  //const { user } = useAuth();
-  //const username = user?.name;
+  const { user } = useAuth();
+  const username = user?.name;
   return (
     <div className="flex flex-col items-center justify-center text-[12px] text-white">
       <p>
         #UID<span>{userId}</span>
       </p>
       <p>
-        <span>{''}</span>
+        <span>{username}</span>
       </p>
       <div className="mt-[5px] h-[1px] w-[245px] bg-white" />
       <div className="mt-3 flex flex-col items-center">

@@ -2,12 +2,14 @@
 
 import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
-// import { useLiff } from '@/contexts/liff';
-//import { useAuth } from '@/contexts/auth';
+import { useAuth } from '@/contexts/auth';
 
 export default function header() {
-  // const { user } = useAuth();
-  // const username = user?.name;
+  const { user } = useAuth();
+  let username = user?.name;
+  if (username) {
+    username = username.split(' ')[0];
+  }
 
   return (
     <div className="relative mx-auto items-center justify-center">
@@ -31,7 +33,7 @@ export default function header() {
         </h2>
         <div className="relative mt-3 flex flex-col">
           <h1 className="text-[20px] font-semibold leading-6">
-            Welcome, <span>{''}</span>
+            Welcome, <span>{username}</span>
           </h1>
         </div>
       </div>
