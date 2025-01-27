@@ -68,3 +68,28 @@ export function useUpdateUserRole(accessToken: string) {
     },
   });
 }
+
+export function addStaff(phone: string, accessToken: string) {
+  return apiClient.patch(
+    `/users/addstaff/${phone}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+}
+
+export function useAddStaff(accessToken: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ phone }: { phone: string }) => addStaff(phone, accessToken),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+    onError: error => {
+      console.error('Failed to add staff:', error);
+    },
+  });
+}

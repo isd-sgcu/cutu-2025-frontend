@@ -28,7 +28,7 @@ export default function Action({ id }: { id: string }) {
     });
   }
 
-  function onUpdateRole(role: 'admin' | 'staff') {
+  function onUpdateRole(role: 'admin' | 'staff' | 'member') {
     const resp = updateRole({ id, role });
     toast.promise(resp, {
       success: 'Update role success',
@@ -46,6 +46,12 @@ export default function Action({ id }: { id: string }) {
     },
     {
       imageURL: '/admin/dashboard/profile.svg',
+      className: 'bg-orange-500',
+      text: 'Change to member',
+      fn: () => onUpdateRole('member'),
+    },
+    {
+      imageURL: '/admin/dashboard/profile.svg',
       className: 'bg-dark-pink',
       text: 'Change to Staff',
       fn: () => onUpdateRole('staff'),
@@ -57,7 +63,7 @@ export default function Action({ id }: { id: string }) {
       fn: () => onUpdateRole('admin'),
     },
   ];
-  
+
   return (
     <Popover>
       <PopoverTrigger>
