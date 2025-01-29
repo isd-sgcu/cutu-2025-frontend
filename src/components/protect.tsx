@@ -5,17 +5,20 @@ import { useAuth } from '@/contexts/auth';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Load from './loading/loading';
+import toast from 'react-hot-toast';
 
 interface ProtectProps {
   roles: Role[];
   children: React.ReactNode;
   callBack?: string;
+  callBackMsg?: string;
 }
 
 export default function Protect({
   roles,
   children,
   callBack = '/',
+  callBackMsg = 'กรุณาลงทะเบียนก่อนเข้าถึงหน้านี้',
 }: ProtectProps) {
   const { user, isInitialized } = useAuth();
   const router = useRouter();
@@ -25,6 +28,7 @@ export default function Protect({
   }
 
   if (!user || !roles.includes(user.role)) {
+    toast(callBackMsg);
     router.push(callBack);
     return <Loading />;
   }
