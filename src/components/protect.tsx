@@ -5,7 +5,6 @@ import { useAuth } from '@/contexts/auth';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Load from './loading/loading';
-import toast from 'react-hot-toast';
 
 interface ProtectProps {
   roles: Role[];
@@ -26,7 +25,6 @@ export default function Protect({
   }
 
   if (!user || !roles.includes(user.role)) {
-    toast.error('You cannot access this page');
     router.push(callBack);
     return <Loading />;
   }
