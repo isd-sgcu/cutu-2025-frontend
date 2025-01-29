@@ -3,13 +3,12 @@ import { useState } from 'react';
 import { useLiff } from '@/contexts/liff';
 import Modal from './Modal';
 import { ScanLine } from 'lucide-react';
+import { apiClient } from '@/utils/axios';
+import { useAuth } from '@/contexts/auth';
 
 export default function QrButton() {
   const { client } = useLiff();
-
-  // TODO: Define the file path
-  // TODO: Read the existing file content
-
+  const { token } = useAuth();
   const [qrCodeValue, setQrCodeValue] = useState<string | null>(null);
   const [modalType, setModalType] = useState<
     'confirm' | 'invalid' | 'already' | null
@@ -23,25 +22,46 @@ export default function QrButton() {
     }
     try {
       const result = await client.scanCodeV2();
-      const value = result.value;
+      const value = result.value ?? '';
 
-      if (value) {
-        setQrCodeValue(value);
-        setIsModalOpen(true);
-        setModalType('confirm');
-      } else if (value === 'taken') {
-        setModalType('already');
-        setIsModalOpen(true);
-      } else {
-        setModalType('invalid');
-        setIsModalOpen(true);
-      }
-    } catch (err) {
-      console.error('QR Scan failed:', err);
+      // Post the QR code result to the API
+      const status = await postQrCodeToApi(value ?? '');
+      setModalType(status?.toString() as 'confirm' | 'invalid' | 'already');
+      setQrCodeValue(value);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Error scanning QR code:', error);
+      alert('Failed to scan QR code. Please try again.');
       setModalType('invalid');
+      setIsModalOpen(true);
     }
   };
 
+  const postQrCodeToApi = async (value: string) => {
+    try {
+      const response = await apiClient.post(
+        `/users/qr/${value}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token?.accessToken}`,
+          },
+        },
+      );
+      if (response.status === 200) {
+        return 'confirm';
+      } else if (response.status === 400) {
+        return 'already';
+      } else if (response.status === 500) {
+        return 'invalid';
+      } else {
+        return 'invalid';
+      }
+    } catch (error) {
+      console.error('Error posting QR code to API:', error);
+      return error;
+    }
+  };
   return (
     <div className="mt-12 flex justify-center">
       <div className="flex h-12 w-72 flex-row justify-center rounded-full bg-white px-4 py-2 text-lg text-dark-pink">
