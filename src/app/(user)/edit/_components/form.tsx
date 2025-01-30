@@ -57,6 +57,8 @@ export default function Form() {
   }, [defaultUser, reset]);
 
   const user = watch();
+  console.log('watch', user);
+  console.log('default', defaultUser);
 
   const onSubmit: SubmitHandler<EditForm> = async data => {
     const context = client?.getContext();
