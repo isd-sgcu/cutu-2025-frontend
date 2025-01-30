@@ -73,6 +73,15 @@ export default function Two({ setStep, form }: TwoProps) {
   useEffect(() => {
     let status: RegisterForm['status'];
 
+    // not specified
+    if (user.education == 'notSpecified') {
+      setValue('graduatedYear', '9999');
+      setValue('faculty', 'ไม่ระบุ');
+      setValue('status', 'general_public');
+      setValue('university', 'ไม่ประสงค์เเจ้ง');
+      return;
+    }
+
     // set default value
     if (
       !!user.education &&
@@ -152,7 +161,7 @@ export default function Two({ setStep, form }: TwoProps) {
         </div>
 
         {/* university */}
-        {user.education && (
+        {user.education && user.education != 'notSpecified' && (
           <div className="relative space-y-1">
             <Label isRequired>
               {user.education == 'studying'
