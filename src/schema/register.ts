@@ -9,6 +9,7 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, 'กรุณากรอกชื่อ-นามสกุล'),
   email: z.string().email('กรุณากรอกอีเมล'),
   phone: z.string().regex(/^\d.{9}$/, 'กรุณากรอกเลขเบอร์ 10 หลัก'),
+  invitationCode: z.string(),
   age: z
     .string({
       message: 'กรุณากรอกอายุ',
