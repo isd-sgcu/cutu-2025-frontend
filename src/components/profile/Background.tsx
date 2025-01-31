@@ -7,7 +7,7 @@ export default function Background() {
     <>
       <Image
         src={getImageURL('/profile/Background.png')}
-        className="absolute inset-0 -z-10 opacity-70"
+        className="absolute inset-0 -z-10 opacity-50"
         fill
         alt="Background"
       />
