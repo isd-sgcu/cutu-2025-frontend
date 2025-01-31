@@ -11,7 +11,7 @@ import { ErrorMsg, ErrorMsgFloat } from '../../register/_components/errorMsg';
 import Image from 'next/image';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { sizeJersey } from '@/const/size';
+import { SizeJersey, sizeJersey } from '@/const/size';
 import { faculties } from '@/const/faculties';
 import { EditForm, EditSchema } from '@/schema/edit';
 import { educationsMap, educationsMapReverse } from '@/const/educations';
@@ -57,8 +57,6 @@ export default function Form() {
   }, [defaultUser, reset]);
 
   const user = watch();
-  console.log('watch', user);
-  console.log('default', defaultUser);
 
   const onSubmit: SubmitHandler<EditForm> = async data => {
     const context = client?.getContext();
@@ -151,10 +149,7 @@ export default function Form() {
           <DropdownInput
             value={educationsMap[user.education]}
             setValue={val =>
-              setValue(
-                'education',
-                educationsMapReverse[val as 'กำลังศึกษา' | 'จบการศึกษา'],
-              )
+              val && setValue('education', educationsMapReverse[val])
             }
             placeholder="กำลังศึกษาอยู่"
             choices={Object.keys(educationsMapReverse).map(key => key)}
@@ -237,7 +232,9 @@ export default function Form() {
           <Label isRequired>ขนาดเสื้อ</Label>
           <DropdownInput
             value={user.sizeJersey}
-            setValue={updateField('sizeJersey')}
+            setValue={(val: string) =>
+              val && setValue('sizeJersey', val as SizeJersey)
+            }
             placeholder="กรุณาเลือก"
             choices={[...sizeJersey]}
           />
