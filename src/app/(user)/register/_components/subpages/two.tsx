@@ -23,6 +23,7 @@ import { universities } from '@/const/universities';
 import { faculties } from '@/const/faculties';
 import { sizeJersey } from '@/const/size';
 import { statusMap } from '@/const/status';
+// import Consent from '../policy/consent';
 
 interface TwoProps {
   setStep: (value: number) => void;
@@ -254,6 +255,13 @@ export default function Two({ setStep, form }: TwoProps) {
         <div className="relative space-y-1">
           <Label>โรคประจำตัว</Label>
           <TextInput {...register('chronicDisease')} />
+          {/* <div className='pt-0.5'></div>
+          <Consent
+            value={true}
+            setValue={(val: boolean) => {}}
+            label="คุณกลัวความสูงหรือไม่"
+            isRequired={false}
+          /> */}
           <ErrorMsgFloat>{errors.chronicDisease?.message}</ErrorMsgFloat>
         </div>
 
