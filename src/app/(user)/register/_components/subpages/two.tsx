@@ -272,6 +272,12 @@ export default function Two({ setStep, form }: TwoProps) {
           <ErrorMsgFloat>{errors.drugAllergy?.message}</ErrorMsgFloat>
         </div>
 
+        <div className="relative space-y-1">
+          <Label>รหัสผู้เเนะนำให้เข้าร่วมกิจกรรม (ไม่จำเป็น)</Label>
+          <TextInput {...register('invitationCode')} placeholder="AB12345" />
+          <ErrorMsgFloat>{errors.invitationCode?.message}</ErrorMsgFloat>
+        </div>
+
         {/* idCardImg */}
         <div className="relative space-y-1">
           <Label isRequired>อัปโหลดรูปด้านหน้าบัตรประชาชน</Label>
