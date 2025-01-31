@@ -9,7 +9,7 @@ import { faculties } from '@/const/faculties';
 export const EditSchema = z.object({
   name: z.string().min(1, 'กรุณากรอกชื่อ-นามสกุล'),
   email: z.string().email('กรุณากรอกอีเมล'),
-  phone: z.string().regex(/^\d+$/, 'กรุณากรอกเลข 0-9 เท่านั้น'),
+  phone: z.string().regex(/^\d.{10}$/, 'กรุณากรอกเลขเบอร์ 10 หลัก'),
   age: z
     .string({
       message: 'กรุณากรอกอายุ',
