@@ -8,7 +8,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 
 const formatThaiDate = (dateString: string) => {
   const date = new Date(dateString);
-  date.setFullYear(date.getFullYear() + 543);
+  date.setFullYear(date.getFullYear());
   return date.toLocaleDateString('th-TH', {
     day: 'numeric',
     month: 'long',
