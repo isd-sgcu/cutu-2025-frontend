@@ -15,7 +15,7 @@ export default function Edit() {
         <p className="text-center font-medium text-white">บัญชีของฉัน</p>
       </div>
       <Link
-        href={'user/edit'}
+        href={'/edit'}
         className="flex h-12 w-[272px] justify-center rounded-full bg-white text-lg text-dark-pink"
       >
         <div className="flex flex-row items-center justify-center gap-1">

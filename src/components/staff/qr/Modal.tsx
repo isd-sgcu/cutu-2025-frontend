@@ -4,7 +4,7 @@ import { getImageURL } from '@/utils/image';
 
 interface ModalProps {
   modalType: 'confirm' | 'invalid' | 'already';
-  userInfo: string | null;
+  userInfo: string | undefined;
   scanAgain: () => void;
   closeFn: () => void;
   time?: string; // Optional prop for 'already' type
@@ -111,10 +111,13 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   return (
-    <div className={`${modalClasses}`}>
+    <div className={`${modalClasses}`} onClick={closeFn}>
       <div className={`flex h-full items-center`}>
         <div className="flex flex-row items-center justify-center">
-          <div className="flex h-full w-72 flex-col items-center justify-center rounded-lg bg-white">
+          <div
+            className="flex h-full w-72 flex-col items-center justify-center rounded-lg bg-white"
+            onClick={e => e.stopPropagation()}
+          >
             {renderContent()}
           </div>
         </div>
