@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import * as Dialog from '@radix-ui/react-dialog';
 
-
 const formatThaiDate = (dateString: string) => {
   const date = new Date(dateString);
   date.setFullYear(date.getFullYear() + 543);
@@ -23,7 +22,7 @@ export default function UserDetails({ id }: { id: string }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
   const [image, setImage] = useState<string | null>(null);
-  const [imageError, setImageError] = useState("");
+  const [imageError, setImageError] = useState('');
   const { data, isError, isLoading } = useOne<User>({
     resource: 'users',
     id: id,
@@ -39,11 +38,11 @@ export default function UserDetails({ id }: { id: string }) {
 
   useEffect(() => {
     if (isImageError) {
-      setImageError("คุณไม่มีสิทธิ์เข้าถึงภาพนี้");
+      setImageError('คุณไม่มีสิทธิ์เข้าถึงภาพนี้');
       setImage(null);
     } else if (imageData?.data?.url) {
       setImage(imageData.data.url);
-      setImageError("");
+      setImageError('');
     }
   }, [imageData, isImageError]);
 
@@ -57,12 +56,15 @@ export default function UserDetails({ id }: { id: string }) {
         {
           onSuccess: () => router.push('/users'),
           onError: () => setIsPermissionDialogOpen(true),
-        }
+        },
       );
     }
   };
 
-  const createField = (label: string, field: keyof User): FieldEntry => ({ label, field });
+  const createField = (label: string, field: keyof User): FieldEntry => ({
+    label,
+    field,
+  });
 
   const renderSection = (title: string, fields: FieldEntry[]) => (
     <div className="border-t border-gray-100 pt-4">
@@ -74,12 +76,13 @@ export default function UserDetails({ id }: { id: string }) {
 
           if (field === 'registeredAt') {
             displayValue = formatThaiDate(value as string);
-          }
-          if (field === 'graduatedYear') {
+          } else if (field === 'graduatedYear') {
             displayValue = (parseInt(value as string) + 543).toString();
-          }
-          if (field === 'status') {
+          } else if (field === 'status') {
             displayValue = value as string;
+            // Add this condition for isAcrophobic
+          } else if (field === 'isAcrophobic') {
+            displayValue = value ? 'ใช่' : 'ไม่';
           }
 
           return (
@@ -94,7 +97,12 @@ export default function UserDetails({ id }: { id: string }) {
   );
 
   if (isLoading) return <div className="p-4 text-center">กำลังโหลด...</div>;
-  if (isError) return <div className="p-4 text-center text-red-500">เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ใช้</div>;
+  if (isError)
+    return (
+      <div className="p-4 text-center text-red-500">
+        เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ใช้
+      </div>
+    );
   if (!user) return <div className="p-4 text-center">ไม่พบผู้ใช้</div>;
 
   return (
@@ -123,7 +131,7 @@ export default function UserDetails({ id }: { id: string }) {
 
       {/* Image Preview */}
       <section className="mb-6">
-        <div 
+        <div
           onClick={() => setIsImageOpen(true)}
           className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gray-100 shadow-lg"
         >
@@ -174,22 +182,26 @@ export default function UserDetails({ id }: { id: string }) {
             createField('อีเมล', 'email'),
             createField('เบอร์โทรศัพท์', 'phone'),
             createField('สถานะ', 'status'),
-            createField('วันที่ลงทะเบียน', 'registeredAt')
+            createField('วันที่ลงทะเบียน', 'registeredAt'),
           ])}
 
           {renderSection('ข้อมูลการศึกษา', [
             createField('มหาวิทยาลัย', 'university'),
             createField('คณะ', 'faculty'),
             createField('ระดับการศึกษา', 'education'),
-            createField('ปีที่จบการศึกษา', 'graduatedYear')
+            createField('ปีที่จบการศึกษา', 'graduatedYear'),
           ])}
 
           {renderSection('ข้อมูลเพิ่มเติม', [
             createField('ขนาดเสื้อ', 'sizeJersey'),
             createField('ข้อจำกัดด้านอาหาร', 'foodLimitation'),
-            ...(user.chronicDisease ? [createField('โรคประจำตัว', 'chronicDisease')] : []),
-            ...(user.drugAllergy ? [createField('อาการแพ้ยา', 'drugAllergy')] : []),
-            ...(user.isAcrophobic ? [createField('กลัวความสูง', 'isAcrophobic')] : [])
+            createField('กลัวความสูงไหม', 'isAcrophobic'),
+            ...(user.chronicDisease
+              ? [createField('โรคประจำตัว', 'chronicDisease')]
+              : []),
+            ...(user.drugAllergy
+              ? [createField('อาการแพ้ยา', 'drugAllergy')]
+              : []),
           ])}
         </div>
       </section>
@@ -243,7 +255,9 @@ export default function UserDetails({ id }: { id: string }) {
                   </Dialog.Title>
 
                   <Dialog.Description className="text-center text-sm text-gray-600">
-                    การดำเนินการนี้จะลบบัญชีผู้ใช้ {user.name} และข้อมูลทั้งหมดที่เกี่ยวข้องอย่างถาวร<br />
+                    การดำเนินการนี้จะลบบัญชีผู้ใช้ {user.name}{' '}
+                    และข้อมูลทั้งหมดที่เกี่ยวข้องอย่างถาวร
+                    <br />
                     การกระทำนี้ไม่สามารถยกเลิกได้
                   </Dialog.Description>
 
@@ -311,16 +325,19 @@ export default function UserDetails({ id }: { id: string }) {
       )}
 
       {/* Permission Error Dialog */}
-      <Dialog.Root open={isPermissionDialogOpen} onOpenChange={setIsPermissionDialogOpen}>
+      <Dialog.Root
+        open={isPermissionDialogOpen}
+        onOpenChange={setIsPermissionDialogOpen}
+      >
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
           <div className="fixed inset-0 flex items-center justify-center p-4">
             <Dialog.Content className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
               <div className="flex flex-col items-center space-y-4">
-                <div className="rounded-full bg-yellow-100 p-3">
+                <div className="bg-yellow-100 rounded-full p-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-yellow-600"
+                    className="text-yellow-600 h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -339,7 +356,8 @@ export default function UserDetails({ id }: { id: string }) {
                 </Dialog.Title>
 
                 <Dialog.Description className="text-center text-sm text-gray-600">
-                  คุณไม่มีสิทธิ์ในการลบผู้ใช้นี้<br />
+                  คุณไม่มีสิทธิ์ในการลบผู้ใช้นี้
+                  <br />
                   กรุณาติดต่อผู้ดูแลระบบหากคุณคิดว่านี่เป็นข้อผิดพลาด
                 </Dialog.Description>
 

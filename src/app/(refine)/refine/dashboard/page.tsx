@@ -48,7 +48,7 @@ const DataTable = () => {
       <div className="rounded-xl bg-white p-4 shadow-sm">
         <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <Link
-            href="/dashboard"
+            href="/refine/dashboard"
             className="group flex items-center gap-2 text-gray-700 hover:text-pink-600"
           >
             <ChevronLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
