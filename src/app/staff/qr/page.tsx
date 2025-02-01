@@ -2,6 +2,7 @@ import Background from '@/components/staff/qr/background';
 import TopPart from '@/components/staff/qr/toppart';
 import Edit from '@/components/staff/qr/editbutton';
 import QrButton from '@/components/staff/qr/qrbutton';
+import RefineButton from '@/components/refine/refineButton';
 export default function Home() {
   return (
     <main className="relative min-h-screen">
@@ -10,6 +11,7 @@ export default function Home() {
         <TopPart />
         <QrButton />
         <Edit />
+        <RefineButton />
       </div>
     </main>
   );

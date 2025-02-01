@@ -3,10 +3,11 @@
 import { Refine } from '@refinedev/core';
 import dataProvider from '@refinedev/simple-rest';
 import axios from 'axios';
+import { config } from '@/app/config';
 
 // Create axios instance with auth headers
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:4000/api',
+  baseURL: config.baseURL + '/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -14,15 +15,16 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
   const token =
-    typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
+    typeof window !== 'undefined' ? localStorage.getItem('auth-data') : null;
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    const parsedToken = JSON.parse(token);
+    config.headers.Authorization = `Bearer ${parsedToken.accessToken}`;
   }
   return config;
 });
 
 // Create authenticated data provider
-const customDataProvider = dataProvider('http://localhost:4000/api', axiosInstance);
+const customDataProvider = dataProvider(config.baseURL + '/api', axiosInstance);
 
 
 export default function Layout({ children }: React.PropsWithChildren) {
