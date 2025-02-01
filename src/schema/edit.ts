@@ -18,6 +18,7 @@ export const EditSchema = z.object({
   sizeJersey: z.enum(sizeJersey, {
     message: 'กรุณาเลือกขนาดเสื้อ',
   }),
+  isAcroPhobia: z.boolean(),
   education: z.enum(educations, { message: 'กรุณาเลือกการศึกษา' }),
   foodLimitation: z.string(),
   chronicDisease: z.string(),

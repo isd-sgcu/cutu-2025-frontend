@@ -18,6 +18,7 @@ export const UserSchema = z.object({
   imageURL: z.string(),
   invitationCode: z.string(),
   lastEntered: z.string(),
+  isAcroPhobia: z.boolean(),
   phone: z.string(),
   role: z.enum(roles),
   sizeJersey: z.enum(sizeJersey),
