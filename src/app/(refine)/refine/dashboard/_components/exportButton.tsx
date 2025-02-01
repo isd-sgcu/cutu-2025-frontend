@@ -26,6 +26,7 @@ export const ExportButton = ({ data }: { data: User[] }) => {
     { label: 'Registered At', field: 'registeredAt' },
     { label: 'Role', field: 'role' },
     { label: 'Education', field: 'education' },
+    { label: 'Is Acrophobic', field: 'isAcrophobic' },
   ];
 
   const handleExportCSV = () => {
@@ -38,8 +39,8 @@ export const ExportButton = ({ data }: { data: User[] }) => {
           const value = user[field];
           // Handle date fields
           if (field === 'lastEntered' || field === 'registeredAt') {
-            return dayjs(value).isValid() 
-              ? dayjs(value).format('YYYY-MM-DD HH:mm')
+            return value && dayjs(value.toString()).isValid() 
+              ? dayjs(value.toString()).format('YYYY-MM-DD HH:mm')
               : '';
           }
           // Escape quotes in string fields

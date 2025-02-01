@@ -19,6 +19,7 @@ export interface User {
   registeredAt: string;
   role: string;
   education: string;
+  isAcrophobic: boolean;
 }
 
 export type FieldEntry = {

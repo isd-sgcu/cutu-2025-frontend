@@ -188,7 +188,8 @@ export default function UserDetails({ id }: { id: string }) {
             createField('ขนาดเสื้อ', 'sizeJersey'),
             createField('ข้อจำกัดด้านอาหาร', 'foodLimitation'),
             ...(user.chronicDisease ? [createField('โรคประจำตัว', 'chronicDisease')] : []),
-            ...(user.drugAllergy ? [createField('อาการแพ้ยา', 'drugAllergy')] : [])
+            ...(user.drugAllergy ? [createField('อาการแพ้ยา', 'drugAllergy')] : []),
+            ...(user.isAcrophobic ? [createField('กลัวความสูง', 'isAcrophobic')] : [])
           ])}
         </div>
       </section>
