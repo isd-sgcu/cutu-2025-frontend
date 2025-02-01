@@ -18,6 +18,7 @@ export const RegisterSchema = z.object({
   sizeJersey: z.enum(sizeJersey, {
     message: 'กรุณาเลือกขนาดเสื้อ',
   }),
+  isAcroPhobia: z.boolean().default(false),
   education: z.enum(educations, { message: 'กรุณาเลือกการศึกษา' }),
   foodLimitation: z.string(),
   chronicDisease: z.string(),

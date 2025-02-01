@@ -22,6 +22,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuth } from '@/contexts/auth';
 import { useLiff } from '@/contexts/liff';
 import toast from 'react-hot-toast';
+import Consent from '../../register/_components/policy/consent';
 
 export default function Form() {
   const { editError, edit, isEditing, user: defaultUser } = useAuth();
@@ -48,6 +49,7 @@ export default function Form() {
         graduatedYear: defaultUser.graduatedYear,
         faculty: defaultUser.faculty,
         age: defaultUser.age,
+        isAcroPhobia: defaultUser.isAcroPhobia,
         sizeJersey: defaultUser.sizeJersey,
         foodLimitation: defaultUser.foodLimitation,
         chronicDisease: defaultUser.chronicDisease,
@@ -252,6 +254,13 @@ export default function Form() {
         <div className="relative space-y-1">
           <Label>โรคประจำตัว</Label>
           <TextInput {...register('chronicDisease')} />
+          <div className="pt-0.5"></div>
+          <Consent
+            value={user.isAcroPhobia}
+            setValue={(val: boolean) => setValue('isAcroPhobia', val)}
+            label="คุณกลัวความสูงหรือไม่"
+            isRequired={false}
+          />
           <ErrorMsgFloat>{errors.chronicDisease?.message}</ErrorMsgFloat>
         </div>
 
