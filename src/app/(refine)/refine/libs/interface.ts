@@ -20,3 +20,8 @@ export interface User {
   role: string;
   education: string;
 }
+
+export type FieldEntry = {
+  label: string;
+  field: keyof User;
+};
