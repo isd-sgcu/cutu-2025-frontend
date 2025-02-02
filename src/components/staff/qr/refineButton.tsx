@@ -2,7 +2,7 @@ import { getImageURL } from '@/utils/image';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Edit() {
+export default function Refine() {
   return (
     <Link
       href={'/refine'}
