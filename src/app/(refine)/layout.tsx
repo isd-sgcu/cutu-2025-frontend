@@ -7,7 +7,7 @@ import { config } from '@/app/config';
 
 // Create axios instance with auth headers
 const axiosInstance = axios.create({
-  baseURL: config.baseURL + '/api',
+  baseURL: config.baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -24,7 +24,7 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 // Create authenticated data provider
-const customDataProvider = dataProvider(config.baseURL + '/api', axiosInstance);
+const customDataProvider = dataProvider(config.baseURL, axiosInstance);
 
 
 export default function Layout({ children }: React.PropsWithChildren) {
