@@ -5,11 +5,8 @@ export const UserTable = ({ children }: { children: React.ReactNode }) => (
           <tr>
             <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">UID</th>
             <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">ชื่อ</th>
-            <th className="hidden px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">อีเมล</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">สถานะ</th>
-            <th className="hidden px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">คณะ</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">ขนาดเสื้อ</th>
-            <th className="hidden px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">เข้างานล่าสุด</th>
+            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">เบอร์โทรศัพท์</th>
+            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">เข้างานล่าสุด</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">

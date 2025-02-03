@@ -1,8 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 import { useOne } from '@refinedev/core';
 import { User, FieldEntry } from '../../../libs/interface';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const formatThaiDate = (dateString: string) => {
@@ -17,30 +15,12 @@ const formatThaiDate = (dateString: string) => {
 
 export default function UserDetails({ id }: { id: string }) {
   const router = useRouter();
-  const [isImageOpen, setIsImageOpen] = useState(false);
-  const [image, setImage] = useState<string | null>(null);
-  const [imageError, setImageError] = useState('');
   const { data, isError, isLoading } = useOne<User>({
     resource: 'users',
     id: id,
   });
 
-  const { data: imageData, isError: isImageError } = useOne({
-    resource: 'users/image',
-    id: id,
-  });
-
   const user = data?.data;
-
-  useEffect(() => {
-    if (isImageError) {
-      setImageError('คุณไม่มีสิทธิ์เข้าถึงภาพนี้');
-      setImage(null);
-    } else if (imageData?.data?.url) {
-      setImage(imageData.data.url);
-      setImageError('');
-    }
-  }, [imageData, isImageError]);
 
   const createField = (label: string, field: keyof User): FieldEntry => ({
     label,
@@ -48,9 +28,9 @@ export default function UserDetails({ id }: { id: string }) {
   });
 
   const renderSection = (title: string, fields: FieldEntry[]) => (
-    <div className="border-t border-gray-100 pt-4">
-      <h3 className="mb-3 text-lg font-semibold text-gray-800">{title}</h3>
-      <div className="space-y-3">
+    <div className="border-t border-dark-blue/20 pt-6">
+      <h3 className="mb-4 text-2xl font-semibold text-dark-blue">{title}</h3>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {fields.map(({ label, field }) => {
           const value = user?.[field];
           let displayValue = value || 'N/A';
@@ -59,16 +39,16 @@ export default function UserDetails({ id }: { id: string }) {
             displayValue = formatThaiDate(value as string);
           } else if (field === 'graduatedYear') {
             displayValue = (parseInt(value as string) + 543).toString();
-          } else if (field === 'status') {
-            displayValue = value as string;
           } else if (field === 'isAcrophobic') {
             displayValue = value ? 'ใช่' : 'ไม่';
           }
 
           return (
-            <div key={field} className="flex justify-between">
-              <span className="text-gray-600">{label}</span>
-              <span className="text-right text-gray-800">{displayValue}</span>
+            <div key={field} className="space-y-1">
+              <dt className="text-base font-medium text-dark-gray">{label}</dt>
+              <dd className="text-xl text-dark-blue">
+                {displayValue}
+              </dd>
             </div>
           );
         })}
@@ -79,23 +59,23 @@ export default function UserDetails({ id }: { id: string }) {
   if (isLoading) return <div className="p-4 text-center">กำลังโหลด...</div>;
   if (isError)
     return (
-      <div className="p-4 text-center text-red-500">
+      <div className="p-4 text-center text-error">
         เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ใช้
       </div>
     );
   if (!user) return <div className="p-4 text-center">ไม่พบผู้ใช้</div>;
 
   return (
-    <div className="relative mx-auto min-h-screen max-w-md bg-gray-50 p-4">
+    <div className="relative mx-auto min-h-screen max-w-4xl bg-gray-100 p-6">
       {/* Header */}
-      <header className="mb-6 flex items-center justify-between">
+      <header className="mb-8">
         <button
           onClick={() => router.push('/refine/dashboard')}
-          className="flex items-center space-x-2 rounded-lg bg-white px-4 py-2 shadow-sm transition-all hover:shadow-md"
+          className="flex items-center space-x-2 text-dark-pink transition-colors hover:text-dark-blue"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray-600"
+            className="h-6 w-6"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -105,59 +85,27 @@ export default function UserDetails({ id }: { id: string }) {
               clipRule="evenodd"
             />
           </svg>
-          <span className="text-gray-700">กลับ</span>
+          <span className="text-xl">กลับสู่หน้าหลัก</span>
         </button>
       </header>
 
-      {/* Image Preview */}
-      <section className="mb-6">
-        <div
-          onClick={() => setIsImageOpen(true)}
-          className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gray-100 shadow-lg"
-        >
-          {imageError ? (
-            <div className="flex h-full flex-col items-center justify-center space-y-2 text-red-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-              <span className="text-sm">{imageError}</span>
-            </div>
-          ) : (
-            image && (
-              <img
-                src={image}
-                alt="Citizen Card Preview"
-                className="h-full w-full object-cover"
-              />
-            )
-          )}
-        </div>
-      </section>
-
       {/* Profile Information */}
-      <section className="mb-6 rounded-2xl bg-white p-6 shadow-sm">
-        <div className="mb-4">
-          <h1 className="text-2xl font-bold text-gray-800">{user.name}</h1>
-          <div className="mt-2 flex items-center space-x-2">
-            <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
-              {user.role}
-            </span>
-            <span className="text-sm text-gray-500">{user.uid}</span>
+      <section className="rounded-xl bg-white p-8 shadow-[0_4px_20px_rgba(223,114,159,0.15)]">
+        <div className="mb-8 border-b border-light-pink pb-6">
+          <div className="flex flex-col items-start space-y-3">
+            <h1 className="text-3xl font-bold text-gradient-pirple">{user.name}</h1>
+            <div className="flex items-center space-x-4">
+              <span className="rounded-lg bg-dark-pink px-4 py-2 text-base font-medium text-white">
+                {user.role}
+              </span>
+              <span className="rounded-lg bg-dark-blue px-4 py-2 text-base font-medium text-light-pink">
+                {user.uid}
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-8">
           {renderSection('ข้อมูลส่วนตัว', [
             createField('อีเมล', 'email'),
             createField('เบอร์โทรศัพท์', 'phone'),
@@ -165,69 +113,21 @@ export default function UserDetails({ id }: { id: string }) {
             createField('วันที่ลงทะเบียน', 'registeredAt'),
           ])}
 
-          {renderSection('ข้อมูลการศึกษา', [
+          {/* {renderSection('ข้อมูลการศึกษา', [
             createField('มหาวิทยาลัย', 'university'),
             createField('คณะ', 'faculty'),
             createField('ระดับการศึกษา', 'education'),
             createField('ปีที่จบการศึกษา', 'graduatedYear'),
-          ])}
+          ])} */}
 
-          {renderSection('ข้อมูลเพิ่มเติม', [
-            createField('ขนาดเสื้อ', 'sizeJersey'),
+          {renderSection('ข้อมูลสุขภาพ', [
             createField('ข้อจำกัดด้านอาหาร', 'foodLimitation'),
-            createField('กลัวความสูงไหม', 'isAcrophobic'),
-            ...(user.chronicDisease
-              ? [createField('โรคประจำตัว', 'chronicDisease')]
-              : []),
-            ...(user.drugAllergy
-              ? [createField('อาการแพ้ยา', 'drugAllergy')]
-              : []),
+            createField('กลัวความสูง', 'isAcrophobic'),
+            createField('โรคประจำตัว', 'chronicDisease'),
+            createField('อาการแพ้ยา', 'drugAllergy'),
           ])}
         </div>
       </section>
-
-      {/* Image Modal */}
-      {isImageOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-          onClick={() => setIsImageOpen(false)}
-        >
-          <div className="relative mx-4 w-full max-w-2xl rounded-2xl bg-white p-4">
-            <button
-              onClick={() => setIsImageOpen(false)}
-              className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            <div className="overflow-hidden rounded-xl border-2 border-gray-200">
-              {image ? (
-                <img
-                  src={image}
-                  alt="Citizen Card"
-                  className="h-auto w-full object-contain"
-                />
-              ) : (
-                <div className="flex h-96 items-center justify-center text-red-500">
-                  {imageError}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
