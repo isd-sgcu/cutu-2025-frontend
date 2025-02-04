@@ -15,7 +15,7 @@ export default function Hero() {
           75th TU-CU
         </h1>
         <p className="text-base font-semibold text-white">
-          15 กุมภาพันธ์ 2568 | 13.00
+          15 กุมภาพันธ์ 2568 | 09:09
         </p>
         <p className="text-base font-semibold text-white">กรีฑาสถานแห่งชาติ</p>
         <Link
