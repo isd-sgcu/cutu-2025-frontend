@@ -6,6 +6,7 @@ const buttons = [
   { text: 'Add Role', icon: UserPlus, href: '/admin/dashboard' },
   { text: 'Scan QR-Code', icon: ScanLine, href: '/staff/qr' },
   { text: 'แก้ไขข้อมูลส่วนตัว', icon: PenLine, href: '/edit' },
+  { text: 'แดชบอร์ด', icon: PenLine, href: '/refine' },
 ];
 
 export default function Buttons() {
