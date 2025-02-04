@@ -9,7 +9,6 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuItems = [
     { title: 'หน้าหลัก', link: '/' },
-    { title: 'สิทธิประโยชน์', link: '#benefits' },
     { title: 'ติดต่อเรา', link: '#contacts' },
     { title: 'ลงทะเบียน', link: '/register' },
   ];
@@ -56,6 +55,7 @@ export default function Navbar() {
             <Link
               key={index}
               href={item.link}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="w-full cursor-pointer text-2xl font-semibold text-black hover:text-pink-500"
             >
               {item.title}
