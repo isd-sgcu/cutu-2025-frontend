@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 import Label from '../label';
 import TextInput from '../textInput';
-import DropdownInput from '../dropdownInput';
-import ImageInput from '../imageinput';
+// import DropdownInput from '../dropdownInput';
+// import ImageInput from '../imageinput';
 import CheckBox from '../policy/checkbox';
-import ComboBox from '../comboBox';
+// import ComboBox from '../comboBox';
 import { ErrorMsg, ErrorMsgFloat } from '../errorMsg';
 import RegisterLayout from '../RegisterLayout';
 import { Button } from '@/components/ui/button';
@@ -18,11 +18,11 @@ import { useLiff } from '@/contexts/liff';
 import { useAuth } from '@/contexts/auth';
 import toast from 'react-hot-toast';
 import { RegisterForm } from '@/schema/register';
-import { educationsMap, educationsMapReverse } from '@/const/educations';
-import { universities } from '@/const/universities';
-import { faculties } from '@/const/faculties';
-import { sizeJersey } from '@/const/size';
-import { statusMap } from '@/const/status';
+// import { educationsMap, educationsMapReverse } from '@/const/educations';
+// import { universities } from '@/const/universities';
+// import { faculties } from '@/const/faculties';
+// import { sizeJersey } from '@/const/size';
+// import { statusMap } from '@/const/status';
 import Consent from '../policy/consent';
 
 interface TwoProps {
@@ -65,52 +65,52 @@ export default function Two({ setStep, form }: TwoProps) {
     toast.dismiss(toastId);
   };
 
-  const updateField = (field: keyof RegisterForm) => {
-    return (value: RegisterForm[keyof RegisterForm]) => {
-      setValue(field, value);
-    };
-  };
+  // const updateField = (field: keyof RegisterForm) => {
+  //   return (value: RegisterForm[keyof RegisterForm]) => {
+  //     setValue(field, value);
+  //   };
+  // };
 
-  useEffect(() => {
-    let status: RegisterForm['status'];
+  // useEffect(() => {
+  //   let status: RegisterForm['status'];
 
-    // not specified
-    if (user.education == 'notSpecified') {
-      setValue('graduatedYear', '9999');
-      setValue('faculty', 'ไม่ระบุ');
-      setValue('status', 'general_public');
-      setValue('university', 'ไม่ประสงค์เเจ้ง');
-      return;
-    }
+  //   // not specified
+  //   if (user.education == 'notSpecified') {
+  //     setValue('graduatedYear', '9999');
+  //     setValue('faculty', 'ไม่ระบุ');
+  //     setValue('status', 'general_public');
+  //     setValue('university', 'ไม่ประสงค์เเจ้ง');
+  //     return;
+  //   }
 
-    // set default value
-    if (
-      !!user.education &&
-      !!user.university &&
-      (user.education != 'graduated' ||
-        user.university != 'จุฬาลงกรณ์มหาวิทยาลัย')
-    ) {
-      setValue('graduatedYear', '9999');
-      setValue('faculty', 'ไม่ระบุ');
-    }
+  //   // set default value
+  //   if (
+  //     !!user.education &&
+  //     !!user.university &&
+  //     (user.education != 'graduated' ||
+  //       user.university != 'จุฬาลงกรณ์มหาวิทยาลัย')
+  //   ) {
+  //     setValue('graduatedYear', '9999');
+  //     setValue('faculty', 'ไม่ระบุ');
+  //   }
 
-    // set status
-    if (user.education == 'studying') {
-      if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'chula_student';
-      } else {
-        status = 'general_student';
-      }
-    } else {
-      if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'alumni';
-      } else {
-        status = 'general_public';
-      }
-    }
+  //   // set status
+  //   if (user.education == 'studying') {
+  //     if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
+  //       status = 'chula_student';
+  //     } else {
+  //       status = 'general_student';
+  //     }
+  //   } else {
+  //     if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
+  //       status = 'alumni';
+  //     } else {
+  //       status = 'general_public';
+  //     }
+  //   }
 
-    setValue('status', status);
-  }, [user.education, user.university, setValue]);
+  //   setValue('status', status);
+  // }, [user.education, user.university, setValue]);
 
   function onBack() {
     setStep(1);
@@ -136,11 +136,11 @@ export default function Two({ setStep, form }: TwoProps) {
         </div>
 
         {/* email */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>อีเมล</Label>
           <TextInput {...register('email')} />
           <ErrorMsgFloat>{errors.email?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* phone */}
         <div className="relative space-y-1">
@@ -148,8 +148,8 @@ export default function Two({ setStep, form }: TwoProps) {
           <TextInput {...register('phone')} />
           <ErrorMsgFloat>{errors.phone?.message}</ErrorMsgFloat>
         </div>
-
-        {/* education */}
+{/* 
+        education
         <div className="relative space-y-1">
           <Label isRequired>การศึกษา</Label>
           <DropdownInput
@@ -162,7 +162,7 @@ export default function Two({ setStep, form }: TwoProps) {
         </div>
 
         {/* university */}
-        {user.education && user.education != 'notSpecified' && (
+        {/* {user.education && user.education != 'notSpecified' && (
           <div className="relative space-y-1">
             <Label isRequired>
               {user.education == 'studying'
@@ -179,17 +179,17 @@ export default function Two({ setStep, form }: TwoProps) {
             />
             <ErrorMsgFloat>{errors.university?.message}</ErrorMsgFloat>
           </div>
-        )}
+        )} */}
 
         {/* status */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>สถานะ</Label>
           <TextInput value={statusMap[user.status] || ''} readOnly />
           <ErrorMsgFloat>{errors.status?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* graduate year && graduate faculty*/}
-        {user.education == 'graduated' &&
+        {/* {user.education == 'graduated' &&
           user.university == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
             <div className="flex justify-between gap-4">
               <div className="relative w-1/2 space-y-2">
@@ -223,17 +223,17 @@ export default function Two({ setStep, form }: TwoProps) {
                 <ErrorMsgFloat>{errors.faculty?.message}</ErrorMsgFloat>
               </div>
             </div>
-          )}
+          )} */}
 
         {/* age */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>อายุ</Label>
           <TextInput {...register('age')} />
           <ErrorMsgFloat>{errors.age?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* size */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>ขนาดเสื้อ</Label>
           <DropdownInput
             value={user.sizeJersey}
@@ -242,7 +242,7 @@ export default function Two({ setStep, form }: TwoProps) {
             choices={[...sizeJersey]}
           />
           <ErrorMsgFloat>{errors.sizeJersey?.message}</ErrorMsgFloat>
-        </div>
+        </div>  */}
 
         {/* foodAllegy */}
         <div className="relative space-y-1">
@@ -272,18 +272,18 @@ export default function Two({ setStep, form }: TwoProps) {
           <ErrorMsgFloat>{errors.drugAllergy?.message}</ErrorMsgFloat>
         </div>
 
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label>รหัสผู้เเนะนำให้เข้าร่วมกิจกรรม (ไม่จำเป็น)</Label>
           <TextInput {...register('invitationCode')} placeholder="AB12345" />
           <ErrorMsgFloat>{errors.invitationCode?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* idCardImg */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>อัปโหลดรูปด้านหน้าบัตรประชาชน</Label>
           <ImageInput value={user.image} setValue={updateField('image')} />
           <ErrorMsgFloat>{errors.image?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* confirm */}
         <div
