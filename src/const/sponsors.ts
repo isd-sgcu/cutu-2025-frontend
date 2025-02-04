@@ -1,6 +1,6 @@
 export const sponsors = [
   {
-    image: '/homepage/Frame 22.png',
+    image: '/homepage/Frame 24.png',
     name: 'sp1',
   },
   {
@@ -8,7 +8,7 @@ export const sponsors = [
     name: 'sp2',
   },
   {
-    image: '/homepage/Frame 24.png',
+    image: '/homepage/Frame 22.png',
     name: 'sp3',
   },
   {
