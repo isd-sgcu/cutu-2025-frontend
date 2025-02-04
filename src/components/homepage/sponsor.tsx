@@ -10,9 +10,9 @@ export default function Sponsors() {
   const scrollByItems = (items: number) => {
     if (scrollRef.current) {
       const container = scrollRef.current;
-      const itemWidth = container.scrollWidth / Math.ceil(sponsors.length / 2); // Calculate the width of 4 items (columns in a row)
-      const scrollDistance = items * itemWidth; // Total scroll distance for items
-      container.scrollLeft += scrollDistance;
+      const itemWidth = container.clientWidth; // Width of the visible container
+      const scrollDistance = items * itemWidth; // Scroll by the width of the container
+      container.scrollBy({ left: scrollDistance, behavior: 'smooth' }); // Smooth scrolling
     }
   };
 
@@ -23,7 +23,7 @@ export default function Sponsors() {
         {/* Left Navigation Button */}
         <button
           className="group mb-2 h-8 w-8"
-          onClick={() => scrollByItems(-3)}
+          onClick={() => scrollByItems(-1)} // Scroll left by one image
         >
           <div className="relative grid scale-75 justify-items-center gap-1.5">
             <span className="h-0.5 w-6 translate-y-3 rotate-45 rounded-full bg-black" />
@@ -34,34 +34,24 @@ export default function Sponsors() {
         {/* Sponsors Content */}
         <div
           ref={scrollRef}
-          className="no-scrollbar flex gap-4 overflow-x-scroll"
+          className="no-scrollbar flex h-full w-full overflow-x-scroll"
         >
-          {Array.from(
-            { length: Math.ceil(sponsors.length / 10) },
-            (_, pageIndex) => (
-              <div
-                key={pageIndex}
-                className="grid w-full shrink-0 grid-cols-5 grid-rows-2 place-items-center gap-5"
-              >
-                {sponsors
-                  .slice(pageIndex * 10, pageIndex * 10 + 10)
-                  .map(({ image, name }, sponsorIndex) => (
-                    <div
-                      key={sponsorIndex}
-                      className="flex h-9 w-9 overflow-hidden rounded-lg border border-gray-300"
-                    >
-                      <div className="relative aspect-[1/1] w-full">
-                        <Image src={getImageURL(image)} alt={name} fill />
-                      </div>
-                    </div>
-                  ))}
+          {sponsors.map(({ image, name }, sponsorIndex) => (
+            <div
+              key={sponsorIndex}
+              className="h-80 w-full shrink-0 overflow-hidden" // Ensure each image takes full width
+            >
+              <div className="relative h-full w-full">
+                <Image src={getImageURL(image)} alt={name} fill />
               </div>
-            ),
-          )}
+            </div>
+          ))}
         </div>
 
         {/* Right Navigation Button */}
-        <button className="group h-8 w-8" onClick={() => scrollByItems(3)}>
+        <button className="group h-8 w-8" onClick={() => scrollByItems(1)}>
+          {' '}
+          {/* Scroll right by one image */}
           <div className="relative mb-2 grid scale-75 justify-items-center gap-1.5">
             <span className="h-0.5 w-6 translate-y-3 -rotate-45 rounded-full bg-black" />
             <span className="h-0.5 w-6 -translate-y-3 rotate-45 rounded-full bg-black" />
