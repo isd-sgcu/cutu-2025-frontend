@@ -39,9 +39,9 @@ export default function Sponsors() {
           {sponsors.map(({ image, name }, sponsorIndex) => (
             <div
               key={sponsorIndex}
-              className="h-44 w-full shrink-0 overflow-hidden" // Ensure each image takes full width
+              className="h-full w-full shrink-0 overflow-hidden" // Ensure each image takes full width
             >
-              <div className="relative h-full w-full">
+              <div className="relative aspect-[308/117] w-full">
                 <Image src={getImageURL(image)} alt={name} fill />
               </div>
             </div>
