@@ -3,20 +3,20 @@
 import { useEffect } from 'react';
 
 import TextInput from '../../register/_components/textInput';
-import DropdownInput from '../../register/_components/dropdownInput';
-import ComboBox from '../../register/_components/comboBox';
+// import DropdownInput from '../../register/_components/dropdownInput';
+// import ComboBox from '../../register/_components/comboBox';
 import Label from '../../register/_components/label';
 import { Button } from '@/components/ui/button';
 import { ErrorMsg, ErrorMsgFloat } from '../../register/_components/errorMsg';
 import Image from 'next/image';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SizeJersey, sizeJersey } from '@/const/size';
-import { faculties } from '@/const/faculties';
+// import { SizeJersey, sizeJersey } from '@/const/size';
+// import { faculties } from '@/const/faculties';
 import { EditForm, EditSchema } from '@/schema/edit';
-import { educationsMap, educationsMapReverse } from '@/const/educations';
-import { universities } from '@/const/universities';
-import { statusMap } from '@/const/status';
+// import { educationsMap, educationsMapReverse } from '@/const/educations';
+// import { universities } from '@/const/universities';
+// import { statusMap } from '@/const/status';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuth } from '@/contexts/auth';
@@ -41,16 +41,16 @@ export default function Form() {
     if (defaultUser) {
       reset({
         name: defaultUser.name,
-        email: defaultUser.email,
+        // email: defaultUser.email,
         phone: defaultUser.phone,
-        education: defaultUser.education,
-        university: defaultUser.university,
-        status: defaultUser.status,
-        graduatedYear: defaultUser.graduatedYear,
-        faculty: defaultUser.faculty,
-        age: defaultUser.age,
+        // education: defaultUser.education,
+        // university: defaultUser.university,
+        // status: defaultUser.status,
+        // graduatedYear: defaultUser.graduatedYear,
+        // faculty: defaultUser.faculty,
+        // age: defaultUser.age,
         isAcroPhobia: defaultUser.isAcroPhobia,
-        sizeJersey: defaultUser.sizeJersey,
+        // sizeJersey: defaultUser.sizeJersey,
         foodLimitation: defaultUser.foodLimitation,
         chronicDisease: defaultUser.chronicDisease,
         drugAllergy: defaultUser.drugAllergy,
@@ -80,43 +80,43 @@ export default function Form() {
     toast.dismiss(toastId);
   };
 
-  const updateField = (field: keyof EditForm) => {
-    return (value: EditForm[keyof EditForm]) => {
-      setValue(field, value);
-    };
-  };
+  // const updateField = (field: keyof EditForm) => {
+  //   return (value: EditForm[keyof EditForm]) => {
+  //     setValue(field, value);
+  //   };
+  // };
 
-  useEffect(() => {
-    let status: EditForm['status'];
+  // useEffect(() => {
+  //   let status: EditForm['status'];
 
-    // set default value
-    if (
-      !!user.education &&
-      !!user.university &&
-      (user.education != 'graduated' ||
-        user.university != 'จุฬาลงกรณ์มหาวิทยาลัย')
-    ) {
-      setValue('graduatedYear', '9999');
-      setValue('faculty', 'ไม่ระบุ');
-    }
+  //   // set default value
+  //   if (
+  //     !!user.education &&
+  //     !!user.university &&
+  //     (user.education != 'graduated' ||
+  //       user.university != 'จุฬาลงกรณ์มหาวิทยาลัย')
+  //   ) {
+  //     setValue('graduatedYear', '9999');
+  //     setValue('faculty', 'ไม่ระบุ');
+  //   }
 
-    // set status
-    if (user.education == 'studying') {
-      if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'chula_student';
-      } else {
-        status = 'general_student';
-      }
-    } else {
-      if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
-        status = 'alumni';
-      } else {
-        status = 'general_public';
-      }
-    }
+  //   // set status
+  //   if (user.education == 'studying') {
+  //     if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
+  //       status = 'chula_student';
+  //     } else {
+  //       status = 'general_student';
+  //     }
+  //   } else {
+  //     if (user.university == 'จุฬาลงกรณ์มหาวิทยาลัย') {
+  //       status = 'alumni';
+  //     } else {
+  //       status = 'general_public';
+  //     }
+  //   }
 
-    setValue('status', status);
-  }, [user.education, user.university, setValue]);
+  //   setValue('status', status);
+  // }, [user.education, user.university, setValue]);
 
   return (
     <div className="w-full flex-1 bg-white">
@@ -132,11 +132,11 @@ export default function Form() {
         </div>
 
         {/* email */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>อีเมล</Label>
           <TextInput {...register('email')} />
           <ErrorMsgFloat>{errors.email?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* phone */}
         <div className="relative space-y-1">
@@ -146,7 +146,7 @@ export default function Form() {
         </div>
 
         {/* education */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>การศึกษา</Label>
           <DropdownInput
             value={educationsMap[user.education]}
@@ -157,10 +157,10 @@ export default function Form() {
             choices={Object.keys(educationsMapReverse).map(key => key)}
           />
           <ErrorMsgFloat>{errors.education?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* university */}
-        {user.education && (
+        {/* {user.education && (
           <div className="relative space-y-1">
             <Label isRequired>
               {user.education == 'studying'
@@ -177,17 +177,17 @@ export default function Form() {
             />
             <ErrorMsgFloat>{errors.university?.message}</ErrorMsgFloat>
           </div>
-        )}
+        )} */}
 
         {/* status */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>สถานะ</Label>
           <TextInput value={statusMap[user.status] || ''} readOnly />
           <ErrorMsgFloat>{errors.status?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* graduate year && graduate faculty*/}
-        {user.education == 'graduated' &&
+        {/* {user.education == 'graduated' &&
           user.university == 'จุฬาลงกรณ์มหาวิทยาลัย' && (
             <div className="flex justify-between gap-4">
               <div className="relative w-1/2 space-y-2">
@@ -221,16 +221,16 @@ export default function Form() {
                 <ErrorMsgFloat>{errors.faculty?.message}</ErrorMsgFloat>
               </div>
             </div>
-          )}
+          )} */}
 
         {/* birthDate */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>อายุ</Label>
           <TextInput {...register('age')} />
           <ErrorMsgFloat>{errors.age?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
         {/* size */}
-        <div className="relative space-y-1">
+        {/* <div className="relative space-y-1">
           <Label isRequired>ขนาดเสื้อ</Label>
           <DropdownInput
             value={user.sizeJersey}
@@ -241,7 +241,7 @@ export default function Form() {
             choices={[...sizeJersey]}
           />
           <ErrorMsgFloat>{errors.sizeJersey?.message}</ErrorMsgFloat>
-        </div>
+        </div> */}
 
         {/* foodAllegy */}
         <div className="relative space-y-1">
