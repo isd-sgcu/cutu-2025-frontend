@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <header className="relative z-50 flex w-full items-center justify-between bg-gradient-to-b from-dark-pink via-20% to-white to-60%">
-      <div className="relative ml-5 mt-12 h-16 w-10">
+      <div className="relative ml-5 mt-8 h-16 w-10">
         <Image src={getImageURL('/homepage/Logo.svg')} fill alt="logo" />
       </div>
 
@@ -43,7 +43,7 @@ export default function Navbar() {
       </button>
 
       <div
-        className={`absolute top-28 z-40 w-full bg-white py-4 transition-all duration-500 ease-in-out ${
+        className={`absolute top-24 z-40 w-full bg-white py-4 transition-all duration-500 ease-in-out ${
           isMenuOpen
             ? 'translate-y-0 opacity-100'
             : 'pointer-events-none -translate-y-5 opacity-0'
