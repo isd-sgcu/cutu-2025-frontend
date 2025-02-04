@@ -1,4 +1,3 @@
-import Benefits from '@/components/homepage/benefits';
 import Contact from '@/components/homepage/contact';
 import Footer from '@/components/homepage/footer';
 import Hero from '@/components/homepage/hero';
@@ -12,7 +11,6 @@ export default function Homepage() {
       <div className="mt-4" />
       <Hero />
       <Countdown />
-      <Benefits />
       <Sponsors />
       <Contact />
       <Footer />
