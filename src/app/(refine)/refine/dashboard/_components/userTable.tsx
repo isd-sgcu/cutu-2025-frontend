@@ -6,7 +6,11 @@ export const UserTable = ({ children }: { children: React.ReactNode }) => (
             <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">UID</th>
             <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">ชื่อ</th>
             <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">เบอร์โทรศัพท์</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">เข้างานล่าสุด</th>
+            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">ข้อจำกัดด้านอาหาร</th>
+            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">การแพ้ยา</th>
+            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">โรคประจำตัว</th>
+            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">กลัวความสู.</th>
+            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">เข้างานครั้งล่าสุด</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">

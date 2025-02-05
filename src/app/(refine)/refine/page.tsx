@@ -8,11 +8,10 @@ import dayjs from 'dayjs';
 import { User } from './libs/interface';
 import { DashboardHeader } from '../refine/_components/header';
 import { LineChart } from '../refine/_components/lineChart';
-import { DoughnutChart } from '../refine/_components/doughnutChart';
 import { CheckInList } from '../refine/_components/checkInList';
 import { processStats, chartOptions } from '../refine/libs/stat';
-import { ScanLine, UserCheck, Users } from 'lucide-react';
-import { 
+import { ScanLine, UserCheck } from 'lucide-react';
+import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
@@ -35,29 +34,24 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement,
 );
 
 const Dashboard = () => {
   const [checkInPage, setCheckInPage] = useState(1);
-  const { tableQuery } = useTable({ resource: 'users' });
-  const data = tableQuery?.data?.data || [];
+  const { tableQuery } = useTable({
+    resource: 'users',
+  });
+  const data = ((tableQuery?.data?.data as User[]) || []).filter(
+    (user: User) => user.role === 'member',
+  );
   const total = tableQuery?.data?.total || 0;
 
-  const { statusStatistics, dailyRegistrations, todaysCheckIns } = processStats(data as User[]);
+  const { dailyRegistrations, todaysCheckIns } = processStats(
+    data as User[],
+  );
 
   // Chart data preparations
-  const doughnutData = {
-    labels: ['นิสิตปัจจุบัน', 'ศิษย์เก่า', 'บุคคลทั่วไป', 'นักศึกษาอื่น'],
-    datasets: [
-      {
-        label: 'จำนวนผู้ลงทะเบียน',
-        data: Object.values(statusStatistics),
-        backgroundColor: ['#708FCE', '#DF729F', '#9BCDEB', '#757575'],
-        borderWidth: 0,
-      },
-    ],
-  };
 
   const lineData = {
     labels: Object.keys(dailyRegistrations)
@@ -66,7 +60,13 @@ const Dashboard = () => {
     datasets: [
       {
         label: 'ผู้ลงทะเบียน',
-        data: Object.values(dailyRegistrations),
+        data: Object.values(
+          Object.fromEntries(
+            Object.entries(dailyRegistrations).sort(([dateA], [dateB]) =>
+              dateA.localeCompare(dateB),
+            ),
+          ),
+        ),
         borderColor: '#DF729F',
         backgroundColor: '#E9B0CC',
         tension: 0.4,
@@ -119,10 +119,12 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        {/* <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <div className="mb-4 flex items-center gap-3">
             <Users className="h-6 w-6 text-pink-600" />
-            <h2 className="text-lg font-semibold text-gray-900">สถิติตามสถานะ</h2>
+            <h2 className="text-lg font-semibold text-gray-900">
+              สถิติตามสถานะ
+            </h2>
           </div>
           <div className="h-64">
             <DoughnutChart
@@ -143,13 +145,15 @@ const Dashboard = () => {
               }}
             />
           </div>
-        </div>
-      </div>
+        </div> */}
+      </div> 
 
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="mb-4 flex items-center gap-3">
           <ScanLine className="h-6 w-6 text-pink-600" />
-          <h2 className="text-lg font-semibold text-gray-900">สถานการณ์วันนี้</h2>
+          <h2 className="text-lg font-semibold text-gray-900">
+            สถานการณ์วันนี้
+          </h2>
         </div>
         <CheckInList
           checkIns={todaysCheckIns}

@@ -21,6 +21,18 @@ export const UserTableRow = ({ user, onClick }: { user: User, onClick: () => voi
           {user.phone}
         </td>
         <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-500 sm:table-cell">
+          {user.foodLimitation}
+        </td>
+        <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-500 sm:table-cell">
+          {user.drugAllergy}
+        </td>
+        <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-500 sm:table-cell">
+          {user.chronicDisease}
+        </td>
+        <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-500 sm:table-cell">
+          {user.isAcrophobic ? 'ใช่' : 'ไม่ใช่'}
+        </td>
+        <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-500 sm:table-cell">
           {dayjs(user.lastEntered).isValid()
             ? dayjs(user.lastEntered).format('DD/MM HH:mm')
             : 'ยังไม่เข้างาน'}

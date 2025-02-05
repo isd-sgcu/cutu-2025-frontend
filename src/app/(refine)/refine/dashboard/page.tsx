@@ -47,15 +47,16 @@ const DataTable = () => {
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="rounded-xl bg-white p-4 shadow-sm">
         <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <Link
-            href="/refine/dashboard"
+          <div
             className="group flex items-center gap-2 text-gray-700 hover:text-pink-600"
           >
             <ChevronLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
-            <h1 className="text-xl font-semibold sm:text-2xl">
-              ข้อมูลผู้ลงทะเบียนทั้งหมด
-            </h1>
-          </Link>
+            <Link href={`/refine`}>
+              <h1 className="text-xl font-semibold sm:text-2xl">
+                ข้อมูลผู้ลงทะเบียนทั้งหมด
+              </h1>
+            </Link>
+          </div>
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <SearchBar
