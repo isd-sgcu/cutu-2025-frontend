@@ -14,7 +14,7 @@ import { ExportButton } from './_components/exportButton'; // Add this import
 const DataTable = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchBy, setSearchBy] = useState<'name' | 'uid'>('name');
+  const [searchBy, setSearchBy] = useState<'name' | 'uid' | 'phone'>('name');
   const PAGE_SIZE = 15;
 
   const { tableQuery, current, setCurrent, pageSize, setPageSize } =
