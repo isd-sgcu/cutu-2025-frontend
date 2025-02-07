@@ -4,6 +4,7 @@ import { Refine } from '@refinedev/core';
 import dataProvider from '@refinedev/simple-rest';
 import axios from 'axios';
 import { config } from '@/app/config';
+import Protect from '@/components/protect';
 
 // Create axios instance with auth headers
 const axiosInstance = axios.create({
@@ -13,7 +14,7 @@ const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use(config => {
   const token =
     typeof window !== 'undefined' ? localStorage.getItem('auth-data') : null;
   if (token) {
@@ -26,13 +27,12 @@ axiosInstance.interceptors.request.use((config) => {
 // Create authenticated data provider
 const customDataProvider = dataProvider(config.baseURL, axiosInstance);
 
-
 export default function Layout({ children }: React.PropsWithChildren) {
   return (
-      <Refine
-        dataProvider={customDataProvider}
-      >
+    <Refine dataProvider={customDataProvider}>
+      <Protect roles={['staff', 'admin']} callBack="คุณไม่มีสิทธิเข้าหน้านี้">
         {children}
-      </Refine>
+      </Protect>
+    </Refine>
   );
 }
