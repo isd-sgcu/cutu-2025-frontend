@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { apiClient } from './axios';
+import { parseRFC3339Date } from './date';
 
 export interface ScanQRResp {
   age: 'string';
@@ -53,9 +54,16 @@ export async function scanQR(
     if (axios.isAxiosError<ScanQRError>(err)) {
       switch (err.response?.status) {
         case 400:
+          const dateTime = parseRFC3339Date(err.response.data.message);
+          const dateString =
+            dateTime.toLocaleString('th-TH', {
+              hour: 'numeric',
+              minute: 'numeric',
+            }) + ' น.';
+
           return {
             modalType: 'already',
-            time: new Date(err.response.data.message).toLocaleString(),
+            time: dateString,
           };
         default:
           return { modalType: 'invalid' };
