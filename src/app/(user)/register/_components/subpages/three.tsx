@@ -8,8 +8,10 @@ import { useRouter } from 'next/navigation';
 import { useToJpeg } from '@hugocxl/react-to-image';
 
 import QRCode from 'react-qr-code';
+import { useAuth } from '@/contexts/auth';
 
 export default function Three() {
+  const { user } = useAuth();
   const router = useRouter();
   const [, convert] = useToJpeg({
     selector: '#qr',
@@ -70,7 +72,11 @@ export default function Three() {
 
         {/* QR code */}
         <section className="flex flex-col items-center">
-          <QRCode value="qr-code" className="size-[200px]" id="qr" />
+          <QRCode
+            value={user?.id || 'user is undefined'}
+            className="size-[200px]"
+            id="qr"
+          />
         </section>
 
         {/* save buttons */}
