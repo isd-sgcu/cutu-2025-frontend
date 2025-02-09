@@ -49,7 +49,10 @@ export async function scanQR(
         },
       },
     );
-    return { modalType: 'confirm', userInfo: resp.data.name };
+    return {
+      modalType: 'confirm',
+      userInfo: `${resp.data.name}  ${resp.data.phone}`,
+    };
   } catch (err: unknown) {
     if (axios.isAxiosError<ScanQRError>(err)) {
       switch (err.response?.status) {
