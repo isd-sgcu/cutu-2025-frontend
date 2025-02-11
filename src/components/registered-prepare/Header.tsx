@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { getImageURL } from '@/utils/image';
-import Link from 'next/link';
+// import Link from 'next/link';
 
 export default function header() {
   return (
@@ -23,7 +23,7 @@ export default function header() {
         <h2 className="text-[12px] font-normal leading-4">
           งานฟุตบอลประเพณีธรรมศาสตร์-จุฬาฯ ครั้งที่ 75
         </h2>
-        <Link
+        {/* <Link
           href={'user/information'}
           className="mt-6 flex h-8 w-52 items-center justify-center rounded-full border-[1px] border-white bg-gradient-to-r from-[#313051] from-20% via-[#607494] to-[#99C5E4]"
         >
@@ -38,7 +38,7 @@ export default function header() {
               วิธีการเตรียมตัวก่อนวันงาน
             </p>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
