@@ -17,7 +17,9 @@ export default function Hero() {
         <p className="text-base font-semibold text-white">
           15 กุมภาพันธ์ 2568 | 09:09
         </p>
-        <p className="text-base font-semibold text-white">กรีฑาสถานแห่งชาติ</p>
+        <p className="text-base font-semibold text-white">
+          สนามจุ๊บ (สนามกีฬาจุฬาลงกรณ์มหาวิทยาลัย)
+        </p>
         <Link
           href={'/register'}
           className="mt-4 rounded-[40px] bg-gradient-to-r from-[#2D284B] to-[#EB69A0] px-4 py-2 text-base font-semibold text-white"

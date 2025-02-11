@@ -1,11 +1,11 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import RegisterLayout from '../RegisterLayout';
 import { Check } from 'lucide-react';
 
 import { useRouter } from 'next/navigation';
-import { useToJpeg } from '@hugocxl/react-to-image';
+// import { useToJpeg } from '@hugocxl/react-to-image';
 
 import QRCode from 'react-qr-code';
 import { useAuth } from '@/contexts/auth';
@@ -13,26 +13,26 @@ import { useAuth } from '@/contexts/auth';
 export default function Three() {
   const { user } = useAuth();
   const router = useRouter();
-  const [, convert] = useToJpeg({
-    selector: '#qr',
-    onSuccess: data => {
-      const link = document.createElement('a');
-      link.download = 'cutu2025-qrcode.jpeg';
-      link.href = data;
-      link.click();
-    },
-    onError: error => {
-      console.error(error);
-    },
-  });
+  // const [, convert] = useToJpeg({
+  //   selector: '#qr',
+  //   onSuccess: data => {
+  //     const link = document.createElement('a');
+  //     link.download = 'cutu2025-qrcode.jpeg';
+  //     link.href = data;
+  //     link.click();
+  //   },
+  //   onError: error => {
+  //     console.error(error);
+  //   },
+  // });
 
   function onBack() {
     router.push('/');
   }
 
-  function onNext() {
-    router.push('/prepare-before-event');
-  }
+  // function onNext() {
+  //   router.push('/prepare-before-event');
+  // }
 
   return (
     <RegisterLayout
@@ -55,7 +55,7 @@ export default function Three() {
         {/* warning */}
         <section>
           <div className="text-center">
-            กรุณาบันทึก QR-Code ด้านล่าง
+            กรุณาบันทึกหน้าจอ QR-Code ด้านล่าง
             <br />
             สำหรับแสดงต่อเจ้าหน้าที่ในวันงาน
             <br />
@@ -66,9 +66,9 @@ export default function Three() {
         </section>
 
         {/* message */}
-        <section className="text-center text-lg font-bold">
+        {/* <section className="text-center text-lg font-bold">
           โปรดศึกษาวิธีการเตรียมตัวก่อนวันงานด้านล่าง
-        </section>
+        </section> */}
 
         {/* QR code */}
         <section className="flex flex-col items-center">
@@ -79,8 +79,8 @@ export default function Three() {
           />
         </section>
 
-        {/* save buttons */}
-        <section
+        {/* Today at 21:42 @Dunk (Frontend) รบกวนเอา 2 ปุ่มนี้ออกหน่อยคับ comment ไว้ก่อน เดะกลับมาใช้ */}
+        {/* <section
           className="flex flex-col items-center gap-4 pt-4"
           onClick={convert}
         >
@@ -96,7 +96,7 @@ export default function Three() {
           <Button className="px-6 text-base" onClick={onNext}>
             วิธีการเตรียมตัวก่อนวันงาน
           </Button>
-        </section>
+        </section> */}
       </main>
     </RegisterLayout>
   );
